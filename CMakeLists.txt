@@ -14,27 +14,6 @@ find_package(Boost 1.37.0 REQUIRED
   COMPONENTS filesystem system program_options)
 
 ##############################################################
-# Fetch Boost documentation tools from svn                   #
-##############################################################
-find_package(Subversion REQUIRED)
-
-if(NOT EXISTS ${CMAKE_SOURCE_DIR}/doc/src)
-  execute_process(COMMAND ${Subversion_SVN_EXECUTABLE} checkout
-    http://svn.boost.org/svn/boost/trunk/doc/src/
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/doc/)
-endif(NOT EXISTS ${CMAKE_SOURCE_DIR}/doc/src)
-
-if(NOT EXISTS ${CMAKE_SOURCE_DIR}/tools/boostbook)
-  execute_process(COMMAND ${Subversion_SVN_EXECUTABLE} checkout
-    http://svn.boost.org/svn/boost/trunk/tools/boostbook/
-    WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}/tools/)
-endif(NOT EXISTS ${CMAKE_SOURCE_DIR}/tools/boostbook)
-
-if(NOT EXISTS ${CMAKE_SOURCE_DIR}/tools/quickbook)
-  execute_process(COMMAND ${Subversion_SVN_EXECUTABLE} checkout
-    http://svn.boost.org/svn/boost/tags/release/Boost_1_37_0/tools/quickbook/
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tools/)
-endif(NOT EXISTS ${CMAKE_SOURCE_DIR}/tools/quickbook)
 
 set(BUILD_QUICKBOOK "ON")
 add_executable(quickbook
