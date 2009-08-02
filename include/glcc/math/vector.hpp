@@ -23,45 +23,84 @@ namespace math
  */
 
 //! Returns the component-wise compare of x < y.
-bvec lessThan(vec x, vec y);
-bvec lessThan(ivec x, ivec y);
-bvec lessThan(uvec x, uvec y);
+GLCC_COMPONENT_WISE(template<typename T>,
+		GLboolean, lessThan, (T, x)(T, y))
+{
+	return x < y;
+}
 
 //! Returns the component-wise compare of x <= y.
-bvec lessThanEqual(vec x, vec y);
-bvec lessThanEqual(ivec x, ivec y);
-bvec lessThanEqual(uvec x, uvec y);
+GLCC_COMPONENT_WISE(template<typename T>,
+		GLboolean, lessThanEqual, (T, x)(T, y))
+{
+	return x <= y;
+}
 
 //! Returns the component-wise compare of x > y.
-bvec greaterThan(vec x, vec y);
-bvec greaterThan(ivec x, ivec y);
-bvec greaterThan(uvec x, uvec y);
+GLCC_COMPONENT_WISE(template<typename T>,
+		GLboolean, greaterThan, (T, x)(T, y))
+{
+	return x > y;
+}
 
 //! Returns the component-wise compare of x >= y.
-bvec greaterThanEqual(vec x, vec y);
-bvec greaterThanEqual(ivec x, ivec y);
-bvec greaterThanEqual(uvec x, uvec y);
+GLCC_COMPONENT_WISE(template<typename T>,
+		GLboolean, greaterThanEqual, (T, x)(T, y))
+{
+	return x >= y;
+}
 
 //! Returns the component-wise compare of x == y.
-bvec equal(vec x, vec y);
-bvec equal(ivec x, ivec y);
-bvec equal(uvec x, uvec y);
-bvec equal(bvec x, bvec y);
+GLCC_COMPONENT_WISE(template<typename T>,
+		GLboolean, equal, (T, x)(T, y))
+{
+	return x == y;
+}
 
 //! Returns the component-wise compare of x != y.
-bvec notEqual(vec x, vec y);
-bvec notEqual(ivec x, ivec y);
-bvec notEqual(uvec x, uvec y);
-bvec notEqual(bvec x, bvec y);
+GLCC_COMPONENT_WISE(template<typename T>,
+		GLboolean, notEqual, (T, x)(T, y))
+{
+	return x != y;
+}
 
 //! Returns true if any component of x is true.
-bool any(bvec2 x);
+inline bool any(const bvec2& x)
+{
+	return x.x() || x.y();
+}
+
+inline bool any(const bvec3& x)
+{
+	return x.x() || x.y() || x.z();
+}
+
+inline bool any(const bvec4& x)
+{
+	return x.x() || x.y() || x.z() || x.w();
+}
 
 //! Returns true only if all components of x are true.
-bool all(bvec x);
+inline bool all(const bvec2& x)
+{
+	return x.x() && x.y();
+}
+
+inline bool all(const bvec3& x)
+{
+	return x.x() && x.y() && x.z();
+}
+
+inline bool all(const bvec4& x)
+{
+	return x.x() && x.y() && x.z() && x.w();
+}
 
 //! Returns the component-wise logical complement of x.
-bvec operator not(bvec x);
+GLCC_COMPONENT_WISE(, GLboolean, not_, (GLboolean, x))
+{
+	return x == GL_FALSE;
+}
 
 /** \} */
 

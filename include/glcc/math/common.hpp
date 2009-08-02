@@ -8,6 +8,7 @@
 #define GLCC_MATH_COMMON_HPP
 
 #include <cmath>
+#include <algorithm>
 #include <glcc/detail/gl.hpp>
 #include <glcc/math/detail/component_wise.hpp>
 
@@ -24,49 +25,60 @@ namespace math
  * \{
  */
 
-GLCC_COMPONENT_WISE(GLfloat, abs, x)
+GLCC_COMPONENT_WISE(, GLfloat, abs, (GLfloat, x))
 {
 	return std::fabs(x);
 }
 
-GLCC_COMPONENT_WISE(GLint, abs, x)
+GLCC_COMPONENT_WISE(, GLint, abs, (GLint, x))
 {
 	return std::abs(x);
 }
 
-genType sign(genType x);
-genIType sign(genIType x);
+GLCC_COMPONENT_WISE(, GLfloat, sign, (GLfloat, x))
+{
+	return x < 0.f ? -1.f : 1.f;
+}
 
-genType floor(genType x); //std::floor
+GLCC_COMPONENT_WISE(, GLint, sign, (GLint, x))
+{
+	return x < 0 ? -1 : 1;
+}
 
-genType trunc(genType x);
+GLCC_COMPONENT_WISE(, GLfloat, floor, (GLfloat, x))
+{
+	return std::floor(x);
+}
 
-genType round(genType x);
+GLCC_COMPONENT_WISE(, GLfloat, trunc, (GLfloat, x));
 
-genType roundEven(genType x);
+GLCC_COMPONENT_WISE(, GLfloat, round, (GLfloat, x));
 
-genType ceil(genType x); //std::ceil
+GLCC_COMPONENT_WISE(, GLfloat, roundEven, (GLfloat, x));
 
-genType fract(genType x);
+GLCC_COMPONENT_WISE(, GLfloat, ceil, (GLfloat, x))
+{
+	return std::ceil(x);
+}
 
-genType mod(genType x, float y);
-genType mod(genType x, genType y);
+GLCC_COMPONENT_WISE(, GLfloat, fract, (GLfloat, x));
 
-genType modf(genType x, genType i); //std::modf
+GLCC_COMPONENT_WISE_2_M(template<typename T>, T, mod, T, x, T, y)
+{
+	return x % y;
+}
 
-genType min(genType x, genType y); //std::min
-genType min(genType x, float y);
-genIType min(genIType x, genIType y);
-genIType min(genIType x, int y);
-genUType min(genUType x, genUType y);
-genUType min(genUType x, uint y);
+genType modf(genType x, genType& i); //std::modf
 
-genType max(genType x, genType y); //std::max
-genType max(genType x, float y);
-genIType max(genIType x, genIType y);
-genIType max(genIType x, int y);
-genUType max(genUType x, genUType y);
-genUType max(genUType x, uint y);
+GLCC_COMPONENT_WISE_2_M(template<typename T>, T, min, T, x, T, y)
+{
+	return std::min(x, y);
+}
+
+GLCC_COMPONENT_WISE_2_M(template<typename T>, T, max, T, x, T, y)
+{
+	return std::max(x, y);
+}
 
 genType clamp(genType x, genType minVal, genType maxVal);
 genType clamp(genType x, float minVal, float maxVal);
@@ -77,7 +89,11 @@ genUType clamp(genUType x, uint minVal, uint maxVal);
 
 genType mix(genType x, genType y, genType a);
 genType mix(genType x, genType y, float a);
-genType mix(genType x, genType y, bvec a);
+
+GLCC_COMPONENT_WISE(, GLfloat, mix, (GLfloat, x)(GLfloat, y)(GLboolean, a))
+{
+	return a ? x : y;
+}
 
 genType step(genType edge, genType x);
 genType step(float edge, genType x);
@@ -85,9 +101,15 @@ genType step(float edge, genType x);
 genType smoothstep(genType edge0, genType edge1, genType x);
 genType smoothstep(float edge0, float edge1, genType x);
 
-bvec isnan(genType x); //std::isnan
+GLCC_COMPONENT_WISE(, GLboolean, isnan, (GLfloat, x))
+{
+	return std::isnan(x);
+}
 
-bvec isinf(genType x); //std::isinf
+GLCC_COMPONENT_WISE(, GLboolean, isinf, (GLfloat, x))
+{
+	return std::isinf(x);
+}
 
 /**
  * \}

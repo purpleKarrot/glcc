@@ -28,59 +28,86 @@ namespace math
  */
 
 //! Converts degrees to radians, i.e. \f$ \frac{\pi}{180} * degrees \f$
-GLCC_COMPONENT_WISE(float, radians, degrees)
+GLCC_COMPONENT_WISE(, GLfloat, radians, (GLfloat, degrees))
 {
-	return M_PI / 180.0 * degrees; // TODO: portable solution
+	return M_PI / 180.0 * degrees;
 }
 
 //! Converts radians to degrees, i.e. \f$ \frac{180}{\pi} * radians \f$
-GLCC_COMPONENT_WISE(float, degrees, radians)
+GLCC_COMPONENT_WISE(, GLfloat, degrees, (GLfloat, radians))
 {
-	180.0 / M_PI * radians; // TODO: portable solution
+	180.0 / M_PI * radians;
 }
 
 //! The standard trigonometric sine function.
-GLCC_COMPONENT_WISE_STD(sin, angle)
+GLCC_COMPONENT_WISE(, GLfloat, sin, (GLfloat, angle))
+{
+	return std::sin(angle);
+}
 
 //! The standard trigonometric cosine function.
-GLCC_COMPONENT_WISE_STD(cos, angle)
+GLCC_COMPONENT_WISE(, GLfloat, cos, (GLfloat, angle))
+{
+	return std::cos(angle);
+}
 
 //! The standard trigonometric tangent.
-GLCC_COMPONENT_WISE_STD(tan, angle)
+GLCC_COMPONENT_WISE(, GLfloat, tan, (GLfloat, angle))
+{
+	return std::tan(angle);
+}
 
-GLCC_COMPONENT_WISE_STD(asin, x)
+GLCC_COMPONENT_WISE(, GLfloat, asin, (GLfloat, angle))
+{
+	return std::asin(angle);
+}
 
-GLCC_COMPONENT_WISE_STD(acos, x)
+GLCC_COMPONENT_WISE(, GLfloat, acos, (GLfloat, angle))
+{
+	return std::acos(angle);
+}
 
 /// Arc tangent. Returns an angle whose tangent is y/x. The
 /// signs of x and y are used to determine what quadrant the
 /// angle is in. The range of values returned by this
 /// function is [−, ]. Results are undefined if x and
 /// y are both 0.
-inline float atan(float y, float x)
+GLCC_COMPONENT_WISE(, GLfloat, atan, (GLfloat, y)(GLfloat, x))
 {
 	return std::atan2(y, x);
 }
 
-GLCC_COMPONENT_WISE_STD(atan, x)
+GLCC_COMPONENT_WISE(, GLfloat, atan, (GLfloat, angle))
+{
+	return std::atan(angle);
+}
 
-GLCC_COMPONENT_WISE_STD(sinh, x)
+GLCC_COMPONENT_WISE(, GLfloat, sinh, (GLfloat, angle))
+{
+	return std::sinh(angle);
+}
 
-GLCC_COMPONENT_WISE_STD(cosh, x)
+GLCC_COMPONENT_WISE(, GLfloat, cosh, (GLfloat, angle))
+{
+	return std::cosh(angle);
+}
 
-GLCC_COMPONENT_WISE_STD(tanh, x)
+GLCC_COMPONENT_WISE(, GLfloat, tanh, (GLfloat, angle))
+{
+	return std::tanh(angle);
+}
 
-GLCC_COMPONENT_WISE_T(asinh, x)
+GLCC_COMPONENT_WISE(template<typename T>, T, asinh, (T, x))
 {
 	return ::asinh(x);
 }
 
-GLCC_COMPONENT_WISE_T(acosh, x)
+GLCC_COMPONENT_WISE(template<typename T>, T, acosh, (T, x))
 {
 	return ::acosh(x);
 }
 
-GLCC_COMPONENT_WISE_T(atanh, x)
+GLCC_COMPONENT_WISE(template<typename T>, T, atanh, (T, x))
 {
 	return ::atanh(x);
 }
