@@ -7,46 +7,49 @@
 #ifndef GLCC_VECTOR_HPP
 #define GLCC_VECTOR_HPP
 
-#include <glcc/geo/types/vector.hpp>
+#include <glcc/detail/gl.hpp>
+#include <glcc/detail/vector2.hpp>
+#include <glcc/detail/vector3.hpp>
+#include <glcc/detail/vector4.hpp>
 
 namespace gl
 {
 
 //! a two component floating-point vector
-typedef geo::vector<GLfloat, 2> vec2;
+typedef gl::detail::vector2<GLfloat> vec2;
 
 //! a three component floating-point vector
-typedef geo::vector<GLfloat, 3> vec3;
+typedef gl::detail::vector3<GLfloat> vec3;
 
 //! a four component floating-point vector
-typedef geo::vector<GLfloat, 4> vec4;
+typedef gl::detail::vector4<GLfloat> vec4;
 
 //! a two component Boolean vector
-typedef geo::vector<GLboolean, 2> bvec2;
+typedef gl::detail::vector2<GLboolean> bvec2;
 
 //! a three component Boolean vector
-typedef geo::vector<GLboolean, 3> bvec3;
+typedef gl::detail::vector3<GLboolean> bvec3;
 
 //! a four component Boolean vector
-typedef geo::vector<GLboolean, 4> bvec4;
+typedef gl::detail::vector4<GLboolean> bvec4;
 
 //! a two component signed integer vector
-typedef geo::vector<GLint, 2> ivec2;
+typedef gl::detail::vector2<GLint> ivec2;
 
 //! a three component signed integer vector
-typedef geo::vector<GLint, 3> ivec3;
+typedef gl::detail::vector3<GLint> ivec3;
 
 //! a four component signed integer vector
-typedef geo::vector<GLint, 4> ivec4;
+typedef gl::detail::vector4<GLint> ivec4;
 
 //! a two component unsigned integer vector
-typedef geo::vector<GLuint, 2> uvec2;
+typedef gl::detail::vector2<GLuint> uvec2;
 
 //! a three component unsigned integer vector
-typedef geo::vector<GLuint, 3> uvec3;
+typedef gl::detail::vector3<GLuint> uvec3;
 
 //! a four component unsigned integer vector
-typedef geo::vector<GLuint, 4> uvec4;
+typedef gl::detail::vector4<GLuint> uvec4;
 
 } // namespace gl
 

@@ -205,12 +205,10 @@ struct texture_target
 
 
 	static inline void get_image();
-	//	void glGetTexImage( enum tex, int lod, enum format,
-	//	   enum type, void *img );
+	//	void glGetTexImage( enum tex, int lod, enum format, enum type, void *img );
 
 	static inline void get_compressed_image();
-	//	void GetCompressedTexImage( enum target, int lod,
-	//	   void *img );
+	//	void GetCompressedTexImage( enum target, int lod, void *img );
 };
 
 } // namespace detail

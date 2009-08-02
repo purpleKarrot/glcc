@@ -4,8 +4,8 @@
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
 
-#ifndef BOOST_GL_COLOR_HPP
-#define BOOST_GL_COLOR_HPP
+#ifndef GLCC_DETAIL_COLOR_HPP
+#define GLCC_DETAIL_COLOR_HPP
 
 #include <glcc/detail/gl.hpp>
 #include <boost/gil/pixel.hpp>
@@ -39,6 +39,10 @@ GLCC_TRAITS(layout, boost::gil::bgr_layout_t, GL_BGR)
 GLCC_TRAITS(layout, boost::gil::bgra_layout_t, GL_BGRA)
 //GLCC_TRAITS(layout, boost::gil::gray_layout_t, GL_LUMINANCE)
 //GLCC_TRAITS(layout, ???, GL_LUMINANCE_ALPHA)
+
+//typedef boost::gil::packed_pixel_type<uint16_t, //
+//		boost::mpl::vector3_c<unsigned, 5, 6, 5>, //
+//		boost::gil::rgb_layout_t>::type rgb565_pixel_t;
 
 GLCC_TRAITS_BASE(unsigned int, channel)
 GLCC_TRAITS(channel, boost::gil::bits8, GL_UNSIGNED_BYTE)
@@ -74,4 +78,4 @@ struct color_traits: layout_traits<boost::gil::layout<
 #undef GLCC_TRAITS
 #undef GLCC_TRAITS_BASE
 
-#endif /* BOOST_GL_COLOR_HPP */
+#endif /* GLCC_DETAIL_COLOR_HPP */

@@ -8,7 +8,7 @@
 #define BOOST_GLSL_TRIGONOMETRY_HPP
 
 #include <cmath>
-#include "detail/macros.hpp"
+#include <glcc/geo/functions/detail/macros.hpp>
 
 namespace gl
 {
@@ -78,7 +78,5 @@ GLCC_COMPONENT_WISE_STD(atanh, x)
 
 } // namespace sl
 } // namespace gl
-
-#undef GLCC_COMPNENT_WISE
 
 #endif /* BOOST_GLSL_TRIGONOMETRY_HPP */

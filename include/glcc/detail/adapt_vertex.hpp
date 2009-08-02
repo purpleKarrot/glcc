@@ -51,23 +51,23 @@ struct vertex_member
         BOOST_PP_SEQ_FOR_EACH_I(GLCC_ADAPT_VERTEX_C, name, seq)                 \
     }}                                                                          \
 
-#define GLCC_ADAPT_VERTEX_C(r, name, i, xyz)                                      \
-    template <>                                                                   \
-    struct vertex_member<name, i>                                                 \
-    {                                                                             \
-        typedef BOOST_PP_TUPLE_ELEM(3, 0, xyz) type;  \
-        BOOST_STATIC_CONSTANT(GLint, size = 0); \
-        BOOST_STATIC_CONSTANT(GLenum, gltype = 0); \
+#define GLCC_ADAPT_VERTEX_C(r, name, i, xyz)                                    \
+    template <>                                                                 \
+    struct vertex_member<name, i>                                               \
+    {                                                                           \
+        typedef BOOST_PP_TUPLE_ELEM(3, 0, xyz) type;                            \
+        BOOST_STATIC_CONSTANT(GLint, size = 0);                                 \
+        BOOST_STATIC_CONSTANT(GLenum, gltype = 0);                              \
         BOOST_STATIC_CONSTANT(GLboolean, normalized = BOOST_PP_TUPLE_ELEM(3, 2, xyz)); \
-        BOOST_STATIC_CONSTANT(GLsizei, stride = sizeof(name) - sizeof(type)); \
-        static type* pointer(name* vertex_)                                       \
-        {                                                                         \
-            return &vertex_->BOOST_PP_TUPLE_ELEM(3, 1, xyz);                       \
-        }                                                                         \
-        static const type* pointer(const name* vertex_)                           \
-        {                                                                         \
-            return &vertex_->BOOST_PP_TUPLE_ELEM(3, 1, xyz);                       \
-        }                                                                         \
-    };                                                                            \
+        BOOST_STATIC_CONSTANT(GLsizei, stride = sizeof(name) - sizeof(type));   \
+        static type* pointer(name* vertex_)                                     \
+        {                                                                       \
+            return &vertex_->BOOST_PP_TUPLE_ELEM(3, 1, xyz);                    \
+        }                                                                       \
+        static const type* pointer(const name* vertex_)                         \
+        {                                                                       \
+            return &vertex_->BOOST_PP_TUPLE_ELEM(3, 1, xyz);                    \
+        }                                                                       \
+    };                                                                          \
 
 #endif /* GLCC_ADAPT_VERTEX_HPP */
