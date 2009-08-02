@@ -20,9 +20,45 @@ public:
 	{
 	}
 
-	~vector3()
+	vector3(T x, T y, T z) :
+		x_(x), y_(y), z_(z)
 	{
 	}
+
+	typename boost::add_reference<T>::type x()
+	{
+		return x_;
+	}
+
+	typename boost::add_reference<T>::type y()
+	{
+		return y_;
+	}
+
+	typename boost::add_reference<T>::type z()
+	{
+		return z_;
+	}
+
+	typename boost::remove_reference<T>::type x() const
+	{
+		return x_;
+	}
+
+	typename boost::remove_reference<T>::type y() const
+	{
+		return y_;
+	}
+
+	typename boost::remove_reference<T>::type z() const
+	{
+		return z_;
+	}
+
+private:
+	T x_;
+	T y_;
+	T z_;
 };
 
 } // namespace detail

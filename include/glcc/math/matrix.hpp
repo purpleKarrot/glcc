@@ -1,15 +1,21 @@
+/**************************************************************
+ * Copyright (c) 2008-2009 Daniel Pfeifer                     *
+ *                                                            *
+ * Distributed under the Boost Software License, Version 1.0. *
+ **************************************************************/
+
 /*
  * 8.5 Matrix Functions
  */
 
-#ifndef BOOST_GLSL_MATRIX_HPP
-#define BOOST_GLSL_MATRIX_HPP
+#ifndef GLCC_MATH_MATRIX_HPP
+#define GLCC_MATH_MATRIX_HPP
 
-#include <boost/glcc/sl/types.hpp>
+#include <glcc/detail/matrix.hpp>
 
 namespace gl
 {
-namespace sl
+namespace math
 {
 
 /// Multiply matrix x by matrix y component-wise, i.e.,
@@ -17,12 +23,12 @@ namespace sl
 /// Note: to get linear algebraic matrix multiplication, use
 /// the multiply operator (*).
 template<typename T, std::size_t M, std::size_t N>
-inline detail::matrix<T, M, N> matrixCompMult(const detail::matrix<T, M, N>& x,
-		const detail::matrix<T, M, N>& y)
+inline gl::detail::matrix<T, M, N> matrixCompMult(const gl::detail::matrix<T,
+        M, N>& x, const gl::detail::matrix<T, M, N>& y)
 {
-	detail::matrix<T, M, N> mat(x);
-	detail::loop_op<M * N>::eval(detail::multiplies_assign(), //
-			mat.begin(), y.begin());
+	gl::detail::matrix<T, M, N> mat(x);
+	gl::detail::loop_op<M * N>::eval(gl::detail::multiplies_assign(), //
+	        mat.begin(), y.begin());
 	return mat;
 }
 
@@ -33,10 +39,11 @@ inline detail::matrix<T, M, N> matrixCompMult(const detail::matrix<T, M, N>& x,
 /// rows is the number of components in c and whose
 /// number of columns is the number of components in r.
 template<typename T, std::size_t M, std::size_t N>
-inline detail::matrix<T, M, N> outerProduct(const detail::vector<T, N>& c,
-		const detail::vector<T, M>& r)
+inline gl::detail::matrix<T, M, N> outerProduct(
+        const typename gl::detail::vector<T, N>::type& c,
+        const typename gl::detail::vector<T, M>::type& r)
 {
-	detail::matrix<T, M, N> mat(x);
+	gl::detail::matrix<T, M, N> mat;
 	//	detail::loop_op<M * N>::eval(detail::multiplies_assign(), //
 	//			mat.begin(), y.begin());
 	return mat;
@@ -45,15 +52,15 @@ inline detail::matrix<T, M, N> outerProduct(const detail::vector<T, N>& c,
 /// Returns a matrix that is the transpose of m. The input
 /// matrix m is not modified.
 template<typename T, std::size_t M, std::size_t N>
-inline detail::matrix<T, M, N> transpose(const detail::matrix<T, N, M>& m)
+inline gl::detail::matrix<T, M, N> transpose(const gl::detail::matrix<T, N, M>& m)
 {
-	detail::matrix<T, M, N> mat(x);
+	gl::detail::matrix<T, M, N> mat;
 	//	detail::loop_op<M * N>::eval(detail::multiplies_assign(), //
 	//			mat.begin(), y.begin());
 	return mat;
 }
 
-} // namespace sl
+} // namespace math
 } // namespace gl
 
-#endif /* BOOST_GLSL_MATRIX_HPP */
+#endif /* GLCC_MATH_MATRIX_HPP */

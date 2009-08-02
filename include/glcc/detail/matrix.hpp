@@ -12,7 +12,7 @@
 
 namespace gl
 {
-namespace math
+namespace detail
 {
 
 template<typename T, std::size_t M, std::size_t N>
@@ -45,14 +45,14 @@ public:
 	/// Matrizenaddition
 	matrix& operator+=(const matrix& other)
 	{
-		geo::loop_op<Size>::eval(geo::plus_assign(), elems, other.elems);
+		detail::loop_op<Size>::eval(detail::plus_assign(), elems, other.elems);
 		return *this;
 	}
 
 	/// Matrizensubtraktion
 	matrix& operator-=(const matrix& other)
 	{
-		geo::loop_op<Size>::eval(geo::minus_assign(), elems, other.elems);
+		detail::loop_op<Size>::eval(detail::minus_assign(), elems, other.elems);
 		return *this;
 	}
 
@@ -67,14 +67,14 @@ public:
 	/// Skalarmultiplikation
 	matrix& operator*=(T skalar)
 	{
-		geo::loop_op<Size>::eval(geo::multiplies_assign(), elems, skalar);
+		detail::loop_op<Size>::eval(detail::multiplies_assign(), elems, skalar);
 		return *this;
 	}
 
 	/// Skalardivision
 	matrix& operator/=(T skalar)
 	{
-		geo::loop_op<Size>::eval(geo::divides_assign(), elems, skalar);
+		detail::loop_op<Size>::eval(detail::divides_assign(), elems, skalar);
 		return *this;
 	}
 
@@ -88,7 +88,7 @@ public:
 	T elems[Size];
 };
 
-} // namespace math
+} // namespace detail
 } // namespace gl
 
 #endif /* GLCC_MATH_TYPES_MATRIX_HPP */

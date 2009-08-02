@@ -6,6 +6,13 @@
  */
 
 #include <glcc/vector.hpp>
+//#include <glcc/math/common.hpp>
+//#include <glcc/math/exponential.hpp>
+//#include <glcc/math/geometric.hpp>
+//#include <glcc/math/matrix.hpp>
+//#include <glcc/math/trigonometric.hpp>
+//#include <glcc/math/vector.hpp>
+
 #include <iostream>
 
 int main(int argc, char* argv[])

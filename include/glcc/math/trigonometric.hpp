@@ -4,15 +4,15 @@
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
 
-#ifndef BOOST_GLSL_TRIGONOMETRY_HPP
-#define BOOST_GLSL_TRIGONOMETRY_HPP
+#ifndef GLCC_MATH_TRIGONOMETRIC_HPP
+#define GLCC_MATH_TRIGONOMETRIC_HPP
 
 #include <cmath>
-#include <glcc/geo/functions/detail/macros.hpp>
+#include <glcc/math/detail/component_wise.hpp>
 
 namespace gl
 {
-namespace sl
+namespace math
 {
 
 /**
@@ -70,13 +70,22 @@ GLCC_COMPONENT_WISE_STD(cosh, x)
 
 GLCC_COMPONENT_WISE_STD(tanh, x)
 
-GLCC_COMPONENT_WISE_STD(asinh, x)
+GLCC_COMPONENT_WISE_T(asinh, x)
+{
+	return ::asinh(x);
+}
 
-GLCC_COMPONENT_WISE_STD(acosh, x)
+GLCC_COMPONENT_WISE_T(acosh, x)
+{
+	return ::acosh(x);
+}
 
-GLCC_COMPONENT_WISE_STD(atanh, x)
+GLCC_COMPONENT_WISE_T(atanh, x)
+{
+	return ::atanh(x);
+}
 
-} // namespace sl
+} // namespace math
 } // namespace gl
 
-#endif /* BOOST_GLSL_TRIGONOMETRY_HPP */
+#endif /* GLCC_MATH_TRIGONOMETRIC_HPP */

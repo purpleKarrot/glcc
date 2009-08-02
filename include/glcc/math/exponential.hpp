@@ -4,15 +4,15 @@
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
 
-#ifndef BOOST_GLSL_EXPONENTIAL_HPP
-#define BOOST_GLSL_EXPONENTIAL_HPP
+#ifndef GLCC_MATH_EXPONENTIAL_HPP
+#define GLCC_MATH_EXPONENTIAL_HPP
 
 #include <cmath>
-#include "detail/macros.hpp"
+#include <glcc/math/detail/component_wise.hpp>
 
 namespace gl
 {
-namespace sl
+namespace math
 {
 
 /**
@@ -74,9 +74,9 @@ GLCC_COMPONENT_WISE(float, inversesqrt, x)
  * \}
  */
 
-} // namespace sl
+} // namespace math
 } // namespace gl
 
 #undef GLCC_COMPNENT_WISE
 
-#endif /* BOOST_GLSL_EXPONENTIAL_HPP */
+#endif /* GLCC_MATH_EXPONENTIAL_HPP */

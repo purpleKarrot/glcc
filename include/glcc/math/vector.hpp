@@ -1,12 +1,26 @@
-/*
- * vector.hpp
- *
- *  Created on: Jun 6, 2009
- *      Author: daniel
- */
+/**************************************************************
+ * Copyright (c) 2008-2009 Daniel Pfeifer                     *
+ *                                                            *
+ * Distributed under the Boost Software License, Version 1.0. *
+ **************************************************************/
 
-#ifndef VECTOR_HPP_
-#define VECTOR_HPP_
+#ifndef GLCC_MATH_VECTOR_HPP
+#define GLCC_MATH_VECTOR_HPP
+
+namespace gl
+{
+namespace math
+{
+
+/**
+ * \defgroup vector Vector Relational Functions (8.6)
+ *
+ * Relational and equality operators (<, <=, >, >=, ==, !=)
+ * are defined to produce scalar Boolean results.
+ * For vector results, use the following functions.
+ *
+ * \{
+ */
 
 //! Returns the component-wise compare of x < y.
 bvec lessThan(vec x, vec y);
@@ -49,5 +63,9 @@ bool all(bvec x);
 //! Returns the component-wise logical complement of x.
 bvec operator not(bvec x);
 
+/** \} */
 
-#endif /* VECTOR_HPP_ */
+} // namespace math
+} // namespace gl
+
+#endif /* GLCC_MATH_VECTOR_HPP */

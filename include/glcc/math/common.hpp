@@ -1,14 +1,20 @@
-/*
- * common.hpp
- *
- *  Created on: Jun 6, 2009
- *      Author: daniel
- */
+/**************************************************************
+ * Copyright (c) 2008-2009 Daniel Pfeifer                     *
+ *                                                            *
+ * Distributed under the Boost Software License, Version 1.0. *
+ **************************************************************/
 
-#ifndef COMMON_HPP_
-#define COMMON_HPP_
+#ifndef GLCC_MATH_COMMON_HPP
+#define GLCC_MATH_COMMON_HPP
 
-#include "detail/macros.hpp"
+#include <cmath>
+#include <glcc/detail/gl.hpp>
+#include <glcc/math/detail/component_wise.hpp>
+
+namespace gl
+{
+namespace math
+{
 
 /**
  * \defgroup common Common Functions (8.3)
@@ -18,12 +24,12 @@
  * \{
  */
 
-GLCC_COMPONENT_WISE(float, abs, x)
+GLCC_COMPONENT_WISE(GLfloat, abs, x)
 {
 	return std::fabs(x);
 }
 
-GLCC_COMPONENT_WISE(int, abs, x)
+GLCC_COMPONENT_WISE(GLint, abs, x)
 {
 	return std::abs(x);
 }
@@ -87,4 +93,7 @@ bvec isinf(genType x); //std::isinf
  * \}
  */
 
-#endif /* COMMON_HPP_ */
+} // namespace math
+} // namespace gl
+
+#endif /* GLCC_MATH_COMMON_HPP */

@@ -8,7 +8,9 @@
 #ifndef HELPER_HPP_
 #define HELPER_HPP_
 
-namespace geo
+namespace gl
+{
+namespace detail
 {
 
 struct assign
@@ -83,6 +85,7 @@ struct loop_op<0>
 	}
 };
 
-} // namespace geo
+} // namespace detail
+} // namespace gl
 
 #endif /* HELPER_HPP_ */
