@@ -23,43 +23,97 @@ namespace math
  */
 
 //! Returns the component-wise compare of x < y.
-GLCC_COMPONENT_WISE(template<typename T>,
-		GLboolean, lessThan, (T, x)(T, y))
+GLCC_COMPONENT_WISE(GLboolean, lessThan, (GLfloat, x)(GLfloat, y))
+{
+	return x < y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, lessThan, (GLint, x)(GLint, y))
+{
+	return x < y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, lessThan, (GLuint, x)(GLuint, y))
 {
 	return x < y;
 }
 
 //! Returns the component-wise compare of x <= y.
-GLCC_COMPONENT_WISE(template<typename T>,
-		GLboolean, lessThanEqual, (T, x)(T, y))
+GLCC_COMPONENT_WISE(GLboolean, lessThanEqual, (GLfloat, x)(GLfloat, y))
+{
+	return x <= y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, lessThanEqual, (GLint, x)(GLint, y))
+{
+	return x <= y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, lessThanEqual, (GLuint, x)(GLuint, y))
 {
 	return x <= y;
 }
 
 //! Returns the component-wise compare of x > y.
-GLCC_COMPONENT_WISE(template<typename T>,
-		GLboolean, greaterThan, (T, x)(T, y))
+GLCC_COMPONENT_WISE(GLboolean, greaterThan, (GLfloat, x)(GLfloat, y))
+{
+	return x > y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, greaterThan, (GLint, x)(GLint, y))
+{
+	return x > y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, greaterThan, (GLuint, x)(GLuint, y))
 {
 	return x > y;
 }
 
 //! Returns the component-wise compare of x >= y.
-GLCC_COMPONENT_WISE(template<typename T>,
-		GLboolean, greaterThanEqual, (T, x)(T, y))
+GLCC_COMPONENT_WISE(GLboolean, greaterThanEqual, (GLfloat, x)(GLfloat, y))
+{
+	return x >= y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, greaterThanEqual, (GLint, x)(GLint, y))
+{
+	return x >= y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, greaterThanEqual, (GLuint, x)(GLuint, y))
 {
 	return x >= y;
 }
 
 //! Returns the component-wise compare of x == y.
-GLCC_COMPONENT_WISE(template<typename T>,
-		GLboolean, equal, (T, x)(T, y))
+GLCC_COMPONENT_WISE(GLboolean, equal, (GLfloat, x)(GLfloat, y))
+{
+	return x == y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, equal, (GLint, x)(GLint, y))
+{
+	return x == y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, equal, (GLuint, x)(GLuint, y))
 {
 	return x == y;
 }
 
 //! Returns the component-wise compare of x != y.
-GLCC_COMPONENT_WISE(template<typename T>,
-		GLboolean, notEqual, (T, x)(T, y))
+GLCC_COMPONENT_WISE(GLboolean, notEqual, (GLfloat, x)(GLfloat, y))
+{
+	return x != y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, notEqual, (GLint, x)(GLint, y))
+{
+	return x != y;
+}
+
+GLCC_COMPONENT_WISE(GLboolean, notEqual, (GLuint, x)(GLuint, y))
 {
 	return x != y;
 }
@@ -97,7 +151,7 @@ inline bool all(const bvec4& x)
 }
 
 //! Returns the component-wise logical complement of x.
-GLCC_COMPONENT_WISE(, GLboolean, not_, (GLboolean, x))
+GLCC_COMPONENT_WISE(GLboolean, not_, (GLboolean, x))
 {
 	return x == GL_FALSE;
 }
