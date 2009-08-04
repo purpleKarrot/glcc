@@ -131,14 +131,12 @@ public:
 
 	typename boost::add_reference<T>::type operator[](std::size_t idx)
 	{
-		BOOST_ASSERT(idx < 2);
-		return (idx == 0) ? x_ : y_;
+		return this->*mem_array[idx];
 	}
 
 	typename boost::remove_reference<T>::type operator[](std::size_t idx) const
 	{
-		BOOST_ASSERT(idx < 2);
-		return (idx == 0) ? x_ : y_;
+		return this->*mem_array[idx];
 	}
 
 	vector2_ref_t xy()
@@ -164,7 +162,12 @@ public:
 private:
 	T x_;
 	T y_;
+
+    static T vector2<T>::* const mem_array[2];
 };
+
+template <typename T>
+T vector2<T>::* const vector2<T>::mem_array[2] = { &vector2<T>::x_, &vector2<T>::y_ };
 
 } // namespace detail
 } // namespace gl

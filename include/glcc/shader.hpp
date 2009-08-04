@@ -19,8 +19,9 @@ public:
 
 	enum shader_type
 	{
-		vertex = GL_VERTEX_SHADER, //
-		fragment = GL_FRAGMENT_SHADER
+		vertex = GL_VERTEX_SHADER,
+		fragment = GL_FRAGMENT_SHADER,
+		geometry = GL_GEOMETRY_SHADER
 	};
 
 	shader(shader_type t) :

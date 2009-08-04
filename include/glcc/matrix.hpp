@@ -14,37 +14,37 @@ namespace gl
 {
 
 //! a 2×2 floating-point matrix
-typedef gl::math::matrix<GLfloat, 2, 2> mat2;
+typedef gl::detail::matrix<GLfloat, 2, 2> mat2;
 
 //! a 3×3 floating-point matrix
-typedef gl::math::matrix<GLfloat, 3, 3> mat3;
+typedef gl::detail::matrix<GLfloat, 3, 3> mat3;
 
 //! a 4×4 floating-point matrix
-typedef gl::math::matrix<GLfloat, 4, 4> mat4;
+typedef gl::detail::matrix<GLfloat, 4, 4> mat4;
 
 //! same as a mat2
 typedef mat2 mat2x2;
 
 //! a floating-point matrix with 2 columns and 3 rows
-typedef gl::math::matrix<GLfloat, 2, 3> mat2x3;
+typedef gl::detail::matrix<GLfloat, 2, 3> mat2x3;
 
 //! a floating-point matrix with 2 columns and 4 rows
-typedef gl::math::matrix<GLfloat, 2, 4> mat2x4;
+typedef gl::detail::matrix<GLfloat, 2, 4> mat2x4;
 
 //! a floating-point matrix with 3 columns and 2 rows
-typedef gl::math::matrix<GLfloat, 3, 2> mat3x2;
+typedef gl::detail::matrix<GLfloat, 3, 2> mat3x2;
 
 //! same as a mat3
 typedef mat3 mat3x3;
 
 //! a floating-point matrix with 3 columns and 4 rows
-typedef gl::math::matrix<GLfloat, 3, 4> mat3x4;
+typedef gl::detail::matrix<GLfloat, 3, 4> mat3x4;
 
 //! a floating-point matrix with 4 columns and 2 rows
-typedef gl::math::matrix<GLfloat, 4, 2> mat4x2;
+typedef gl::detail::matrix<GLfloat, 4, 2> mat4x2;
 
 //! a floating-point matrix with 4 columns and 3 rows
-typedef gl::math::matrix<GLfloat, 4, 3> mat4x3;
+typedef gl::detail::matrix<GLfloat, 4, 3> mat4x3;
 
 //! same as a mat4
 typedef mat4 mat4x4;

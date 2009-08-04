@@ -6,6 +6,7 @@
  */
 
 #include <glcc/matrix.hpp>
+#include <glcc/math/matrix.hpp>
 #include <iostream>
 
 int main(int argc, char* argv[])
