@@ -13,50 +13,23 @@ namespace gl
 namespace detail
 {
 
-struct assign
-{
-	template<typename T>
-	void operator()(T& left, T right)
-	{
-		left = right;
-	}
-};
+#define GLCC_OP_FUNCTOR(NAME, OP)         \
+	struct NAME                           \
+	{                                     \
+		template<typename T>              \
+		void operator()(T& left, T right) \
+		{                                 \
+			left OP right;                \
+		}                                 \
+	};
 
-struct plus_assign
-{
-	template<typename T>
-	void operator()(T& left, T right)
-	{
-		left += right;
-	}
-};
+GLCC_OP_FUNCTOR(assign, =)
+GLCC_OP_FUNCTOR(plus_assign, +=)
+GLCC_OP_FUNCTOR(minus_assign, -=)
+GLCC_OP_FUNCTOR(multiplies_assign, *=)
+GLCC_OP_FUNCTOR(divides_assign, /=)
 
-struct minus_assign
-{
-	template<typename T>
-	void operator()(T& left, T right)
-	{
-		left -= right;
-	}
-};
-
-struct multiplies_assign
-{
-	template<typename T>
-	void operator()(T& left, T right)
-	{
-		left *= right;
-	}
-};
-
-struct divides_assign
-{
-	template<typename T>
-	void operator()(T& left, T right)
-	{
-		left /= right;
-	}
-};
+#undef GLCC_OP_FUNCTOR
 
 template<std::size_t N>
 struct loop_op

@@ -14,63 +14,61 @@ namespace std
 using boost::array;
 }
 
-#include <glcc/geo/types/vector.hpp>
-#include <glcc/geo/types/matrix.hpp>
+#include <glcc/detail/vector.hpp>
+#include <glcc/detail/matrix.hpp>
 
-#define GLCC_uniform(T, A) \
-	inline void uniform(GLuint location, T value) \
-	{ \
-		glUniform1##A(location, value); \
-	} \
-	template<std::size_t N> \
-	inline void uniform(GLuint location, const std::array<T, N>& values) \
-	{ \
-		glUniform1##A##v(location, N, values.data()); \
+#define GLCC_uniform(T, A)                                                     \
+	inline void uniform(GLuint location, T value)                              \
+	{                                                                          \
+		glUniform1##A(location, value);                                        \
+	}                                                                          \
+	template<std::size_t N>                                                    \
+	inline void uniform(GLuint location, const std::array<T, N>& values)       \
+	{                                                                          \
+		glUniform1##A##v(location, N, values.data());                          \
 	}
 
 #define GLCC_vector_elements(z, N, d) , value[N]
-#define GLCC_uniform_vector(T, A, D) \
-	inline void uniform(GLuint location, \
-			const geo::vector<T, D>& value) \
-	{ \
-		glUniform##D##A(location \
-			BOOST_PP_REPEAT(D, GLCC_vector_elements, ~)); \
-	} \
-	template<std::size_t N> \
-	inline void uniform(GLuint location, \
-			const std::array<geo::vector<T, D>, N>& values) \
-	{ \
+#define GLCC_uniform_vector(T, A, D)                                           \
+	inline void uniform(GLuint location, const detail::vector<T, D>& value)    \
+	{                                                                          \
+		glUniform##D##A(location BOOST_PP_REPEAT(D, GLCC_vector_elements, ~)); \
+	}                                                                          \
+	template<std::size_t N>                                                    \
+	inline void uniform(GLuint location,                                       \
+			const std::array<detail::vector<T, D>, N>& values)                 \
+	{                                                                          \
 		glUniform##D##A##v(location, N, reinterpret_cast<T*> (values.data())); \
 	}
 
-#define GLCC_uniform_matrix_s(D) \
-	inline void uniform(GLuint location, \
-			const geo::matrix<GLfloat, D, D>& value) \
-	{ \
-		glUniformMatrix##D##fv(location, 1, false, \
-				reinterpret_cast<const GLfloat*>(&value)); \
-	} \
-	template<std::size_t S> \
-	inline void uniform(GLuint location, \
-			const std::array<geo::matrix<GLfloat, D, D>, S>& values) \
-	{ \
-		glUniformMatrix##D##fv(location, S, false, \
-				reinterpret_cast<GLfloat*> (values.data())); \
+#define GLCC_uniform_matrix_s(D)                                               \
+	inline void uniform(GLuint location,                                       \
+			const detail::matrix<GLfloat, D, D>& value)                        \
+	{                                                                          \
+		glUniformMatrix##D##fv(location, 1, false,                             \
+				reinterpret_cast<const GLfloat*>(&value));                     \
+	}                                                                          \
+	template<std::size_t S>                                                    \
+	inline void uniform(GLuint location,                                       \
+			const std::array<detail::matrix<GLfloat, D, D>, S>& values)        \
+	{                                                                          \
+		glUniformMatrix##D##fv(location, S, false,                             \
+				reinterpret_cast<GLfloat*> (values.data()));                   \
 	}
 
-#define GLCC_uniform_matrix(M, N) \
-	inline void uniform(GLuint location, \
-			const geo::matrix<GLfloat, M, N>& value) \
-	{ \
-		glUniformMatrix##M##x##N##fv(location, 1, false, \
-				reinterpret_cast<const GLfloat*>(&value)); \
-	} \
-	template<std::size_t S> \
-	inline void uniform(GLuint location, \
-			const std::array<geo::matrix<GLfloat, M, N>, S>& values) \
-	{ \
-		glUniformMatrix##M##x##N##fv(location, S, false, \
-				reinterpret_cast<GLfloat*> (values.data())); \
+#define GLCC_uniform_matrix(M, N)                                              \
+	inline void uniform(GLuint location,                                       \
+			const detail::matrix<GLfloat, M, N>& value)                        \
+	{                                                                          \
+		glUniformMatrix##M##x##N##fv(location, 1, false,                       \
+				reinterpret_cast<const GLfloat*>(&value));                     \
+	}                                                                          \
+	template<std::size_t S>                                                    \
+	inline void uniform(GLuint location,                                       \
+			const std::array<detail::matrix<GLfloat, M, N>, S>& values)        \
+	{                                                                          \
+		glUniformMatrix##M##x##N##fv(location, S, false,                       \
+				reinterpret_cast<GLfloat*> (values.data()));                   \
 	}
 
 namespace gl

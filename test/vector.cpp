@@ -12,9 +12,9 @@
 
 int main(int argc, char* argv[])
 {
-	gl::vec2 vec(0.4f, 2.3f);
+	gl::vec3 v(1, 2, 3);
 
 	//vec.yx()[0] = 0.5f;
 
-	std::cout << vec.x() << " " << vec.y() << std::endl;
+	std::cout << v.yyzx() << std::endl;
 }

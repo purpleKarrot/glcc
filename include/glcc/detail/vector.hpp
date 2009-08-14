@@ -4,12 +4,11 @@
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
 
-#ifndef GLCC_MATH_TYPES_VECTOR_HPP
-#define GLCC_MATH_TYPES_VECTOR_HPP
+#ifndef GLCC_DETAIL_VECTOR_HPP
+#define GLCC_DETAIL_VECTOR_HPP
 
-#include <glcc/detail/vector2.hpp>
-#include <glcc/detail/vector3.hpp>
-#include <glcc/detail/vector4.hpp>
+#include <boost/array.hpp>
+#include <glcc/detail/helper.hpp>
 
 namespace gl
 {
@@ -17,29 +16,79 @@ namespace detail
 {
 
 template<typename T, std::size_t N>
-struct vector
+class vector: private boost::array<T, N>
 {
-};
+	typedef typename boost::array<T, N> super;
 
-template<typename T>
-struct vector<T, 2>
-{
-	typedef vector2<T> type;
-};
+public:
 
-template<typename T>
-struct vector<T, 3>
-{
-	typedef vector3<T> type;
-};
+	using super::operator[];
 
-template<typename T>
-struct vector<T, 4>
-{
-	typedef vector4<T> type;
+	using super::operator=;
+
+	vector& operator+=(const vector& other)
+	{
+		loop_op<N>::eval(plus_assign(), super::begin(), other.begin());
+		return *this;
+	}
+
+	vector& operator-=(const vector& other)
+	{
+		loop_op<N>::eval(minus_assign(), super::begin(), other.begin());
+		return *this;
+	}
+
+	vector& operator*=(T skalar)
+	{
+		loop_op<N>::eval(multiplies_assign(), super::begin(), skalar);
+		return *this;
+	}
+
+	vector& operator/=(T skalar)
+	{
+		loop_op<N>::eval(divides_assign(), super::begin(), skalar);
+		return *this;
+	}
+
+private:
+
+	friend vector operator+(const vector& lhs, const vector& rhs)
+	{
+		vector nrv(lhs);
+		nrv += rhs;
+		return nrv;
+	}
+
+	friend vector operator-(const vector& lhs, const vector& rhs)
+	{
+		vector nrv(lhs);
+		nrv -= rhs;
+		return nrv;
+	}
+
+	friend vector operator*(const vector& lhs, T rhs)
+	{
+		vector nrv(lhs);
+		nrv *= rhs;
+		return nrv;
+	}
+
+	friend vector operator/(const vector& lhs, T rhs)
+	{
+		vector nrv(lhs);
+		nrv /= rhs;
+		return nrv;
+	}
+
+	friend std::ostream& operator<<(std::ostream&os, const vector& rhs)
+	{
+		os << "( ";
+		std::copy(rhs.begin(), rhs.end(), std::ostream_iterator<T>(os, " "));
+		return os << ")";
+	}
 };
 
 } // namespace detail
 } // namespace gl
 
-#endif /* GLCC_MATH_TYPES_VECTOR_HPP */
+#endif /* GLCC_DETAIL_VECTOR_HPP */

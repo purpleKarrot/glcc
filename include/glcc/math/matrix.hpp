@@ -53,8 +53,8 @@ inline gl::detail::matrix<GLfloat, M, N> outerProduct(
 /// Returns a matrix that is the transpose of m. The input
 /// matrix m is not modified.
 template<std::size_t M, std::size_t N>
-inline gl::detail::matrix<GLfloat, M, N> transpose(
-        const gl::detail::matrix<GLfloat, N, M>& m)
+inline gl::detail::matrix<GLfloat, M, N> //
+transpose(const gl::detail::matrix<GLfloat, N, M>& m)
 {
 	gl::detail::matrix<GLfloat, M, N> mat;
 	//	detail::loop_op<M * N>::eval(detail::multiplies_assign(), //
@@ -63,7 +63,7 @@ inline gl::detail::matrix<GLfloat, M, N> transpose(
 }
 
 /// Returns the determinant of m.
-GLfloat determinant(const mat2& m);
+GLfloat determinant(const gl::mat2& m);
 GLfloat determinant(const mat3& m);
 GLfloat determinant(const mat4& m);
 

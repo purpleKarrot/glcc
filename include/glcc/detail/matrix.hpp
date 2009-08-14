@@ -4,12 +4,11 @@
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
 
-#ifndef GLCC_MATH_TYPES_MATRIX_HPP
-#define GLCC_MATH_TYPES_MATRIX_HPP
+#ifndef GLCC_DETAIL_MATRIX_HPP
+#define GLCC_DETAIL_MATRIX_HPP
 
 #include <glcc/detail/vector.hpp>
 #include <glcc/detail/helper.hpp>
-#include <boost/utility/enable_if.hpp>
 
 namespace gl
 {
@@ -17,13 +16,10 @@ namespace detail
 {
 
 template<typename T, std::size_t M, std::size_t N>
-class matrix //: public boost::additive<matrix<T, M, N> , //
-// boost::multiplicative<matrix<T, M, N> , T> >
+class matrix: private boost::array<gl::detail::vector<T, M>, N>
 {
-	enum
-	{
-		Rows = M, Cols = N, Size = M * N
-	};
+	typedef typename boost::array<gl::detail::vector<T, M>, N> super;
+	typedef typename gl::detail::vector<T, M> vector_t;
 
 public:
 	matrix()
@@ -38,108 +34,95 @@ public:
 	{
 	}
 
-	matrix(const matrix& other) :
-		elems(other.elems)
-	{
-	}
+	//	matrix(const matrix& other) :
+	//		elems(other.elems)
+	//	{
+	//	}
+
+	using super::operator[];
+
+	using super::operator=;
 
 	/// Matrizenaddition
 	matrix& operator+=(const matrix& other)
 	{
-		detail::loop_op<Size>::eval(detail::plus_assign(), elems, other.elems);
+		loop_op<N>::eval(plus_assign(), super::begin(), other.begin());
 		return *this;
 	}
 
 	/// Matrizensubtraktion
 	matrix& operator-=(const matrix& other)
 	{
-		detail::loop_op<Size>::eval(detail::minus_assign(), elems, other.elems);
+		loop_op<N>::eval(minus_assign(), super::begin(), other.begin());
 		return *this;
 	}
 
 	/// Matrizenmultiplikation
-	template<std::size_t S>
-	typename boost::enable_if_c<M == S && N == S, matrix&>::type //
-	operator*=(const matrix<T, S, S>& other)
-	{
-		//		Matrix<T> temp(*this);
-		//		set_product(temp, other);
-		return *this;
-	}
+	//	template<std::size_t S>
+	//	typename boost::enable_if_c<M == S && N == S, matrix&>::type //
+	//	operator*=(const matrix<T, S, S>& other)
+	//	{
+	//		//		Matrix<T> temp(*this);
+	//		//		set_product(temp, other);
+	//		return *this;
+	//	}
 
 	/// Skalarmultiplikation
 	matrix& operator*=(T skalar)
 	{
-		detail::loop_op<Size>::eval(detail::multiplies_assign(), elems, skalar);
+		loop_op<M * N>::eval(multiplies_assign(), //
+		        reinterpret_cast<T*> (this), skalar);
 		return *this;
 	}
 
 	/// Skalardivision
 	matrix& operator/=(T skalar)
 	{
-		detail::loop_op<Size>::eval(detail::divides_assign(), elems, skalar);
+		loop_op<M * N>::eval(divides_assign(), //
+		        reinterpret_cast<T*> (this), skalar);
 		return *this;
 	}
 
-	typename vector<T, Rows>::type operator[](std::size_t idx) const
-	{
-		return get_col<Rows> ();
-	}
-
-	typename vector<T&, Rows>::type operator[](std::size_t idx)
-	{
-		return get_col<Rows> ();
-	}
-
-	//	boost::enable_if_c<Rows == 2, vector2_ref_t>::type //
-	//	operator[](std::size_t idx)
-	//	{
-	//		vector2_ref_t(0, 0);
-	//	}
-
-	//private:
-	T elems[Size];
-
 private:
 
-	template<std::size_t S>
-	typename boost::enable_if_c<S == 2, vector2<T> >::type //
-	get_col(std::size_t idx) const
+	friend matrix operator+(const matrix& lhs, const matrix& rhs)
 	{
+		matrix nrv(lhs);
+		nrv += rhs;
+		return nrv;
 	}
 
-	template<std::size_t S>
-	typename boost::enable_if_c<S == 3, vector3<T> >::type //
-	get_col(std::size_t idx) const
+	friend matrix operator-(const matrix& lhs, const matrix& rhs)
 	{
+		matrix nrv(lhs);
+		nrv -= rhs;
+		return nrv;
 	}
 
-	template<std::size_t S>
-	typename boost::enable_if_c<S == 4, vector4<T> >::type //
-	get_col(std::size_t idx) const
+	friend matrix operator*(const matrix& lhs, T rhs)
 	{
+		matrix nrv(lhs);
+		nrv *= rhs;
+		return nrv;
 	}
 
-	template<std::size_t S>
-	typename boost::enable_if_c<S == 2, vector2<T&> >::type //
-	get_col(std::size_t idx)
+	friend matrix operator/(const matrix& lhs, T rhs)
 	{
+		matrix nrv(lhs);
+		nrv /= rhs;
+		return nrv;
 	}
 
-	template<std::size_t S>
-	typename boost::enable_if_c<S == 3, vector3<T&> >::type //
-	get_col(std::size_t idx)
+	friend std::ostream& operator<<(std::ostream&os, const matrix& rhs)
 	{
-	}
-
-	template<std::size_t S>
-	typename boost::enable_if_c<S == 4, vector4<T&> >::type //
-	get_col(std::size_t idx)
-	{
+		os << "[\n";
+		std::copy(rhs.begin(), rhs.end(), //
+		        std::ostream_iterator<vector_t>(os, "\n"));
+		return os << "]";
 	}
 };
 
 } // namespace detail
 } // namespace gl
 
-#endif /* GLCC_MATH_TYPES_MATRIX_HPP */
+#endif /* GLCC_DETAIL_MATRIX_HPP */
