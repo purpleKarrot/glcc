@@ -24,7 +24,7 @@ inline T get(GLenum pname)
 }
 
 template<>
-inline bool get<int64_t> (GLenum pname)
+inline int64_t get<int64_t> (GLenum pname)
 {
 	GLint64 param;
 	glGetInteger64v(pname, &param);

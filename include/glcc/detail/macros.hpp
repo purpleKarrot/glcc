@@ -16,7 +16,7 @@
 #define GLCC_BASE(BASE, GLTS, GLTP) \
 	public: \
 	GLuint name; \
-	BASE(GLuint n) : name(n) { assert(name == 0 || glIs##GLTS(name)); } \
+	BASE(GLuint n) : name(n) { /*assert(name == 0 || glIs##GLTS(name));*/ } \
 	protected: \
 	BASE() : name(0) {} \
 	static void gen(GLsizei n, GLuint* p) { glGen##GLTP(n, p); } \

@@ -8,6 +8,7 @@
 #define GLCC_SCOPED_BIND_BASE_HPP
 
 #include <boost/noncopyable.hpp>
+#include <glcc/detail/get.hpp>
 
 namespace gl
 {

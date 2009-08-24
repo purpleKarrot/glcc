@@ -26,7 +26,8 @@ GLCC_BASE(texture_base, Texture, Textures)
 template<GLenum Target, GLenum Binding>
 struct texture_target
 {
-	const static GLenum target_type = Target;
+	BOOST_STATIC_CONSTANT(GLenum, target_type = Target);
+
 	typedef texture_base value_type;
 	typedef scoped_bind_base<texture_target, Binding> scoped_bind;
 
