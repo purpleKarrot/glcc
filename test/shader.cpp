@@ -8,12 +8,9 @@
 #include <glcc/matrix.hpp>
 #include <glcc/program.hpp>
 
-GLCC_PROGRAM(shader,(gl::mat3x4, desaturate))
-
-shader myshader;
-
 int main(int, char**)
 {
-	myshader.desaturate(3);
+	GLCC_PROGRAM(, (gl::mat3x4, desaturate)) myshader;
 
+	myshader.desaturate(3);
 }

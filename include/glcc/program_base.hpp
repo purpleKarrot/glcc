@@ -9,7 +9,6 @@
 
 #include <string>
 #include <glcc/shader.hpp>
-#include <glcc/uniform.hpp>
 
 namespace gl
 {
@@ -81,12 +80,6 @@ public:
 	void use()
 	{
 		glUseProgram(name);
-	}
-
-	template<typename T>
-	gl::uniform<T> uniform(const char* const name)
-	{
-		return gl::uniform<T>(this->name, name);
 	}
 
 	//private:

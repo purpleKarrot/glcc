@@ -42,12 +42,12 @@
 			return true;                                                        \
 		}                                                                       \
 		BOOST_PP_SEQ_FOR_EACH(GLCC_PROGRAM_SETGET,, UNIFORMS)                   \
-    };
+    }
 
 #define GLCC_PROGRAM_LOC(r, data, elem) GLuint GLCC_uniform_loc(elem);
 
-#define GLCC_PROGRAM_LOCATE(r, data, elem) \
-	GLCC_uniform_loc(elem) = \
+#define GLCC_PROGRAM_LOCATE(r, data, elem)                                      \
+	GLCC_uniform_loc(elem) =                                                    \
 	glGetUniformLocation(this->name, GLCC_uniform_str(elem));
 
 #define GLCC_PROGRAM_SETGET(r, data, elem)                                      \

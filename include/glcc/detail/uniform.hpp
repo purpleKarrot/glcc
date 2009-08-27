@@ -16,6 +16,7 @@ using boost::array;
 
 #include <glcc/detail/vector.hpp>
 #include <glcc/detail/matrix.hpp>
+#include <boost/preprocessor/repetition/repeat.hpp>
 
 #define GLCC_uniform(T, A)                                                     \
 	inline void uniform(GLuint location, T value)                              \

@@ -13,4 +13,4 @@ set(LIBRARIES
 
 add_executable(vector vector.cpp)
 add_executable(matrix matrix.cpp)
-#add_executable(shader shader.cpp)
+add_executable(shader shader.cpp)
