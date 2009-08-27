@@ -27,7 +27,6 @@ template<GLenum Target, GLenum Binding>
 struct texture_target
 {
 	BOOST_STATIC_CONSTANT(GLenum, target_type = Target);
-
 	typedef texture_base value_type;
 	typedef scoped_bind_base<texture_target, Binding> scoped_bind;
 

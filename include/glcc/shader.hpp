@@ -41,11 +41,16 @@ public:
 		return static_cast<shader_type> (t);
 	}
 
-	void source(const std::string& s)
+	void source(const char* string)
 	{
-		const GLchar* string = s.c_str();
-		const GLint length = s.length();
-		glShaderSource(name, 1, &string, &length);
+		glShaderSource(name, 1, &string, 0);
+	}
+
+	void source(const std::string& string)
+	{
+		const GLchar* s = string.c_str();
+		const GLint l = string.length();
+		glShaderSource(name, 1, &s, &l);
 	}
 
 	std::string source() const

@@ -16,5 +16,7 @@ int main(int argc, char* argv[])
 
 	//vec.yx()[0] = 0.5f;
 
+	std::cout << gl::math::normalize(v) << std::endl;
+
 	std::cout << v.yyzx() << std::endl;
 }

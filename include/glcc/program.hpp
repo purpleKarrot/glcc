@@ -7,76 +7,59 @@
 #ifndef GLCC_PROGRAM_HPP
 #define GLCC_PROGRAM_HPP
 
-#include <string>
-#include <glcc/shader.hpp>
-#include <glcc/uniform.hpp>
+#include <glcc/program_base.hpp>
+#include <glcc/detail/uniform.hpp>
+#include <glcc/detail/get_uniform.hpp>
 
-namespace gl
-{
+#include <boost/preprocessor/cat.hpp>
+#include <boost/preprocessor/seq/for_each.hpp>
+#include <boost/preprocessor/tuple/elem.hpp>
+#include <boost/preprocessor/stringize.hpp>
 
-class program
-{
-public:
-	program() :
-		name(glCreateProgram())
-	{
+#define GLCC_PROGRAM(NAME, UNIFORMS)                                            \
+    GLCC_PROGRAM_I(NAME, BOOST_PP_CAT(GLCC_PROGRAM_X UNIFORMS, 0))
+
+#define GLCC_PROGRAM_X(x, y) ((x, y)) GLCC_PROGRAM_Y
+#define GLCC_PROGRAM_Y(x, y) ((x, y)) GLCC_PROGRAM_X
+#define GLCC_PROGRAM_X0
+#define GLCC_PROGRAM_Y0
+
+#define GLCC_uniform_type(tuple) BOOST_PP_TUPLE_ELEM(2, 0, tuple)
+#define GLCC_uniform_name(tuple) BOOST_PP_TUPLE_ELEM(2, 1, tuple)
+#define GLCC_uniform_str(tuple) BOOST_PP_STRINGIZE(GLCC_uniform_name(tuple))
+#define GLCC_uniform_loc(tuple) BOOST_PP_CAT(GLCC_uniform_name(tuple), _loc)
+
+#define GLCC_PROGRAM_I(NAME, UNIFORMS)                                          \
+    class NAME : public gl::program                                             \
+    {                                                                           \
+		BOOST_PP_SEQ_FOR_EACH(GLCC_PROGRAM_LOC,, UNIFORMS)                      \
+    public:                                                                     \
+		bool link()                                                             \
+		{                                                                       \
+			if(!gl::program::link())                                            \
+				return false;                                                   \
+			BOOST_PP_SEQ_FOR_EACH(GLCC_PROGRAM_LOCATE,, UNIFORMS)               \
+			return true;                                                        \
+		}                                                                       \
+		BOOST_PP_SEQ_FOR_EACH(GLCC_PROGRAM_SETGET,, UNIFORMS)                   \
+    };
+
+#define GLCC_PROGRAM_LOC(r, data, elem) GLuint GLCC_uniform_loc(elem);
+
+#define GLCC_PROGRAM_LOCATE(r, data, elem) \
+	GLCC_uniform_loc(elem) = \
+	glGetUniformLocation(this->name, GLCC_uniform_str(elem));
+
+#define GLCC_PROGRAM_SETGET(r, data, elem)                                      \
+	GLCC_uniform_type(elem) GLCC_uniform_name(elem)()                           \
+	{                                                                           \
+		GLCC_uniform_type(elem) value;                                          \
+		gl::detail::get_uniform(name, GLCC_uniform_loc(elem), value);           \
+		return value;                                                           \
+	}                                                                           \
+	void GLCC_uniform_name(elem)(GLCC_uniform_type(elem) const& value)          \
+	{                                                                           \
+		gl::detail::uniform(GLCC_uniform_loc(elem), value);                     \
 	}
-
-	~program()
-	{
-		glDeleteProgram(name);
-	}
-
-	void attach(gl::shader shader)
-	{
-		glAttachShader(name, shader.name);
-	}
-
-	void detach(gl::shader shader)
-	{
-		glDetachShader(name, shader.name);
-	}
-
-	bool validate()
-	{
-		GLint success;
-		glValidateProgram(name);
-		glGetProgramiv(name, GL_VALIDATE_STATUS, &success);
-		return success == GL_TRUE;
-	}
-
-	bool link()
-	{
-		GLint success;
-		glLinkProgram(name);
-		glGetProgramiv(name, GL_LINK_STATUS, &success);
-		return success == GL_TRUE;
-	}
-
-	std::string info_log()
-	{
-		GLint length;
-		glGetProgramiv(name, GL_INFO_LOG_LENGTH, &length);
-		std::string buffer(length, 0);
-		glGetProgramInfoLog(name, length, 0, &buffer[0]);
-		return buffer;
-	}
-
-	void use()
-	{
-		glUseProgram(name);
-	}
-
-	template<typename T>
-	gl::uniform<T> uniform(const char* const name)
-	{
-		return gl::uniform<T>(this->name, name);
-	}
-
-	//private:
-	GLuint name;
-};
-
-} // namespace gl
 
 #endif /* GLCC_PROGRAM_HPP */

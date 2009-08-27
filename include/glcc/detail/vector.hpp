@@ -26,9 +26,21 @@ public:
 
 	using super::operator=;
 
+	vector& operator+=(T skalar)
+	{
+		loop_op<N>::eval(plus_assign(), super::begin(), skalar);
+		return *this;
+	}
+
 	vector& operator+=(const vector& other)
 	{
 		loop_op<N>::eval(plus_assign(), super::begin(), other.begin());
+		return *this;
+	}
+
+	vector& operator-=(T skalar)
+	{
+		loop_op<N>::eval(minus_assign(), super::begin(), skalar);
 		return *this;
 	}
 
@@ -44,18 +56,44 @@ public:
 		return *this;
 	}
 
+	vector& operator*=(const vector& other)
+	{
+		loop_op<N>::eval(multiplies_assign(), super::begin(), other.begin());
+		return *this;
+	}
+
 	vector& operator/=(T skalar)
 	{
 		loop_op<N>::eval(divides_assign(), super::begin(), skalar);
 		return *this;
 	}
 
+	vector& operator/=(const vector& other)
+	{
+		loop_op<N>::eval(divides_assign(), super::begin(), other.begin());
+		return *this;
+	}
+
 private:
+
+	friend vector operator+(const vector& lhs, T rhs)
+	{
+		vector nrv(lhs);
+		nrv += rhs;
+		return nrv;
+	}
 
 	friend vector operator+(const vector& lhs, const vector& rhs)
 	{
 		vector nrv(lhs);
 		nrv += rhs;
+		return nrv;
+	}
+
+	friend vector operator-(const vector& lhs, T rhs)
+	{
+		vector nrv(lhs);
+		nrv -= rhs;
 		return nrv;
 	}
 
@@ -73,7 +111,21 @@ private:
 		return nrv;
 	}
 
+	friend vector operator*(const vector& lhs, const vector& rhs)
+	{
+		vector nrv(lhs);
+		nrv *= rhs;
+		return nrv;
+	}
+
 	friend vector operator/(const vector& lhs, T rhs)
+	{
+		vector nrv(lhs);
+		nrv /= rhs;
+		return nrv;
+	}
+
+	friend vector operator/(const vector& lhs, const vector& rhs)
 	{
 		vector nrv(lhs);
 		nrv /= rhs;

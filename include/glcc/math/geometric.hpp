@@ -8,9 +8,9 @@
 #define GLCC_MATH_GEOMETRIC_HPP
 
 #include <glcc/detail/vector.hpp>
-#include <glcc/math/detail/length2.hpp>
-#include <glcc/math/detail/length3.hpp>
-#include <glcc/math/detail/length4.hpp>
+#include <glcc/math/detail/vector_param.hpp>
+#include <boost/utility/enable_if.hpp>
+#include <cmath>
 
 namespace gl
 {
@@ -27,47 +27,34 @@ namespace math
 
 //! Returns the length of vector x.
 /** i.e. \f$ \sqrt{x[0]^2+x[1]^2+\ldots} \f$ */
-template<typename T>
-inline gl::math::detail::length2 length(const gl::detail::vector2<T>& x)
+template<typename T, std::size_t N>
+inline typename boost::enable_if_c<N == 2, float>::type //
+length(const gl::detail::vector<T, N>& x)
 {
-	return gl::math::detail::length2(x.x(), x.y());
+	return std::sqrt(x[0] * x[0] + x[1] * x[1]);
 }
 
-template<typename T>
-inline gl::math::detail::length3 length(const gl::detail::vector3<T>& x)
+template<typename T, std::size_t N>
+inline typename boost::enable_if_c<N == 3, float>::type //
+length(const gl::detail::vector<T, N>& x)
 {
-	return gl::math::detail::length3(x.x(), x.y(), x.z());
+	return std::sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]);
 }
 
-template<typename T>
-inline gl::math::detail::length4 length(const gl::detail::vector4<T>& x)
+template<typename T, std::size_t N>
+inline typename boost::enable_if_c<N == 4, float>::type //
+length(const gl::detail::vector<T, N>& x)
 {
-	return gl::math::detail::length4(x.x(), x.y(), x.z(), x.w());
+	return std::sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2] + x[3] * x[3]);
 }
 
 //! Returns the distance between p0 and p1.
 /** i.e. length(p0 - p1) */
-template<typename T>
-inline gl::math::detail::length2 distance(const gl::detail::vector2<T>& p0,
-        const gl::detail::vector2<T>& p1)
+template<typename T, std::size_t N>
+inline float distance(const gl::detail::vector<T, N>& p0,
+        const gl::detail::vector<T, N>& p1)
 {
-	return gl::math::detail::length2(p0.x() - p1.x(), p0.y() - p1.y());
-}
-
-template<typename T>
-inline gl::math::detail::length3 distance(const gl::detail::vector3<T>& p0,
-        const gl::detail::vector3<T>& p1)
-{
-	return gl::math::detail::length3(p0.x() - p1.x(), p0.y() - p1.y(), p0.z()
-	        - p1.z());
-}
-
-template<typename T>
-inline gl::math::detail::length4 distance(const gl::detail::vector4<T>& p0,
-        const gl::detail::vector4<T>& p1)
-{
-	return gl::math::detail::length4(p0.x() - p1.x(), p0.y() - p1.y(), //
-	        p0.z() - p1.z(), p0.w() - p1.w());
+	return length(p0 - p1);
 }
 
 //! Returns the dot product of a and b.
@@ -112,8 +99,8 @@ inline vec3 cross(vec3 a, vec3 b)
 
 //! Returns a vector in the same direction as x but with a length of 1.
 template<typename T, std::size_t N>
-inline typename gl::detail::vector<T, N>::type normalize(
-        const typename gl::detail::vector<T, N>::type& x)
+inline typename gl::math::detail::vector_type<T, N>::type //
+normalize(const gl::detail::vector<T, N>& x)
 {
 	return x / length(x);
 }

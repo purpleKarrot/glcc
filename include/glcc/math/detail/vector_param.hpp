@@ -19,6 +19,29 @@ namespace detail
 {
 
 template<typename T, std::size_t N>
+struct vector_type
+{
+};
+
+template<typename T>
+struct vector_type<T, 2>
+{
+	typedef typename gl::detail::vector2<T> type;
+};
+
+template<typename T>
+struct vector_type<T, 3>
+{
+	typedef typename gl::detail::vector3<T> type;
+};
+
+template<typename T>
+struct vector_type<T, 4>
+{
+	typedef typename gl::detail::vector4<T> type;
+};
+
+template<typename T, std::size_t N>
 struct vector_param
 {
 };
