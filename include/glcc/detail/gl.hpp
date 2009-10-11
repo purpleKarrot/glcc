@@ -19,11 +19,25 @@
 
 #ifdef WIN32
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+//#define WIN32_LEAN_AND_MEAN
+//#include <windows.h>
+#define __glext_h_
 #include <GL/gl.h>
+#undef  __glext_h_
+
 #include <glcc/detail/ext/glext.h>
-#include <glcc/detail/ext/wglext.h>
+
+#define GLCC_PROC(type, name) extern type name;
+#include <glcc/proc/gl12.hpp>
+#include <glcc/proc/gl13.hpp>
+#include <glcc/proc/gl14.hpp>
+#include <glcc/proc/gl15.hpp>
+#include <glcc/proc/gl20.hpp>
+#include <glcc/proc/gl21.hpp>
+#include <glcc/proc/gl30.hpp>
+#include <glcc/proc/gl31.hpp>
+#include <glcc/proc/glarb.hpp>
+#undef GLCC_PROC
 
 #ifdef _MSC_VER
 #pragma comment(lib, "OpenGL32.lib")
@@ -39,14 +53,14 @@
 #define GL_GLEXT_LEGACY 1
 #include <GL/gl.h>
 
-#define GLX_GLXEXT_LEGACY 1
-#include <GL/glx.h>
+//#define GLX_GLXEXT_LEGACY 1
+//#include <GL/glx.h>
 
 #define GL_GLEXT_PROTOTYPES 1
 #include <glcc/detail/ext/glext.h>
 
-#define GLX_GLXEXT_PROTOTYPES 1
-#include <glcc/detail/ext/glxext.h>
+//#define GLX_GLXEXT_PROTOTYPES 1
+//#include <glcc/detail/ext/glxext.h>
 
 #endif
 

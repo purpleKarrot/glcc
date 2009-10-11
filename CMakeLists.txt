@@ -10,27 +10,27 @@ project(glcc)
 set(CMAKE_BUILD_TYPE "Debug")
 #add_definitions(-std=c++0x)
 
-find_package(Boost 1.37.0 REQUIRED
+find_package(Boost 1.38.0
   COMPONENTS filesystem system program_options)
 
 ##############################################################
 
-set(BUILD_QUICKBOOK "ON")
-add_executable(quickbook
-  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/quickbook.cpp
-  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/actions.cpp
-  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/actions_class.cpp
-  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/utils.cpp
-  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/post_process.cpp
-  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/collector.cpp
-  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/template_stack.cpp
-  )
-target_link_libraries(quickbook ${Boost_LIBRARIES})
+#set(BUILD_QUICKBOOK "ON")
+#add_executable(quickbook
+#  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/quickbook.cpp
+#  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/actions.cpp
+#  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/actions_class.cpp
+#  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/utils.cpp
+#  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/post_process.cpp
+#  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/collector.cpp
+#  ${CMAKE_SOURCE_DIR}/tools/quickbook/detail/template_stack.cpp
+#  )
+#target_link_libraries(quickbook ${Boost_LIBRARIES})
 
 ##############################################################
 
-include(tools/BoostDocs.cmake)
-include(tools/BoostUtils.cmake)
+#include(tools/BoostDocs.cmake)
+#include(tools/BoostUtils.cmake)
 
 find_package(OpenGL REQUIRED)
 
@@ -39,5 +39,10 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   )
 
-add_subdirectory(doc)
+#if(CMAKE_HOST_WIN32)
+  add_library(glcc src/proc.cpp)
+#endif(CMAKE_HOST_WIN32)
+
+#add_subdirectory(doc)
 add_subdirectory(test)
+
