@@ -17,36 +17,14 @@ namespace detail
 
 struct error_category: boost::system::error_category
 {
-	const char* name() const
-	{
-		return "OpenGL";
-	}
+	const char* name() const;
 
-	std::string message(int value) const
-	{
-		if (value == GL_NO_ERROR)
-			return "No error";
-		if (value == GL_INVALID_ENUM)
-			return "Enum argument out of range";
-		if (value == GL_INVALID_VALUE)
-			return "Numeric argument out of range";
-		if (value == GL_INVALID_OPERATION)
-			return "Operation illegal in current state";
-		if (value == GL_INVALID_FRAMEBUFFER_OPERATION)
-			return "Framebuffer object is not complete";
-		if (value == GL_OUT_OF_MEMORY)
-			return "Not enough memory left to execute command";
-		return "Unknown error";
-	}
+	std::string message(int value) const;
 };
 
 } // namespace detail
 
-boost::system::error_code error()
-{
-	static gl::detail::error_category instance;
-	return boost::system::error_code(glGetError(), instance);
-}
+boost::system::error_code error();
 
 } // namespace gl
 

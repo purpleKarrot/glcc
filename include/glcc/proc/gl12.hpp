@@ -8,10 +8,61 @@
 # error GLCC_PROC must be defined before including this file!
 #endif
 
-// Version 1.2
-GLCC_PROC(PFNGLBLENDCOLORPROC, glBlendColor)
-GLCC_PROC(PFNGLBLENDEQUATIONPROC, glBlendEquation)
-GLCC_PROC(PFNGLDRAWRANGEELEMENTSPROC, glDrawRangeElements)
-GLCC_PROC(PFNGLTEXIMAGE3DPROC, glTexImage3D)
-GLCC_PROC(PFNGLTEXSUBIMAGE3DPROC, glTexSubImage3D)
-GLCC_PROC(PFNGLCOPYTEXSUBIMAGE3DPROC, glCopyTexSubImage3D)
+GLCC_PROC(PFNGLBLENDCOLORPROC, glBlendColor,
+		((GLclampf, red))
+		((GLclampf, green))
+		((GLclampf, blue))
+		((GLclampf, alpha))
+)
+
+GLCC_PROC(PFNGLBLENDEQUATIONPROC, glBlendEquation,
+		((GLenum, mode))
+)
+
+GLCC_PROC(PFNGLDRAWRANGEELEMENTSPROC, glDrawRangeElements,
+		((GLenum, mode))
+		((GLuint, start))
+		((GLuint, end))
+		((GLsizei, count))
+		((GLenum, type))
+		((const GLvoid*, indices))
+)
+
+GLCC_PROC(PFNGLTEXIMAGE3DPROC, glTexImage3D,
+		((GLenum, target))
+		((GLint, level))
+		((GLint, internalformat))
+		((GLsizei, width))
+		((GLsizei, height))
+		((GLsizei, depth))
+		((GLint, border))
+		((GLenum, format))
+		((GLenum, type))
+		((const GLvoid*, pixels))
+)
+
+GLCC_PROC(PFNGLTEXSUBIMAGE3DPROC, glTexSubImage3D,
+		((GLenum, target))
+		((GLint, level))
+		((GLint, xoffset))
+		((GLint, yoffset))
+		((GLint, zoffset))
+		((GLsizei, width))
+		((GLsizei, height))
+		((GLsizei, depth))
+		((GLenum, format))
+		((GLenum, type))
+		((const GLvoid*, pixels))
+)
+
+GLCC_PROC(PFNGLCOPYTEXSUBIMAGE3DPROC, glCopyTexSubImage3D,
+		((GLenum, target))
+		((GLint, level))
+		((GLint, xoffset))
+		((GLint, yoffset))
+		((GLint, zoffset))
+		((GLint, x))
+		((GLint, y))
+		((GLsizei, width))
+		((GLsizei, height))
+)

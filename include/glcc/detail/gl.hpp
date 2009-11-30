@@ -19,15 +19,15 @@
 
 #ifdef WIN32
 
-//#define WIN32_LEAN_AND_MEAN
-//#include <windows.h>
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 #define __glext_h_
 #include <GL/gl.h>
 #undef  __glext_h_
 
 #include <glcc/detail/ext/glext.h>
 
-#define GLCC_PROC(type, name) extern type name;
+#define GLCC_PROC(type, name, arg) extern type name;
 #include <glcc/proc/gl12.hpp>
 #include <glcc/proc/gl13.hpp>
 #include <glcc/proc/gl14.hpp>
@@ -36,7 +36,7 @@
 #include <glcc/proc/gl21.hpp>
 #include <glcc/proc/gl30.hpp>
 #include <glcc/proc/gl31.hpp>
-#include <glcc/proc/glarb.hpp>
+#include <glcc/proc/gl32.hpp>
 #undef GLCC_PROC
 
 #ifdef _MSC_VER

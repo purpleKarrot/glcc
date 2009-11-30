@@ -10,7 +10,11 @@ project(glcc)
 set(CMAKE_BUILD_TYPE "Debug")
 #add_definitions(-std=c++0x)
 
-find_package(Boost 1.38.0
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake)
+
+set(Boost_USE_STATIC_LIBS   ON)
+set(Boost_USE_MULTITHREADED ON)
+find_package(Boost 1.38.0 REQUIRED
   COMPONENTS filesystem system program_options)
 
 ##############################################################
@@ -32,16 +36,20 @@ find_package(Boost 1.38.0
 #include(tools/BoostDocs.cmake)
 #include(tools/BoostUtils.cmake)
 
+set(OPENCL_ROOT $ENV{ATISTREAMSDKROOT})
+find_package(OpenCL REQUIRED)
 find_package(OpenGL REQUIRED)
 
 include_directories(
   include
   ${Boost_INCLUDE_DIRS}
+  ${OPENCL_INCLUDE_DIR}
   )
 
-#if(CMAKE_HOST_WIN32)
-  add_library(glcc src/proc.cpp)
-#endif(CMAKE_HOST_WIN32)
+add_library(glcc
+  src/error.cpp
+  src/link.cpp
+  )
 
 #add_subdirectory(doc)
 add_subdirectory(test)

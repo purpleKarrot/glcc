@@ -8,7 +8,6 @@
 #define GLCC_DETAIL_VECTOR_2_HPP
 
 #include <glcc/detail/vector.hpp>
-#include <glcc/detail/vector_element.hpp>
 
 namespace gl
 {
@@ -41,40 +40,6 @@ public:
 		x() = other[0];
 		y() = other[1];
 	}
-
-	GLCC_VECTOR_ELEMENT(x, 0)
-	GLCC_VECTOR_ELEMENT(y, 1)
-
-	GLCC_SWIZZLE_2(x, x)
-	GLCC_SWIZZLE_2(x, y)
-	GLCC_SWIZZLE_2(y, x)
-	GLCC_SWIZZLE_2(y, y)
-
-	GLCC_SWIZZLE_3(x, x, x)
-	GLCC_SWIZZLE_3(x, x, y)
-	GLCC_SWIZZLE_3(x, y, x)
-	GLCC_SWIZZLE_3(x, y, y)
-	GLCC_SWIZZLE_3(y, x, x)
-	GLCC_SWIZZLE_3(y, x, y)
-	GLCC_SWIZZLE_3(y, y, x)
-	GLCC_SWIZZLE_3(y, y, y)
-
-	GLCC_SWIZZLE_4(x, x, x, x)
-	GLCC_SWIZZLE_4(x, x, x, y)
-	GLCC_SWIZZLE_4(x, x, y, x)
-	GLCC_SWIZZLE_4(x, x, y, y)
-	GLCC_SWIZZLE_4(x, y, x, x)
-	GLCC_SWIZZLE_4(x, y, x, y)
-	GLCC_SWIZZLE_4(x, y, y, x)
-	GLCC_SWIZZLE_4(x, y, y, y)
-	GLCC_SWIZZLE_4(y, x, x, x)
-	GLCC_SWIZZLE_4(y, x, x, y)
-	GLCC_SWIZZLE_4(y, x, y, x)
-	GLCC_SWIZZLE_4(y, x, y, y)
-	GLCC_SWIZZLE_4(y, y, x, x)
-	GLCC_SWIZZLE_4(y, y, x, y)
-	GLCC_SWIZZLE_4(y, y, y, x)
-	GLCC_SWIZZLE_4(y, y, y, y)
 };
 
 } // namespace detail

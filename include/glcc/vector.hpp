@@ -8,48 +8,46 @@
 #define GLCC_VECTOR_HPP
 
 #include <glcc/detail/gl.hpp>
-#include <glcc/detail/vector2.hpp>
-#include <glcc/detail/vector3.hpp>
-#include <glcc/detail/vector4.hpp>
+#include <boost/la/vec.hpp>
 
 namespace gl
 {
 
 //! a two component floating-point vector
-typedef gl::detail::vector2<GLfloat> vec2;
+typedef boost::la::vec<GLfloat, 2> vec2;
 
 //! a three component floating-point vector
-typedef gl::detail::vector3<GLfloat> vec3;
+typedef boost::la::vec<GLfloat, 3> vec3;
 
 //! a four component floating-point vector
-typedef gl::detail::vector4<GLfloat> vec4;
+typedef boost::la::vec<GLfloat, 4> vec4;
 
 //! a two component Boolean vector
-typedef gl::detail::vector2<GLboolean> bvec2;
+typedef boost::la::vec<GLboolean, 2> bvec2;
 
 //! a three component Boolean vector
-typedef gl::detail::vector3<GLboolean> bvec3;
+typedef boost::la::vec<GLboolean, 3> bvec3;
 
 //! a four component Boolean vector
-typedef gl::detail::vector4<GLboolean> bvec4;
+typedef boost::la::vec<GLboolean, 4> bvec4;
 
 //! a two component signed integer vector
-typedef gl::detail::vector2<GLint> ivec2;
+typedef boost::la::vec<GLint, 2> ivec2;
 
 //! a three component signed integer vector
-typedef gl::detail::vector3<GLint> ivec3;
+typedef boost::la::vec<GLint, 3> ivec3;
 
 //! a four component signed integer vector
-typedef gl::detail::vector4<GLint> ivec4;
+typedef boost::la::vec<GLint, 4> ivec4;
 
 //! a two component unsigned integer vector
-typedef gl::detail::vector2<GLuint> uvec2;
+typedef boost::la::vec<GLuint, 2> uvec2;
 
 //! a three component unsigned integer vector
-typedef gl::detail::vector3<GLuint> uvec3;
+typedef boost::la::vec<GLuint, 3> uvec3;
 
 //! a four component unsigned integer vector
-typedef gl::detail::vector4<GLuint> uvec4;
+typedef boost::la::vec<GLuint, 4> uvec4;
 
 } // namespace gl
 
