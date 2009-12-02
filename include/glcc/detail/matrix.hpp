@@ -7,20 +7,18 @@
 #ifndef GLCC_DETAIL_MATRIX_HPP
 #define GLCC_DETAIL_MATRIX_HPP
 
-#include <glcc/detail/vector.hpp>
-#include <glcc/detail/helper.hpp>
+#include <glcc/detail/gl.hpp>
+#include <boost/la/mat_traits.hpp>
+#include <boost/la/matrix_assign.hpp>
 
 namespace gl
 {
 namespace detail
 {
 
-template<typename T, std::size_t M, std::size_t N>
-class matrix: private boost::array<gl::detail::vector<T, M>, N>
+template<std::size_t Cols, std::size_t Rows>
+class matrix
 {
-	typedef typename boost::array<gl::detail::vector<T, M>, N> super;
-	typedef typename gl::detail::vector<T, M> vector_t;
-
 public:
 	matrix()
 	{
@@ -30,99 +28,79 @@ public:
 	{
 	}
 
-	matrix(T a)
-	{
-	}
-
-	//	matrix(const matrix& other) :
-	//		elems(other.elems)
-	//	{
-	//	}
-
-	using super::operator[];
-
-	using super::operator=;
-
-	/// Matrizenaddition
-	matrix& operator+=(const matrix& other)
-	{
-		loop_op<N>::eval(plus_assign(), super::begin(), other.begin());
-		return *this;
-	}
-
-	/// Matrizensubtraktion
-	matrix& operator-=(const matrix& other)
-	{
-		loop_op<N>::eval(minus_assign(), super::begin(), other.begin());
-		return *this;
-	}
-
-	/// Matrizenmultiplikation
-	//	template<std::size_t S>
-	//	typename boost::enable_if_c<M == S && N == S, matrix&>::type //
-	//	operator*=(const matrix<T, S, S>& other)
-	//	{
-	//		//		Matrix<T> temp(*this);
-	//		//		set_product(temp, other);
-	//		return *this;
-	//	}
-
-	/// Skalarmultiplikation
-	matrix& operator*=(T skalar)
-	{
-		loop_op<M * N>::eval(multiplies_assign(), //
-		        reinterpret_cast<T*> (this), skalar);
-		return *this;
-	}
-
-	/// Skalardivision
-	matrix& operator/=(T skalar)
-	{
-		loop_op<M * N>::eval(divides_assign(), //
-		        reinterpret_cast<T*> (this), skalar);
-		return *this;
-	}
-
 private:
 
-	friend matrix operator+(const matrix& lhs, const matrix& rhs)
-	{
-		matrix nrv(lhs);
-		nrv += rhs;
-		return nrv;
-	}
-
-	friend matrix operator-(const matrix& lhs, const matrix& rhs)
-	{
-		matrix nrv(lhs);
-		nrv -= rhs;
-		return nrv;
-	}
-
-	friend matrix operator*(const matrix& lhs, T rhs)
-	{
-		matrix nrv(lhs);
-		nrv *= rhs;
-		return nrv;
-	}
-
-	friend matrix operator/(const matrix& lhs, T rhs)
-	{
-		matrix nrv(lhs);
-		nrv /= rhs;
-		return nrv;
-	}
-
-	friend std::ostream& operator<<(std::ostream&os, const matrix& rhs)
-	{
-		os << "[\n";
-		std::copy(rhs.begin(), rhs.end(), //
-		        std::ostream_iterator<vector_t>(os, "\n"));
-		return os << "]";
-	}
+public:
+	GLfloat data[Cols][Rows];
 };
 
 } // namespace detail
 } // namespace gl
+
+/*
+ * OpenGL matrices are 16-value arrays with base vectors laid out
+ * contiguously in memory. The translation components occupy the
+ * 13th, 14th, and 15th elements of the 16-element matrix, where
+ * indices are numbered from 1 to 16.
+ */
+
+namespace boost
+{
+namespace la
+{
+
+template<std::size_t Cols, std::size_t Rows>
+struct matrix_traits<gl::detail::matrix<Cols, Rows> >
+{
+	typedef gl::detail::matrix<Cols, Rows> this_matrix;
+	typedef GLfloat scalar_type;
+	static std::size_t const cols = Cols;
+	static std::size_t const rows = Rows;
+
+	template<int Row, int Col>
+	static BOOST_LA_INLINE_CRITICAL
+	scalar_type r(this_matrix const& x)
+	{
+		BOOST_STATIC_ASSERT(Row>=0);
+		BOOST_STATIC_ASSERT(Row<Rows);
+		BOOST_STATIC_ASSERT(Col>=0);
+		BOOST_STATIC_ASSERT(Col<Cols);
+		return x.data[Col][Row];
+	}
+
+	template<int Row, int Col>
+	static BOOST_LA_INLINE_CRITICAL
+	scalar_type& w(this_matrix& x)
+	{
+		BOOST_STATIC_ASSERT(Row>=0);
+		BOOST_STATIC_ASSERT(Row<Rows);
+		BOOST_STATIC_ASSERT(Col>=0);
+		BOOST_STATIC_ASSERT(Col<Cols);
+		return x.data[Col][Row];
+	}
+
+	static BOOST_LA_INLINE_CRITICAL
+	scalar_type ir(int row, int col, this_matrix const& x)
+	{
+		BOOST_ASSERT(row>=0);
+		BOOST_ASSERT(row<Rows);
+		BOOST_ASSERT(col>=0);
+		BOOST_ASSERT(col<Cols);
+		return x.data[col][row];
+	}
+
+	static BOOST_LA_INLINE_CRITICAL
+	scalar_type& iw(int row, int col, this_matrix& x)
+	{
+		BOOST_ASSERT(row>=0);
+		BOOST_ASSERT(row<Rows);
+		BOOST_ASSERT(col>=0);
+		BOOST_ASSERT(col<Cols);
+		return x.data[col][row];
+	}
+};
+
+} // namespace la
+} // namespace boost
 
 #endif /* GLCC_DETAIL_MATRIX_HPP */

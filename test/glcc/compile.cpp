@@ -5,9 +5,12 @@
  *      Author: daniel
  */
 
+#include <boost/test/unit_test.hpp>
 #include <glcc.hpp>
 
-int main()
+BOOST_AUTO_TEST_SUITE(compile)
+
+BOOST_AUTO_TEST_CASE(main)
 {
 	gl::texture texture;
 	gl::set<gl::texture> textures(5);
@@ -27,3 +30,4 @@ int main()
 	gl::set<gl::framebuffer> framebuffers(5);
 }
 
+BOOST_AUTO_TEST_SUITE_END()

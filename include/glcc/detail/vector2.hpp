@@ -15,32 +15,50 @@ namespace detail
 {
 
 template<typename T>
-class vector2: public gl::detail::vector<T, 2>
+class vector<T, 2>
 {
 public:
-	vector2()
+	vector()
 	{
 	}
 
-	vector2(T val)
+	vector(T val) :
+		x(val), y(val)
 	{
-		x() = val;
-		y() = val;
 	}
 
-	vector2(T x_, T y_)
+	vector(T x_, T y_) :
+		x(x_), y(y_)
 	{
-		x() = x_;
-		y() = y_;
 	}
 
 	template<typename U>
-	vector2(const vector<U, 2>& other)
+	vector(const vector<U, 2>& other) :
+		x(other.x), y(other.y)
 	{
-		x() = other[0];
-		y() = other[1];
 	}
+
+public:
+	T operator[](std::size_t i) const
+	{
+		return this->*mem_array[i];
+	}
+
+	T& operator[](std::size_t i)
+	{
+		return this->*mem_array[i];
+	}
+
+public:
+	T x, y;
+
+private:
+	static T vector<T, 2>::* const mem_array[2];
 };
+
+template<typename T>
+T vector<T, 2>::* const vector<T, 2>::mem_array[2] =
+{ &vector<T, 2>::x, &vector<T, 2>::y };
 
 } // namespace detail
 } // namespace gl

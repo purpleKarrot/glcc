@@ -44,14 +44,14 @@ using boost::array;
 
 #define GLCC_uniform_matrix_s(D)                                               \
 	inline void uniform(GLuint location,                                       \
-			const detail::matrix<GLfloat, D, D>& value)                        \
+			const detail::matrix<D, D>& value)                                 \
 	{                                                                          \
 		glUniformMatrix##D##fv(location, 1, false,                             \
-				reinterpret_cast<const GLfloat*>(&value));                     \
+				reinterpret_cast<const GLfloat*>(value.data));                 \
 	}                                                                          \
 	template<std::size_t S>                                                    \
 	inline void uniform(GLuint location,                                       \
-			const std::array<detail::matrix<GLfloat, D, D>, S>& values)        \
+			const std::array<detail::matrix<D, D>, S>& values)                 \
 	{                                                                          \
 		glUniformMatrix##D##fv(location, S, false,                             \
 				reinterpret_cast<GLfloat*> (values.data()));                   \
@@ -59,14 +59,14 @@ using boost::array;
 
 #define GLCC_uniform_matrix(M, N)                                              \
 	inline void uniform(GLuint location,                                       \
-			const detail::matrix<GLfloat, M, N>& value)                        \
+			const detail::matrix<M, N>& value)                                 \
 	{                                                                          \
 		glUniformMatrix##M##x##N##fv(location, 1, false,                       \
-				reinterpret_cast<const GLfloat*>(&value));                     \
+				reinterpret_cast<const GLfloat*>(value.data));                 \
 	}                                                                          \
 	template<std::size_t S>                                                    \
 	inline void uniform(GLuint location,                                       \
-			const std::array<detail::matrix<GLfloat, M, N>, S>& values)        \
+			const std::array<detail::matrix<M, N>, S>& values)                 \
 	{                                                                          \
 		glUniformMatrix##M##x##N##fv(location, S, false,                       \
 				reinterpret_cast<GLfloat*> (values.data()));                   \

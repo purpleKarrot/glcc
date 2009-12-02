@@ -5,23 +5,20 @@
 ##############################################################
 
 find_package(GLUT REQUIRED)
+include_directories(${GLUT_INCLUDE_DIR})
 
-set(LIBRARIES glcc
-# ${Boost_SYSTEM_LIBRARY}
+find_package(Boost 1.38.0 REQUIRED
+  COMPONENTS unit_test_framework)
+
+file(GLOB_RECURSE GLCC_TEST_SRC glcc/*.cpp)
+add_executable(glcc_test ${GLCC_TEST_SRC})
+
+target_link_libraries(glcc_test
+  ${Boost_LIBRARIES}
   ${OPENGL_LIBRARIES}
-# ${GLUT_glut_LIBRARY}
+  ${GLUT_glut_LIBRARY}
   )
 
-add_executable(vector vector.cpp)
-add_executable(matrix matrix.cpp)
-add_executable(shader shader.cpp)
-add_library(cl cl.cpp)
+#file(GLOB_RECURSE CLCC_TEST_SRC clcc/*.cpp)
+#add_test_module(clcc_test ${CLCC_TEST_SRC})
 
-target_link_libraries(vector ${LIBRARIES})
-target_link_libraries(matrix ${LIBRARIES})
-target_link_libraries(shader ${LIBRARIES})
-
-if(CMAKE_HOST_WIN32)
-  add_executable(wgl wgl)
-  target_link_libraries(wgl ${LIBRARIES})
-endif(CMAKE_HOST_WIN32)

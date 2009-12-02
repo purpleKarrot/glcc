@@ -18,68 +18,16 @@ namespace math
 namespace detail
 {
 
-template<typename T, std::size_t N>
-struct vector_type
-{
-};
-
-template<typename T>
-struct vector_type<T, 2>
-{
-	typedef typename gl::detail::vector2<T> type;
-};
-
-template<typename T>
-struct vector_type<T, 3>
-{
-	typedef typename gl::detail::vector3<T> type;
-};
-
-template<typename T>
-struct vector_type<T, 4>
-{
-	typedef typename gl::detail::vector4<T> type;
-};
-
-template<typename T, std::size_t N>
+template<typename T, std::size_t D>
 struct vector_param
 {
+	typedef typename gl::detail::vector<T, D> const& type;
 };
 
-template<typename T>
-struct vector_param<T, 2>
+template<typename T, std::size_t D>
+struct vector_param<T&, D>
 {
-	typedef const typename gl::detail::vector2<T>& type;
-};
-
-template<typename T>
-struct vector_param<T, 3>
-{
-	typedef const typename gl::detail::vector3<T>& type;
-};
-
-template<typename T>
-struct vector_param<T, 4>
-{
-	typedef const typename gl::detail::vector4<T>& type;
-};
-
-template<typename T>
-struct vector_param<T&, 2>
-{
-	typedef typename gl::detail::vector2<T>& type;
-};
-
-template<typename T>
-struct vector_param<T&, 3>
-{
-	typedef typename gl::detail::vector3<T>& type;
-};
-
-template<typename T>
-struct vector_param<T&, 4>
-{
-	typedef typename gl::detail::vector4<T>& type;
+	typedef typename gl::detail::vector<T, D>& type;
 };
 
 } // namespace detail

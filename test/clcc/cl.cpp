@@ -1,3 +1,5 @@
+#if 0
+
 #define __CL_ENABLE_EXCEPTIONS
 
 #include <clcc/cl.hpp>
@@ -43,3 +45,5 @@ int main(void)
 
 	return EXIT_SUCCESS;
 }
+
+#endif

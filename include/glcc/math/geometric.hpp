@@ -7,10 +7,12 @@
 #ifndef GLCC_MATH_GEOMETRIC_HPP
 #define GLCC_MATH_GEOMETRIC_HPP
 
-#include <glcc/detail/vector.hpp>
-#include <glcc/math/detail/vector_param.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <cmath>
+#include <glcc/detail/vector.hpp>
+#include <boost/la/vector_dot.hpp>
+#include <boost/la/vector_cross.hpp>
+#include <boost/la/vector_div_scalar.hpp>
+#include <boost/la/vector_magnitude.hpp>
 
 namespace gl
 {
@@ -27,57 +29,29 @@ namespace math
 
 //! Returns the length of vector x.
 /** i.e. \f$ \sqrt{x[0]^2+x[1]^2+\ldots} \f$ */
-template<typename T, std::size_t N>
-inline typename boost::enable_if_c<N == 2, float>::type //
-length(const gl::detail::vector<T, N>& x)
+template<typename T, std::size_t D>
+GLfloat length(gl::detail::vector<T, D> const& x)
 {
-	return std::sqrt(x[0] * x[0] + x[1] * x[1]);
-}
-
-template<typename T, std::size_t N>
-inline typename boost::enable_if_c<N == 3, float>::type //
-length(const gl::detail::vector<T, N>& x)
-{
-	return std::sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]);
-}
-
-template<typename T, std::size_t N>
-inline typename boost::enable_if_c<N == 4, float>::type //
-length(const gl::detail::vector<T, N>& x)
-{
-	return std::sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2] + x[3] * x[3]);
+	return boost::la::magnitude(x);
 }
 
 //! Returns the distance between p0 and p1.
 /** i.e. length(p0 - p1) */
-template<typename T, std::size_t N>
-inline float distance(const gl::detail::vector<T, N>& p0,
-        const gl::detail::vector<T, N>& p1)
+template<typename T, std::size_t D>
+inline GLfloat distance(gl::detail::vector<T, D> const& p0, //
+		gl::detail::vector<T, D> const& p1)
 {
+	using namespace boost::la;
 	return length(p0 - p1);
 }
 
 //! Returns the dot product of a and b.
 /** i.e. \f$ x[0]*y[0]+x[1]*y[1]+\ldots \f$ */
-template<typename T>
-inline float dot(const gl::detail::vector2<T>& a,
-        const gl::detail::vector2<T>& b)
+template<typename T, std::size_t D>
+inline float dot(const gl::detail::vector<T, D>& a, //
+		const gl::detail::vector<T, D>& b)
 {
-	return a.x() * b.x() + a.y() * b.y();
-}
-
-template<typename T>
-inline float dot(const gl::detail::vector3<T>& a,
-        const gl::detail::vector3<T>& b)
-{
-	return a.x() * b.x() + a.y() * b.y() + a.z() * b.z();
-}
-
-template<typename T>
-inline float dot(const gl::detail::vector4<T>& a,
-        const gl::detail::vector4<T>& b)
-{
-	return a.x() * b.x() + a.y() * b.y() + a.z() * b.z() + a.w() * b.w();
+	return boost::la::dot(a, b);
 }
 
 //! Returns the cross product of a and b.
@@ -92,25 +66,24 @@ inline float dot(const gl::detail::vector4<T>& a,
  */
 inline vec3 cross(vec3 a, vec3 b)
 {
-	return vec3(a.y() * b.z() - b.y() * a.z(), //
-	        a.z() * b.x() - b.z() * a.x(), //
-	        a.x() * b.y() - b.x() * a.y());
+	return boost::la::cross(a, b);
 }
 
 //! Returns a vector in the same direction as x but with a length of 1.
-template<typename T, std::size_t N>
-inline typename gl::math::detail::vector_type<T, N>::type //
-normalize(const gl::detail::vector<T, N>& x)
+template<typename T, std::size_t D>
+inline typename gl::detail::vector<T, D> //
+normalize(const gl::detail::vector<T, D>& x)
 {
+	using namespace boost::la;
 	return x / length(x);
 }
 
 //! If dot(Nref, I) < 0 return n, otherwise return -N.
 template<typename T, std::size_t N>
-inline typename gl::detail::vector<T, N>::type faceforward(
-        const typename gl::detail::vector<T, N>::type& n,
-        typename gl::detail::vector<T, N>::type& I,
-        const typename gl::detail::vector<T, N>::type& Nref)
+inline typename gl::detail::vector<T, N> //
+faceforward(typename gl::detail::vector<T, N> const& n,
+		typename gl::detail::vector<T, N> const& I,
+		typename gl::detail::vector<T, N> const& Nref)
 {
 	return dot(Nref, I) < 0 ? n : -n;
 }
@@ -120,9 +93,9 @@ inline typename gl::detail::vector<T, N>::type faceforward(
 /** n must already be normalized in order to achieve the desired result.
  */
 template<typename T, std::size_t N>
-inline typename gl::detail::vector<T, N>::type reflect(
-        const typename gl::detail::vector<T, N>::type& i,
-        const typename gl::detail::vector<T, N>::type& n)
+inline typename gl::detail::vector<T, N> //
+reflect(typename gl::detail::vector<T, N> const& i, //
+		typename gl::detail::vector<T, N> const& n)
 {
 	return i - 2 * dot(n, i) * n;
 }
@@ -135,9 +108,9 @@ inline typename gl::detail::vector<T, N>::type reflect(
  *  desired results.
  */
 template<typename T, std::size_t N>
-inline typename gl::detail::vector<T, N>::type refract(
-        const typename gl::detail::vector<T, N>::type& i,
-        const typename gl::detail::vector<T, N>::type& n, float eta)
+inline typename gl::detail::vector<T, N> //
+refract(typename gl::detail::vector<T, N> const& i, //
+		typename gl::detail::vector<T, N> const& n, float eta)
 {
 	float k = 1.0 - eta * eta * (1.0 - dot(n, i) * dot(n, i));
 	if (k < 0.f)

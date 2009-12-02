@@ -15,35 +15,50 @@ namespace detail
 {
 
 template<typename T>
-class vector3: public gl::detail::vector<T, 3>
+class vector<T, 3>
 {
 public:
-	vector3()
+	vector()
 	{
 	}
 
-	vector3(T val)
+	vector(T val) :
+		x(val), y(val), z(val)
 	{
-		x() = val;
-		y() = val;
-		z() = val;
 	}
 
-	vector3(T x_, T y_, T z_)
+	vector(T x_, T y_, T z_) :
+		x(x_), y(y_), z(z_)
 	{
-		x() = x_;
-		y() = y_;
-		z() = z_;
 	}
 
 	template<typename U>
-	vector3(const vector<U, 3>& other)
+	vector(const vector<U, 3>& other) :
+		x(other.x), y(other.y), z(other.z)
 	{
-		x() = other[0];
-		y() = other[1];
-		z() = other[2];
 	}
+
+public:
+	T operator[](std::size_t i) const
+	{
+		return this->*mem_array[i];
+	}
+
+	T& operator[](std::size_t i)
+	{
+		return this->*mem_array[i];
+	}
+
+public:
+	T x, y, z;
+
+private:
+	static T vector<T, 3>::* const mem_array[3];
 };
+
+template<typename T>
+T vector<T, 3>::* const vector<T, 3>::mem_array[3] =
+{ &vector<T, 3>::x, &vector<T, 3>::y, &vector<T, 3>::z };
 
 } // namespace detail
 } // namespace gl

@@ -40,29 +40,29 @@
 	detail::vector_param<GLCC_CW_T(TP), D>::type GLCC_CW_P(TP)
 
 // expand to: P1.x(), P2.x(), P3.x()
-#define GLCC_CW_COMPONENT(r, D, I, TP) BOOST_PP_COMMA_IF(I) GLCC_CW_P(TP).D()
+#define GLCC_CW_COMPONENT(r, D, I, TP) BOOST_PP_COMMA_IF(I) GLCC_CW_P(TP).D
 
 #define GLCC_COMPONENT_WISE_I(RETURN, FUNCTION, SEQ)                           \
 	RETURN FUNCTION(BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_PARAM,, SEQ));             \
-	inline gl::detail::vector2<RETURN> FUNCTION(                               \
+	inline gl::detail::vector<RETURN, 2> FUNCTION(                             \
 			BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_VEC_PARAM, 2, SEQ))                \
 	{                                                                          \
-		return gl::detail::vector2<RETURN>(                                    \
+		return gl::detail::vector<RETURN, 2>(                                  \
 				FUNCTION(BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_COMPONENT, x, SEQ)),  \
 				FUNCTION(BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_COMPONENT, y, SEQ))); \
 	}                                                                          \
-	inline gl::detail::vector3<RETURN> FUNCTION(                               \
+	inline gl::detail::vector<RETURN, 3> FUNCTION(                             \
 			BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_VEC_PARAM, 3, SEQ))                \
 	{                                                                          \
-		return gl::detail::vector3<RETURN>(                                    \
+		return gl::detail::vector<RETURN, 3>(                                  \
 				FUNCTION(BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_COMPONENT, x, SEQ)),  \
 				FUNCTION(BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_COMPONENT, y, SEQ)),  \
 				FUNCTION(BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_COMPONENT, z, SEQ))); \
 	}                                                                          \
-	inline gl::detail::vector4<RETURN> FUNCTION(                               \
+	inline gl::detail::vector<RETURN, 4> FUNCTION(                             \
 			BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_VEC_PARAM, 4, SEQ))                \
 	{                                                                          \
-		return gl::detail::vector4<RETURN>(                                    \
+		return gl::detail::vector<RETURN, 4>(                                  \
 				FUNCTION(BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_COMPONENT, x, SEQ)),  \
 				FUNCTION(BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_COMPONENT, y, SEQ)),  \
 				FUNCTION(BOOST_PP_SEQ_FOR_EACH_I(GLCC_CW_COMPONENT, z, SEQ)),  \

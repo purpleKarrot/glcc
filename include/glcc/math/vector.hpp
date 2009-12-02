@@ -7,6 +7,10 @@
 #ifndef GLCC_MATH_VECTOR_HPP
 #define GLCC_MATH_VECTOR_HPP
 
+#include <glcc/detail/gl.hpp>
+#include <glcc/vector.hpp>
+#include <glcc/math/detail/component_wise.hpp>
+
 namespace gl
 {
 namespace math
@@ -118,42 +122,52 @@ GLCC_COMPONENT_WISE(GLboolean, notEqual, (GLuint, x)(GLuint, y))
 	return x != y;
 }
 
-//! Returns true if any component of x is true.
-inline bool any(const bvec2& x)
+//! Returns true if any component of a is true.
+inline bool any(const bvec2& a)
 {
-	return x.x() || x.y();
+	return a.x || a.y;
 }
 
-inline bool any(const bvec3& x)
+inline bool any(const bvec3& a)
 {
-	return x.x() || x.y() || x.z();
+	return a.x || a.y || a.z;
 }
 
-inline bool any(const bvec4& x)
+inline bool any(const bvec4& a)
 {
-	return x.x() || x.y() || x.z() || x.w();
+	return a.x || a.y || a.z || a.w;
 }
 
-//! Returns true only if all components of x are true.
-inline bool all(const bvec2& x)
+//! Returns true only if all components of a are true.
+inline bool all(const bvec2& a)
 {
-	return x.x() && x.y();
+	return a.x && a.y;
 }
 
-inline bool all(const bvec3& x)
+inline bool all(const bvec3& a)
 {
-	return x.x() && x.y() && x.z();
+	return a.x && a.y && a.z;
 }
 
-inline bool all(const bvec4& x)
+inline bool all(const bvec4& a)
 {
-	return x.x() && x.y() && x.z() && x.w();
+	return a.x && a.y && a.z && a.w;
 }
 
-//! Returns the component-wise logical complement of x.
-GLCC_COMPONENT_WISE(GLboolean, not_, (GLboolean, x))
+//! Returns the component-wise logical complement of a.
+inline bvec2 operator not(bvec2 const& a)
 {
-	return x == GL_FALSE;
+	return bvec2(!a.x, !a.y);
+}
+
+inline bvec3 operator not(bvec3 const& a)
+{
+	return bvec3(!a.x, !a.y, !a.z);
+}
+
+inline bvec4 operator not(bvec4 const& a)
+{
+	return bvec4(!a.x, !a.y, !a.z, !a.w);
 }
 
 /** \} */

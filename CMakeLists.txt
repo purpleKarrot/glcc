@@ -36,14 +36,14 @@ find_package(Boost 1.38.0 REQUIRED
 #include(tools/BoostDocs.cmake)
 #include(tools/BoostUtils.cmake)
 
-set(OPENCL_ROOT $ENV{ATISTREAMSDKROOT})
-find_package(OpenCL REQUIRED)
+#set(OPENCL_ROOT $ENV{ATISTREAMSDKROOT})
+#find_package(OpenCL REQUIRED)
 find_package(OpenGL REQUIRED)
 
 include_directories(
   include
   ${Boost_INCLUDE_DIRS}
-  ${OPENCL_INCLUDE_DIR}
+# ${OPENCL_INCLUDE_DIR}
   )
 
 add_library(glcc

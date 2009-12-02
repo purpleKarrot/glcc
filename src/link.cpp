@@ -5,7 +5,11 @@
  *      Author: Daniel Pfeifer
  */
 
+#include <boost/config.hpp>
+#ifdef BOOST_WINDOWS
+
 #include <glcc/detail/gl.hpp>
+#include <GL/glx.h>
 #include <cassert>
 
 #include <boost/preprocessor/tuple/elem.hpp>
@@ -16,9 +20,9 @@
 #include <Carbon/Carbon.h>
 #endif
 
+//name = reinterpret_cast<type> (wglGetProcAddress(#name));
 #define GLCC_PROC(type, name, arg)                            \
-/*	name = (ptr) glXGetProcAddress((const GLubyte*)#name);*/  \
-	name = reinterpret_cast<type> (wglGetProcAddress(#name)); \
+	name = (type) glXGetProcAddress((const GLubyte*)#name);   \
 	assert(name && "unable to get proc address");             \
 
 //#define GLCC_PROC(TYPE, NAME)                                            \
@@ -84,3 +88,5 @@ static void link()
 #undef GLCC_PROC
 #undef P2
 #undef P1
+
+#endif

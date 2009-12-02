@@ -5,12 +5,19 @@
  *      Author: daniel
  */
 
+#include <boost/test/unit_test.hpp>
 #include <glcc/matrix.hpp>
 #include <glcc/program.hpp>
 
-int main(int, char**)
+BOOST_AUTO_TEST_SUITE(shader_program)
+
+BOOST_AUTO_TEST_CASE(main)
 {
 	GLCC_PROGRAM(, (gl::mat3x4, desaturate)) myshader;
 
-	myshader.desaturate(3);
+	gl::mat3x4 m;
+
+	myshader.desaturate(m);
 }
+
+BOOST_AUTO_TEST_SUITE_END()

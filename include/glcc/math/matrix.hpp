@@ -12,6 +12,12 @@
 #define GLCC_MATH_MATRIX_HPP
 
 #include <glcc/matrix.hpp>
+#include <boost/la/all.hpp>
+//#include <boost/la/matrix_determinant.hpp>
+//#include <boost/la/matrix_inverse.hpp>
+//#include <boost/la/row_matrix.hpp>
+//#include <boost/la/col_matrix.hpp>
+//#include <boost/la/matrix_assign.hpp>
 
 namespace gl
 {
@@ -23,14 +29,14 @@ namespace math
 /// Note: to get linear algebraic matrix multiplication, use
 /// the multiply operator (*).
 template<std::size_t M, std::size_t N>
-inline gl::detail::matrix<GLfloat, M, N> //
-matrixCompMult(const gl::detail::matrix<GLfloat, M, N>& x,
-        const gl::detail::matrix<GLfloat, M, N>& y)
+inline gl::detail::matrix<M, N> //
+matrixCompMult(gl::detail::matrix<M, N> const& x,
+		gl::detail::matrix<M, N> const& y)
 {
-	gl::detail::matrix<GLfloat, M, N> mat(x);
-	gl::detail::loop_op<M * N>::eval(gl::detail::multiplies_assign(), //
-	        mat.begin(), y.begin());
-	return mat;
+	gl::detail::matrix<M, N> m;
+	for (int i = 0; i < M * N; ++i)
+		m.data[i] = x.data[i] * y.data[i];
+	return m;
 }
 
 /// Treats the first parameter c as a column vector (matrix
@@ -40,40 +46,38 @@ matrixCompMult(const gl::detail::matrix<GLfloat, M, N>& x,
 /// rows is the number of components in c and whose
 /// number of columns is the number of components in r.
 template<std::size_t M, std::size_t N>
-inline gl::detail::matrix<GLfloat, M, N> outerProduct(
-        const typename gl::detail::vector<GLfloat, N>::type& c,
-        const typename gl::detail::vector<GLfloat, M>::type& r)
+inline gl::detail::matrix<M, N> //
+outerProduct(gl::detail::vector<float, N> const& c,
+		gl::detail::vector<float, M> const& r)
 {
-	gl::detail::matrix<GLfloat, M, N> mat;
-	//	detail::loop_op<M * N>::eval(detail::multiplies_assign(), //
-	//			mat.begin(), y.begin());
-	return mat;
+	using namespace boost::la;
+	return (c | col_matrix) * (r | row_matrix);
 }
 
 /// Returns a matrix that is the transpose of m. The input
 /// matrix m is not modified.
-template<std::size_t M, std::size_t N>
-inline gl::detail::matrix<GLfloat, M, N> //
-transpose(const gl::detail::matrix<GLfloat, N, M>& m)
+template<int M, int N>
+inline gl::detail::matrix<M, N> transpose(gl::detail::matrix<N, M> const& m)
 {
-	gl::detail::matrix<GLfloat, M, N> mat;
-	//	detail::loop_op<M * N>::eval(detail::multiplies_assign(), //
-	//			mat.begin(), y.begin());
-	return mat;
+	return m | boost::la::transpose;
 }
 
 /// Returns the determinant of m.
-GLfloat determinant(const gl::mat2& m);
-GLfloat determinant(const mat3& m);
-GLfloat determinant(const mat4& m);
+template<int D>
+inline GLfloat determinant(gl::detail::matrix<D, D> const& m)
+{
+	return boost::la::determinant(m);
+}
 
 /// Returns a matrix that is the inverse of m. The input
 /// matrix m is not modified. The values in the returned
 /// matrix are undefined if m is singular or poorly-
 /// conditioned (nearly singular).
-mat2 inverse(const mat2& m);
-mat3 inverse(const mat3& m);
-mat4 inverse(const mat4& m);
+template<int D>
+inline gl::detail::matrix<D, D> inverse(gl::detail::matrix<D, D> const& m)
+{
+	return boost::la::inverse(m);
+}
 
 } // namespace math
 } // namespace gl

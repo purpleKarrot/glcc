@@ -7,140 +7,89 @@
 #ifndef GLCC_DETAIL_VECTOR_HPP
 #define GLCC_DETAIL_VECTOR_HPP
 
-#include <boost/array.hpp>
-#include <glcc/detail/helper.hpp>
+#include <boost/la/vec_traits.hpp>
+#include <boost/la/vector_assign.hpp>
 
 namespace gl
 {
 namespace detail
 {
 
-template<typename T, std::size_t N>
-class vector: private boost::array<T, N>
+template<typename T, std::size_t D>
+class vector
 {
-	typedef typename boost::array<T, N> super;
+public:
+	template<class R>
+	operator R() const
+	{
+		R r;
+		boost::la::assign(r, *this);
+		return r;
+	}
 
 public:
-
-	using super::operator[];
-
-	using super::operator=;
-
-	vector& operator+=(T skalar)
+	T operator[](std::size_t i) const
 	{
-		loop_op<N>::eval(plus_assign(), super::begin(), skalar);
-		return *this;
+		return data[i];
 	}
 
-	vector& operator+=(const vector& other)
+	T& operator[](std::size_t i)
 	{
-		loop_op<N>::eval(plus_assign(), super::begin(), other.begin());
-		return *this;
-	}
-
-	vector& operator-=(T skalar)
-	{
-		loop_op<N>::eval(minus_assign(), super::begin(), skalar);
-		return *this;
-	}
-
-	vector& operator-=(const vector& other)
-	{
-		loop_op<N>::eval(minus_assign(), super::begin(), other.begin());
-		return *this;
-	}
-
-	vector& operator*=(T skalar)
-	{
-		loop_op<N>::eval(multiplies_assign(), super::begin(), skalar);
-		return *this;
-	}
-
-	vector& operator*=(const vector& other)
-	{
-		loop_op<N>::eval(multiplies_assign(), super::begin(), other.begin());
-		return *this;
-	}
-
-	vector& operator/=(T skalar)
-	{
-		loop_op<N>::eval(divides_assign(), super::begin(), skalar);
-		return *this;
-	}
-
-	vector& operator/=(const vector& other)
-	{
-		loop_op<N>::eval(divides_assign(), super::begin(), other.begin());
-		return *this;
+		return data[i];
 	}
 
 private:
-
-	friend vector operator+(const vector& lhs, T rhs)
-	{
-		vector nrv(lhs);
-		nrv += rhs;
-		return nrv;
-	}
-
-	friend vector operator+(const vector& lhs, const vector& rhs)
-	{
-		vector nrv(lhs);
-		nrv += rhs;
-		return nrv;
-	}
-
-	friend vector operator-(const vector& lhs, T rhs)
-	{
-		vector nrv(lhs);
-		nrv -= rhs;
-		return nrv;
-	}
-
-	friend vector operator-(const vector& lhs, const vector& rhs)
-	{
-		vector nrv(lhs);
-		nrv -= rhs;
-		return nrv;
-	}
-
-	friend vector operator*(const vector& lhs, T rhs)
-	{
-		vector nrv(lhs);
-		nrv *= rhs;
-		return nrv;
-	}
-
-	friend vector operator*(const vector& lhs, const vector& rhs)
-	{
-		vector nrv(lhs);
-		nrv *= rhs;
-		return nrv;
-	}
-
-	friend vector operator/(const vector& lhs, T rhs)
-	{
-		vector nrv(lhs);
-		nrv /= rhs;
-		return nrv;
-	}
-
-	friend vector operator/(const vector& lhs, const vector& rhs)
-	{
-		vector nrv(lhs);
-		nrv /= rhs;
-		return nrv;
-	}
-
-	friend std::ostream& operator<<(std::ostream&os, const vector& rhs)
-	{
-		os << "( ";
-		std::copy(rhs.begin(), rhs.end(), std::ostream_iterator<T>(os, " "));
-		return os << ")";
-	}
+	T data[D];
 };
 
 } // namespace detail
 } // namespace gl
+
+
+namespace boost
+{
+namespace la
+{
+
+template<typename T, std::size_t D>
+struct vector_traits<gl::detail::vector<T, D> >
+{
+	typedef gl::detail::vector<T, D> this_vector;
+	typedef T scalar_type;
+	static int const dim = D;
+
+	template<int I>
+	static BOOST_LA_INLINE_CRITICAL scalar_type r(this_vector const& x)
+	{
+		BOOST_STATIC_ASSERT(I>=0);
+		BOOST_STATIC_ASSERT(I<dim);
+		return x[I];
+	}
+
+	template<int I>
+	static BOOST_LA_INLINE_CRITICAL scalar_type& w(this_vector& x)
+	{
+		BOOST_STATIC_ASSERT(I>=0);
+		BOOST_STATIC_ASSERT(I<dim);
+		return x[I];
+	}
+
+	static BOOST_LA_INLINE_CRITICAL scalar_type ir(int i, this_vector const& x)
+	{
+		BOOST_ASSERT(i>=0);
+		BOOST_ASSERT(i<dim);
+		return x[i];
+	}
+
+	static BOOST_LA_INLINE_CRITICAL scalar_type& iw(int i, this_vector& x)
+	{
+		BOOST_ASSERT(i>=0);
+		BOOST_ASSERT(i<dim);
+		return x[i];
+	}
+};
+
+} // namespace la
+} // namespace boost
 
 #endif /* GLCC_DETAIL_VECTOR_HPP */
