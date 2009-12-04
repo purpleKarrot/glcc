@@ -20,7 +20,7 @@ class set: private boost::noncopyable
 
 public:
 	set(std::size_t count) :
-		count_(count), elements_(new GLuint[count])
+		count_(count), elements_(new unsigned int[count])
 	{
 		base_type::gen(count_, elements_.get());
 	}
@@ -35,7 +35,7 @@ public:
 	//	 rbegin()
 	//	 rend()
 
-	std::size_t size()
+	std::size_t size() const
 	{
 		return count_;
 	}
@@ -60,9 +60,9 @@ public:
 		elements_.swap(other.elements_);
 	}
 
-private:
+protected:
 	std::size_t count_;
-	boost::scoped_array<GLuint> elements_;
+	boost::scoped_array<unsigned int> elements_;
 };
 
 } // namespace gl

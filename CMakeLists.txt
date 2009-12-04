@@ -46,9 +46,13 @@ include_directories(
 # ${OPENCL_INCLUDE_DIR}
   )
 
+add_library(alcc
+  src/alcc/error.cpp
+  )
+
 add_library(glcc
-  src/error.cpp
-  src/link.cpp
+  src/glcc/error.cpp
+  src/glcc/link.cpp
   )
 
 #add_subdirectory(doc)
