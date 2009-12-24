@@ -12,6 +12,14 @@
 namespace gl
 {
 
+template<typename T>
+void vertex_attrib_pointer(GLuint index, bool normalized, GLsizei stride,
+		const T* pointer)
+{
+	glVertexAttribPointer(index, size<T>::value, type<T>::value, normalized,
+			stride, pointer);
+}
+
 template<std::size_t I>
 struct vertex_attrib_pointer
 {
