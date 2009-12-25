@@ -26,9 +26,10 @@
 #include <glcc/shader.hpp>
 #include <glcc/stencil.hpp>
 #include <glcc/texture.hpp>
+#include <glcc/uniform.hpp>
 #include <glcc/vector.hpp>
 #include <glcc/vertex_array.hpp>
-#include <glcc/vertex_attrib.hpp>
+#include <glcc/vertex_attrib_pointer.hpp>
 
 /// gl::
 namespace gl
