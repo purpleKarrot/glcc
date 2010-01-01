@@ -6,8 +6,9 @@
 
 #include <boost/test/unit_test.hpp>
 #include <glcc/info.hpp>
+#include "../GL3Context.hpp"
 
-BOOST_AUTO_TEST_SUITE(info)
+BOOST_FIXTURE_TEST_SUITE(info, GL3Context)
 
 BOOST_AUTO_TEST_CASE(main)
 {

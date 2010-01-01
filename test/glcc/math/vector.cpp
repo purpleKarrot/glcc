@@ -18,7 +18,7 @@ BOOST_AUTO_TEST_CASE(lessThan)
 	gl::vec2 a(1, 2);
 	gl::vec2 b(2, 1);
 
-static const	int v = vector_traits<gl::bvec3>::dim;
+static const	int v = vector_traits<gl::bvec2>::dim;
 	BOOST_CHECK_EQUAL(v, 2);
 
 //	BOOST_CHECK_EQUAL(gl::math::lessThan(a, b), gl::bvec2(true, false));

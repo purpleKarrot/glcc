@@ -39,6 +39,7 @@ find_package(Boost 1.38.0 REQUIRED
 #set(OPENCL_ROOT $ENV{ATISTREAMSDKROOT})
 #find_package(OpenCL REQUIRED)
 find_package(OpenGL REQUIRED)
+add_definitions(-DGL3_PROTOTYPES=1)
 
 include_directories(
   include

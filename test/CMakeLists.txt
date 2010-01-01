@@ -4,20 +4,32 @@
 # Distributed under the Boost Software License, Version 1.0. #
 ##############################################################
 
-find_package(GLUT REQUIRED)
-include_directories(${GLUT_INCLUDE_DIR})
+include(AddTestModule)
 
 find_package(Boost 1.38.0 REQUIRED
   COMPONENTS unit_test_framework)
 
+##############################################################
+
+set(SDLDIR /usr/local/)
+find_package(SDL REQUIRED)
+include_directories(${SDL_INCLUDE_DIR})
+
+add_library(GL3Context SHARED GL3Context.cpp utils.cpp)
+target_link_libraries(GL3Context ${SDL_LIBRARY})
+
+##############################################################
+
 file(GLOB_RECURSE GLCC_TEST_SRC glcc/*.cpp)
-add_executable(glcc_test ${GLCC_TEST_SRC})
+add_test_module(glcc_test ${GLCC_TEST_SRC})
 
 target_link_libraries(glcc_test
+  GL3Context
   ${Boost_LIBRARIES}
   ${OPENGL_LIBRARIES}
-  ${GLUT_glut_LIBRARY}
   )
+
+##############################################################
 
 #file(GLOB_RECURSE CLCC_TEST_SRC clcc/*.cpp)
 #add_test_module(clcc_test ${CLCC_TEST_SRC})

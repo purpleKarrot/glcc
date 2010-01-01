@@ -35,7 +35,7 @@ size_base<1>
 };
 
 template<typename T>
-struct size<T, typename boost::enable_if<boost::la::is_vector<T>::value>::type> : //
+struct size<T, typename boost::enable_if<typename boost::la::is_vector<T>::value>::type> : //
 size_base<boost::la::vector_traits<T>::dim>
 {
 };
@@ -51,8 +51,8 @@ GLCC_TRAITS(type, GLfloat, GL_FLOAT)
 GLCC_TRAITS(type, GLdouble, GL_DOUBLE)
 
 template<typename T>
-struct type<T, typename boost::enable_if<boost::la::is_vector<T>::value>::type> : //
-type<boost::la::vector_traits<T>::scalar_type>
+struct type<T, typename boost::enable_if<typename boost::la::is_vector<T>::value>::type> : //
+type<typename boost::la::vector_traits<T>::scalar_type>
 {
 };
 
