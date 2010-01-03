@@ -1,5 +1,5 @@
 /**************************************************************
- * Copyright (c) 2008-2009 Daniel Pfeifer                     *
+ * Copyright (c) 2008-2010 Daniel Pfeifer                     *
  *                                                            *
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
@@ -59,12 +59,14 @@ struct buffer_target
 		return glUnmapBuffer(Target);
 	}
 
-	static void access(GLint* data)
+	static inline GLint access()
 	{
-		glGetBufferParameteriv(Target, GL_BUFFER_ACCESS, data);
+		GLint data;
+		glGetBufferParameteriv(Target, GL_BUFFER_ACCESS, &data);
+		return data;
 	}
 
-	static inline bool mapped(GLint* data)
+	static inline bool mapped()
 	{
 		GLint value;
 		glGetBufferParameteriv(Target, GL_BUFFER_MAPPED, &value);
@@ -74,18 +76,22 @@ struct buffer_target
 	static inline GLint size()
 	{
 		GLint data;
-		glGetBufferParameteriv(Target, GL_BUFFER_SIZE, data);
+		glGetBufferParameteriv(Target, GL_BUFFER_SIZE, &data);
 		return data;
 	}
 
-	static void usage(GLint* data)
+	static inline GLint usage()
 	{
-		glGetBufferParameteriv(Target, GL_BUFFER_USAGE, data);
+		GLint data;
+		glGetBufferParameteriv(Target, GL_BUFFER_USAGE, &data);
+		return data;
 	}
 
-	static inline void map_pointer(GLvoid** pointer)
+	static inline GLvoid* map_pointer()
 	{
-		glGetBufferPointerv(Target, GL_BUFFER_MAP_POINTER, pointer);
+		GLvoid * pointer;
+		glGetBufferPointerv(Target, GL_BUFFER_MAP_POINTER, &pointer);
+		return pointer;
 	}
 };
 
@@ -103,8 +109,8 @@ typedef detail::buffer_target<GL_PIXEL_PACK_BUFFER, //
 typedef detail::buffer_target<GL_PIXEL_UNPACK_BUFFER, //
 		GL_PIXEL_UNPACK_BUFFER_BINDING> pixel_unpack_buffer;
 
-//typedef detail::buffer_target<GL_TRANSFORM_FEEDBACK_BUFFER, //
-//		GL_TRANSFORM_FEEDBACK_BUFFER_BINDING> transform_feedback_buffer;
+typedef detail::buffer_target<GL_TRANSFORM_FEEDBACK_BUFFER, //
+		GL_TRANSFORM_FEEDBACK_BUFFER_BINDING> transform_feedback_buffer;
 
 GLCC_OBJECT(buffer)
 
