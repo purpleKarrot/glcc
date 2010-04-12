@@ -10,7 +10,7 @@
 #include <cmath>
 #include <algorithm>
 #include <glcc/detail/gl.hpp>
-#include <glcc/math/detail/component_wise.hpp>
+#include "detail/component_wise.hpp"
 
 namespace gl
 {

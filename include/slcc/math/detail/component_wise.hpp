@@ -7,10 +7,10 @@
 #ifndef GLCC_MATH_DETAIL_COMPONENT_WISE_HPP
 #define GLCC_MATH_DETAIL_COMPONENT_WISE_HPP
 
-#include <glcc/detail/vector2.hpp>
-#include <glcc/detail/vector3.hpp>
-#include <glcc/detail/vector4.hpp>
-#include <glcc/math/detail/vector_param.hpp>
+#include <slcc/detail/vector2.hpp>
+#include <slcc/detail/vector3.hpp>
+#include <slcc/detail/vector4.hpp>
+#include "vector_param.hpp"
 
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>

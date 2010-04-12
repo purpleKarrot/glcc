@@ -14,19 +14,20 @@ namespace std
 using boost::array;
 }
 
-#include <glcc/detail/vector.hpp>
-#include <glcc/detail/matrix.hpp>
+#include <slcc/detail/vector.hpp>
+#include <slcc/detail/matrix.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
 
 #define GLCC_uniform(T, A)                                                     \
-	inline void uniform(GLuint location, T value)                              \
+	inline void set_uniform(GLuint program, GLuint location, T value)          \
 	{                                                                          \
-		glUniform1##A(location, value);                                        \
+		glProgramUniform1##A##EXT(program, location, value);                   \
 	}                                                                          \
 	template<std::size_t N>                                                    \
-	inline void uniform(GLuint location, const std::array<T, N>& values)       \
+	inline void set_uniform(GLuint program, GLuint location,                   \
+		const std::array<T, N>& values)                                        \
 	{                                                                          \
-		glUniform1##A##v(location, N, values.data());                          \
+		glProgramUniform1##A##vEXT(program, location, N, values.data());       \
 	}
 
 #define GLCC_vector_elements(z, N, d) , value[N]

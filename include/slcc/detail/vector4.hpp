@@ -4,10 +4,10 @@
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
 
-#ifndef GLCC_DETAIL_VECTOR_2_HPP
-#define GLCC_DETAIL_VECTOR_2_HPP
+#ifndef GLCC_DETAIL_VECTOR_4_HPP
+#define GLCC_DETAIL_VECTOR_4_HPP
 
-#include <glcc/detail/vector.hpp>
+#include <slcc/detail/vector.hpp>
 
 namespace gl
 {
@@ -15,7 +15,7 @@ namespace detail
 {
 
 template<typename T>
-class vector<T, 2>
+class vector<T, 4>
 {
 public:
 	vector()
@@ -23,18 +23,18 @@ public:
 	}
 
 	vector(T val) :
-		x(val), y(val)
+		x(val), y(val), z(val), w(val)
 	{
 	}
 
-	vector(T x_, T y_) :
-		x(x_), y(y_)
+	vector(T x_, T y_, T z_, T w_) :
+		x(x_), y(y_), z(z_), w(w_)
 	{
 	}
 
 	template<typename U>
-	vector(const vector<U, 2>& other) :
-		x(other.x), y(other.y)
+	vector(const vector<U, 4>& other) :
+		x(other.x), y(other.y), z(other.z), w(other.w)
 	{
 	}
 
@@ -50,17 +50,17 @@ public:
 	}
 
 public:
-	T x, y;
+	T x, y, z, w;
 
 private:
-	static T vector<T, 2>::* const mem_array[2];
+	static T vector<T, 4>::* const mem_array[4];
 };
 
 template<typename T>
-T vector<T, 2>::* const vector<T, 2>::mem_array[2] =
-{ &vector<T, 2>::x, &vector<T, 2>::y };
+T vector<T, 4>::* const vector<T, 4>::mem_array[4] =
+{ &vector<T, 4>::x, &vector<T, 4>::y, &vector<T, 4>::z, &vector<T, 4>::w };
 
 } // namespace detail
 } // namespace gl
 
-#endif /* GLCC_DETAIL_VECTOR_2_HPP */
+#endif /* GLCC_DETAIL_VECTOR_4_HPP */

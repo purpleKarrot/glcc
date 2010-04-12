@@ -12,17 +12,6 @@
 
 namespace gl
 {
-namespace detail
-{
-
-struct error_category: boost::system::error_category
-{
-	const char* name() const;
-
-	std::string message(int value) const;
-};
-
-} // namespace detail
 
 boost::system::error_code error();
 

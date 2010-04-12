@@ -7,16 +7,15 @@
 #ifndef GLCC_DETAIL_MATRIX_HPP
 #define GLCC_DETAIL_MATRIX_HPP
 
-#include <glcc/detail/gl.hpp>
 #include <boost/la/mat_traits.hpp>
 #include <boost/la/matrix_assign.hpp>
 
-namespace gl
+namespace sl
 {
 namespace detail
 {
 
-template<std::size_t Cols, std::size_t Rows>
+template<typename T, std::size_t Cols, std::size_t Rows>
 class matrix
 {
 public:
@@ -31,11 +30,11 @@ public:
 private:
 
 public:
-	GLfloat data[Cols][Rows];
+	T data[Cols][Rows];
 };
 
 } // namespace detail
-} // namespace gl
+} // namespace sl
 
 /*
  * OpenGL matrices are 16-value arrays with base vectors laid out
@@ -49,11 +48,11 @@ namespace boost
 namespace la
 {
 
-template<std::size_t Cols, std::size_t Rows>
-struct matrix_traits<gl::detail::matrix<Cols, Rows> >
+template<typename T, std::size_t Cols, std::size_t Rows>
+struct matrix_traits<sl::detail::matrix<T, Cols, Rows> >
 {
 	typedef gl::detail::matrix<Cols, Rows> this_matrix;
-	typedef GLfloat scalar_type;
+	typedef T scalar_type;
 	static std::size_t const cols = Cols;
 	static std::size_t const rows = Rows;
 

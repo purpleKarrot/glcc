@@ -8,7 +8,7 @@
 #define GLCC_MATH_GEOMETRIC_HPP
 
 #include <cmath>
-#include <glcc/detail/vector.hpp>
+#include <slcc/detail/vector.hpp>
 #include <boost/la/vector_dot.hpp>
 #include <boost/la/vector_cross.hpp>
 #include <boost/la/vector_div_scalar.hpp>

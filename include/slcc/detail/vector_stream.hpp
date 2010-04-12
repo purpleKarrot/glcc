@@ -7,7 +7,7 @@
 #ifndef GLCC_DETAIL_VECTOR_STREAM_HPP
 #define GLCC_DETAIL_VECTOR_STREAM_HPP
 
-#include <glcc/detail/vector.hpp>
+#include <slcc/detail/vector.hpp>
 
 namespace gl
 {

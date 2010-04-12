@@ -11,7 +11,7 @@
 #ifndef GLCC_MATH_MATRIX_HPP
 #define GLCC_MATH_MATRIX_HPP
 
-#include <glcc/matrix.hpp>
+#include <slcc/matrix.hpp>
 #include <boost/la/all.hpp>
 //#include <boost/la/matrix_determinant.hpp>
 //#include <boost/la/matrix_inverse.hpp>

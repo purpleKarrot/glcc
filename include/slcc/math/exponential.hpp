@@ -8,7 +8,7 @@
 #define GLCC_MATH_EXPONENTIAL_HPP
 
 #include <cmath>
-#include <glcc/math/detail/component_wise.hpp>
+#include <slcc/math/detail/component_wise.hpp>
 
 namespace gl
 {

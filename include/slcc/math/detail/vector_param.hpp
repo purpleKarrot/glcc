@@ -4,9 +4,9 @@
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
 
-#include <glcc/detail/vector2.hpp>
-#include <glcc/detail/vector3.hpp>
-#include <glcc/detail/vector4.hpp>
+#include <slcc/detail/vector2.hpp>
+#include <slcc/detail/vector3.hpp>
+#include <slcc/detail/vector4.hpp>
 
 #ifndef GLCC_MATH_DETAIL_VECTOR_PARAM_HPP
 #define GLCC_MATH_DETAIL_VECTOR_PARAM_HPP

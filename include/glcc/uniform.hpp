@@ -1,5 +1,5 @@
 /**************************************************************
- * Copyright (c) 2008-2009 Daniel Pfeifer                     *
+ * Copyright (c) 2008-2010 Daniel Pfeifer                     *
  *                                                            *
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
@@ -21,12 +21,17 @@ class uniform: private boost::noncopyable
 
 public:
 	uniform() :
-		location(0)
+		program(0), location(0)
+	{
+	}
+
+	uniform(GLuint program, GLuint location) :
+		program(program), location(location)
 	{
 	}
 
 	uniform(GLuint program, const char* name) :
-		location(glGetUniformLocation(program, name))
+		program(program), location(glGetUniformLocation(program, name))
 	{
 	}
 
@@ -34,26 +39,33 @@ public:
 	{
 	}
 
-	void locate(GLuint program, const char* name)
+	void assign(GLuint program, GLuint location)
 	{
-		location = glGetUniformLocation(program, name);
+		this->program = program;
+		this->location = location;
+	}
+
+	void assign(GLuint program, const char* name)
+	{
+		this->program = program;
+		this->location = glGetUniformLocation(program, name);
 	}
 
 	param_type operator=(param_type value)
 	{
-		detail::uniform(location, value);
+		detail::set_uniform(program, location, value);
 		return value;
 	}
 
 	operator T()
 	{
 		T value;
-		assert(!"Not implemented!");
-		// TODO: detail::get_uniform(location, value);
+		detail::get_uniform(program, location, value);
 		return value;
 	}
 
 private:
+	GLuint program;
 	GLuint location;
 };
 
