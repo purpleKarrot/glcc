@@ -11,11 +11,11 @@ add_reference(glcc-ref.xml
   ../include/glcc/depth.hpp
   ../include/glcc/draw.hpp
   ../include/glcc/error.hpp
+  ../include/glcc/extension.hpp
   ../include/glcc/framebuffer.hpp
   ../include/glcc/hint.hpp
   ../include/glcc/info.hpp
   ../include/glcc/logic.hpp
-  ../include/glcc/matrix.hpp
   ../include/glcc/miscellaneous.hpp
   ../include/glcc/pixel.hpp
   ../include/glcc/program.hpp
@@ -26,9 +26,8 @@ add_reference(glcc-ref.xml
   ../include/glcc/stencil.hpp
   ../include/glcc/texture.hpp
   ../include/glcc/uniform.hpp
-  ../include/glcc/vector.hpp
   ../include/glcc/vertex_array.hpp
-  ../include/glcc/vertex_attrib.hpp
+  ../include/glcc/vertex_attrib_pointer.hpp
   HEADER_PREFIX glcc
   )
 
