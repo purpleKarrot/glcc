@@ -4,7 +4,7 @@
 # Distributed under the Boost Software License, Version 1.0. #
 ##############################################################
 
-add_reference(glcc.xml
+add_reference(glcc-ref.xml
   glcc.hpp
   glcc/blend.hpp
   glcc/buffer.hpp
@@ -33,5 +33,5 @@ add_reference(glcc.xml
 
 add_documentation(
   glcc.qbk
-  glcc.xml
+  glcc-ref.xml
   )
