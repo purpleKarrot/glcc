@@ -5,30 +5,31 @@
 ##############################################################
 
 add_reference(glcc-ref.xml
-  glcc.hpp
-  glcc/blend.hpp
-  glcc/buffer.hpp
-  glcc/depth.hpp
-  glcc/draw.hpp
-  glcc/error.hpp
-  glcc/framebuffer.hpp
-  glcc/hint.hpp
-  glcc/info.hpp
-  glcc/logic.hpp
-  glcc/matrix.hpp
-  glcc/miscellaneous.hpp
-  glcc/pixel.hpp
-  glcc/program.hpp
-  glcc/query.hpp
-  glcc/renderbuffer.hpp
-  glcc/set.hpp
-  glcc/shader.hpp
-  glcc/stencil.hpp
-  glcc/texture.hpp
-  glcc/uniform.hpp
-  glcc/vector.hpp
-  glcc/vertex_array.hpp
-  glcc/vertex_attrib.hpp
+  ../include/glcc.hpp
+  ../include/glcc/blend.hpp
+  ../include/glcc/buffer.hpp
+  ../include/glcc/depth.hpp
+  ../include/glcc/draw.hpp
+  ../include/glcc/error.hpp
+  ../include/glcc/framebuffer.hpp
+  ../include/glcc/hint.hpp
+  ../include/glcc/info.hpp
+  ../include/glcc/logic.hpp
+  ../include/glcc/matrix.hpp
+  ../include/glcc/miscellaneous.hpp
+  ../include/glcc/pixel.hpp
+  ../include/glcc/program.hpp
+  ../include/glcc/query.hpp
+  ../include/glcc/renderbuffer.hpp
+  ../include/glcc/set.hpp
+  ../include/glcc/shader.hpp
+  ../include/glcc/stencil.hpp
+  ../include/glcc/texture.hpp
+  ../include/glcc/uniform.hpp
+  ../include/glcc/vector.hpp
+  ../include/glcc/vertex_array.hpp
+  ../include/glcc/vertex_attrib.hpp
+  HEADER_PREFIX glcc
   )
 
 add_documentation(
