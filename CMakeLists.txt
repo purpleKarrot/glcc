@@ -48,3 +48,4 @@ add_library(glcc
 
 #add_subdirectory(doc)
 #add_subdirectory(test)
+add_subdirectory(tools)
