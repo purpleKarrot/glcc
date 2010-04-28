@@ -371,4 +371,4 @@ blah
 
 [endsect]
 
-[xinclude gl_autodoc.xml]
+[xinclude glcc-ref.xml]
