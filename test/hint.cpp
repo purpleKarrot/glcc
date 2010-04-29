@@ -5,33 +5,28 @@
  **************************************************************/
 
 #include <glcc/blend.hpp>
-#include <glcc/error.hpp>
-#include <boost/test/unit_test.hpp>
+#include "detail/unit_test.hpp"
 
 BOOST_AUTO_TEST_SUITE(hint)
 
 BOOST_AUTO_TEST_CASE(line_smooth_hint)
 {
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_CASE(polygon_smooth_hint)
 {
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_CASE(texture_compression_hint)
 {
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_CASE(fragment_shader_derivative_hint)
 {
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

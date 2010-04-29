@@ -5,7 +5,7 @@
  **************************************************************/
 
 #include <glcc/stencil.hpp>
-#include <boost/test/unit_test.hpp>
+#include "detail/unit_test.hpp"
 
 BOOST_AUTO_TEST_SUITE(stencil)
 
@@ -16,30 +16,28 @@ BOOST_AUTO_TEST_CASE(enable)
 
 	gl::stencil::disable();
 	BOOST_CHECK(!gl::stencil::is_enabled());
+
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_CASE(function)
 {
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_CASE(op)
 {
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_CASE(clear)
 {
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_CASE(mask)
 {
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

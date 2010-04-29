@@ -5,8 +5,7 @@
  **************************************************************/
 
 #include <glcc/info.hpp>
-#include <glcc/error.hpp>
-#include <boost/test/unit_test.hpp>
+#include "detail/unit_test.hpp"
 
 BOOST_AUTO_TEST_SUITE(info)
 
@@ -20,8 +19,7 @@ BOOST_AUTO_TEST_CASE(main)
 	BOOST_TEST_MESSAGE( "major_version: " << gl::major_version() );
 	BOOST_TEST_MESSAGE( "minor_version: " << gl::minor_version() );
 
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

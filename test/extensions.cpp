@@ -5,9 +5,7 @@
  **************************************************************/
 
 #include <glcc/extensions.hpp>
-#include <glcc/error.hpp>
-#include <boost/test/unit_test.hpp>
-#include <iostream>
+#include "detail/unit_test.hpp"
 
 BOOST_AUTO_TEST_SUITE(extension)
 
@@ -18,8 +16,7 @@ BOOST_AUTO_TEST_CASE(main)
 //	std::copy(gl::extensions().begin(), gl::extensions().end(),
 //			std::ostream_iterator<const char*>(std::cout, ", "));
 
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

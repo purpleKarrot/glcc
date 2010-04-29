@@ -17,13 +17,13 @@ include_directories(${SDL_INCLUDE_DIR})
 
 ##############################################################
 
-add_test_module(glcc_test GL3Context.cpp
-  glcc/blend.cpp
-  glcc/depth.cpp
-  glcc/extensions.cpp
-  glcc/hint.cpp
-  glcc/info.cpp
-  glcc/logic.cpp
+add_test_module(glcc_test detail/GL3Context.cpp
+  blend.cpp
+  depth.cpp
+  extensions.cpp
+  hint.cpp
+  info.cpp
+  logic.cpp
   )
 
 target_link_libraries(glcc_test

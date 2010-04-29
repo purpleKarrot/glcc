@@ -5,9 +5,8 @@
  **************************************************************/
 
 #include <glcc/blend.hpp>
-#include <glcc/error.hpp>
-#include <boost/test/unit_test.hpp>
 #include <boost/la/all.hpp>
+#include "detail/unit_test.hpp"
 
 namespace boost
 {
@@ -35,8 +34,7 @@ BOOST_AUTO_TEST_CASE(enable)
 	gl::blend::disable();
 	BOOST_CHECK(!gl::blend::is_enabled());
 
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_CASE(color)
@@ -46,20 +44,17 @@ BOOST_AUTO_TEST_CASE(color)
 	gl::blend::color(color);
 	BOOST_CHECK_EQUAL(gl::blend::color(), color);
 
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_CASE(equation)
 {
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_CASE(function)
 {
-	boost::system::error_code error = gl::error();
-	BOOST_CHECK_MESSAGE(!error, error.message());
+	GLCC_CHECK_ERROR();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

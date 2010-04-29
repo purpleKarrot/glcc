@@ -16,28 +16,14 @@ file(DOWNLOAD
   ${CTOOLBOX_USE_FILE})
 include(${CTOOLBOX_USE_FILE})
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake)
-
 set(Boost_USE_STATIC_LIBS   ON)
 set(Boost_USE_MULTITHREADED ON)
 find_package(Boost 1.40 REQUIRED COMPONENTS system)
 
 find_package(OpenGL REQUIRED)
-add_definitions(-DGL3_PROTOTYPES=1)
 
 include(Extract)
 extract(${CMAKE_SOURCE_DIR}/include/boost-la.zip ${CMAKE_BINARY_DIR}/include)
-
-set(GLEXT_DIRECTORY ${CMAKE_BINARY_DIR}/include/glcc/ext)
-macro(DOWNLOAD_GLEXT FILE)
-  if(NOT EXISTS ${GLEXT_DIRECTORY}/${FILE})
-    file(DOWNLOAD http://www.opengl.org/registry/api/${FILE}
-      ${GLEXT_DIRECTORY}/${FILE})
-  endif(NOT EXISTS ${GLEXT_DIRECTORY}/${FILE})
-endmacro(DOWNLOAD_GLEXT FILE)
-download_glext(glext.h)
-download_glext(glxext.h)
-download_glext(wglext.h)
 
 include_directories(
   include
@@ -45,11 +31,12 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   )
 
-add_library(glcc
-  src/glcc/error.cpp
-  src/glcc/link.cpp
-  )
+add_library(glcc src/error.cpp)
 
-#add_subdirectory(doc)
+set(THIS_PROJECT_NAME glcc)
+include(AddReference)
+include(AddDocumentation)
+add_subdirectory(doc EXCLUDE_FROM_ALL)
+
 add_subdirectory(test)
 #add_subdirectory(tools)

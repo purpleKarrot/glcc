@@ -1,9 +1,8 @@
-/*
- * GL3Context.cpp
- *
- *  Created on: 30.12.2009
- *      Author: daniel
- */
+/**************************************************************
+ * Copyright (c) 2008-2010 Daniel Pfeifer                     *
+ *                                                            *
+ * Distributed under the Boost Software License, Version 1.0. *
+ **************************************************************/
 
 #include <SDL.h>
 #include <GL/glew.h>
