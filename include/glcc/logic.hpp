@@ -8,6 +8,7 @@
 #define GLCC_LOGIC_HPP
 
 #include <glcc/detail/gl.hpp>
+#include <glcc/detail/get.hpp>
 #include <glcc/detail/macros.hpp>
 
 namespace gl

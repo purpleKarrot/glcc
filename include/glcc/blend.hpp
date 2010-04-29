@@ -10,6 +10,7 @@
 #include <glcc/detail/gl.hpp>
 #include <glcc/detail/get.hpp>
 #include <glcc/detail/macros.hpp>
+#include <glcc/vec.hpp>
 
 namespace gl
 {
@@ -21,8 +22,7 @@ GLCC_ENABLE(GL_BLEND)
 
 inline void color(const vec4& value)
 {
-	//glBlendColor(value.r, value.g, value.b, value.a);
-	glBlendColor(value[0], value[1], value[2], value[3]);
+	glBlendColor(value.a[0], value.a[1], value.a[2], value.a[3]);
 }
 
 inline vec4 color()

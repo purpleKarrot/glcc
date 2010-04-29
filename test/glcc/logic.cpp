@@ -4,20 +4,23 @@
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
 
-#include <glcc/extensions.hpp>
+#include <glcc/logic.hpp>
 #include <glcc/error.hpp>
 #include <boost/test/unit_test.hpp>
-#include <iostream>
 
-BOOST_AUTO_TEST_SUITE(extension)
+BOOST_AUTO_TEST_SUITE(logic)
 
-BOOST_AUTO_TEST_CASE(main)
+BOOST_AUTO_TEST_CASE(enable)
 {
-	BOOST_TEST_MESSAGE( "number of extensions: " << gl::extensions().size() );
+	gl::logic::enable();
+	BOOST_CHECK(gl::logic::is_enabled());
 
-//	std::copy(gl::extensions().begin(), gl::extensions().end(),
-//			std::ostream_iterator<const char*>(std::cout, ", "));
+	gl::logic::disable();
+	BOOST_CHECK(!gl::logic::is_enabled());
+}
 
+BOOST_AUTO_TEST_CASE(op)
+{
 	boost::system::error_code error = gl::error();
 	BOOST_CHECK_MESSAGE(!error, error.message());
 }

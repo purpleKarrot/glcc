@@ -15,23 +15,20 @@ set(SDLDIR /usr/local/)
 find_package(SDL REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
 
-add_library(GL3Context GL3Context.cpp)
-
 ##############################################################
 
-file(GLOB_RECURSE GLCC_TEST_SRC glcc/*.cpp)
-add_test_module(glcc_test ${GLCC_TEST_SRC})
+add_test_module(glcc_test GL3Context.cpp
+  glcc/blend.cpp
+  glcc/depth.cpp
+  glcc/extensions.cpp
+  glcc/hint.cpp
+  glcc/info.cpp
+  glcc/logic.cpp
+  )
 
 target_link_libraries(glcc_test
-  GL3Context
+  glcc GLEW
   ${SDL_LIBRARY}
   ${Boost_LIBRARIES}
   ${OPENGL_LIBRARIES}
-  GLEW
   )
-
-##############################################################
-
-#file(GLOB_RECURSE CLCC_TEST_SRC clcc/*.cpp)
-#add_test_module(clcc_test ${CLCC_TEST_SRC})
-

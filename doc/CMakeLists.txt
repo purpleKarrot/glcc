@@ -11,7 +11,7 @@ add_reference(glcc-ref.xml
   ../include/glcc/depth.hpp
   ../include/glcc/draw.hpp
   ../include/glcc/error.hpp
-  ../include/glcc/extension.hpp
+  ../include/glcc/extensions.hpp
   ../include/glcc/framebuffer.hpp
   ../include/glcc/hint.hpp
   ../include/glcc/info.hpp

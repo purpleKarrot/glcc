@@ -8,6 +8,8 @@
 #define BOOST_GL_DETAIL_GET_HPP
 
 #include <glcc/detail/gl.hpp>
+#include <boost/la/vector_make.hpp>
+#include <glcc/vec.hpp>
 
 namespace gl
 {
@@ -54,21 +56,21 @@ inline float get<float> (GLenum pname)
 	return param;
 }
 
-//template<>
-//inline vec4 get<vec4> (GLenum pname)
-//{
-//	GLfloat param[4];
-//	glGetFloatv(pname, param);
-//	return vec4(param[0], param[1], param[2], param[3]);
-//}
-//
-//template<>
-//inline bvec4 get<bvec4> (GLenum pname)
-//{
-//	GLboolean param[4];
-//	glGetBooleanv(pname, param);
-//	return bvec4(param[0], param[1], param[2], param[3]);
-//}
+template<>
+inline vec4 get<vec4> (GLenum pname)
+{
+	vec4 param;
+	glGetFloatv(pname, &param.a[0]);
+	return param;
+}
+
+template<>
+inline bvec4 get<bvec4> (GLenum pname)
+{
+	bvec4 param;
+	glGetBooleanv(pname, &param.a[0]);
+	return param;
+}
 
 template<>
 inline const char* get<const char*> (GLenum pname)
