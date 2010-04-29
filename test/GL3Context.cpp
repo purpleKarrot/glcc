@@ -6,6 +6,7 @@
  */
 
 #include "GL3Context.hpp"
+#include <GL/glew.h>
 #include <stdexcept>
 
 GL3Context::GL3Context()
@@ -29,6 +30,7 @@ GL3Context::GL3Context()
 	}
 
 	context = SDL_GL_CreateContext(window);
+	glewInit();
 
 	SDL_GL_SetSwapInterval(1);
 }

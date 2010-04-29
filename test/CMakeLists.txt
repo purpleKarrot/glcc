@@ -6,7 +6,7 @@
 
 include(AddTestModule)
 
-find_package(Boost 1.38.0 REQUIRED
+find_package(Boost 1.40.0 REQUIRED
   COMPONENTS unit_test_framework)
 
 ##############################################################
@@ -15,8 +15,7 @@ set(SDLDIR /usr/local/)
 find_package(SDL REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
 
-add_library(GL3Context SHARED GL3Context.cpp utils.cpp)
-target_link_libraries(GL3Context ${SDL_LIBRARY})
+add_library(GL3Context GL3Context.cpp)
 
 ##############################################################
 
@@ -25,8 +24,10 @@ add_test_module(glcc_test ${GLCC_TEST_SRC})
 
 target_link_libraries(glcc_test
   GL3Context
+  ${SDL_LIBRARY}
   ${Boost_LIBRARIES}
   ${OPENGL_LIBRARIES}
+  GLEW
   )
 
 ##############################################################

@@ -16,7 +16,6 @@
 #include <glcc/hint.hpp>
 #include <glcc/info.hpp>
 #include <glcc/logic.hpp>
-#include <glcc/matrix.hpp>
 #include <glcc/miscellaneous.hpp>
 #include <glcc/pixel.hpp>
 #include <glcc/program.hpp>
@@ -27,7 +26,6 @@
 #include <glcc/stencil.hpp>
 #include <glcc/texture.hpp>
 #include <glcc/uniform.hpp>
-#include <glcc/vector.hpp>
 #include <glcc/vertex_array.hpp>
 #include <glcc/vertex_attrib_pointer.hpp>
 

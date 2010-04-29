@@ -28,6 +28,17 @@ add_definitions(-DGL3_PROTOTYPES=1)
 include(Extract)
 extract(${CMAKE_SOURCE_DIR}/include/boost-la.zip ${CMAKE_BINARY_DIR}/include)
 
+set(GLEXT_DIRECTORY ${CMAKE_BINARY_DIR}/include/glcc/ext)
+macro(DOWNLOAD_GLEXT FILE)
+  if(NOT EXISTS ${GLEXT_DIRECTORY}/${FILE})
+    file(DOWNLOAD http://www.opengl.org/registry/api/${FILE}
+      ${GLEXT_DIRECTORY}/${FILE})
+  endif(NOT EXISTS ${GLEXT_DIRECTORY}/${FILE})
+endmacro(DOWNLOAD_GLEXT FILE)
+download_glext(glext.h)
+download_glext(glxext.h)
+download_glext(wglext.h)
+
 include_directories(
   include
   ${CMAKE_BINARY_DIR}/include
@@ -40,5 +51,5 @@ add_library(glcc
   )
 
 #add_subdirectory(doc)
-#add_subdirectory(test)
-add_subdirectory(tools)
+add_subdirectory(test)
+#add_subdirectory(tools)
