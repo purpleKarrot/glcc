@@ -1,7 +1,7 @@
 [library gl::
  [quickbook 1.5]
  [authors [Pfeifer, Daniel] ]
- [copyright 2008-2010 Daniel Pfeifer]
+ [copyright 2008 2009 2010 Daniel Pfeifer]
  [purpose A user-friendly interface to OpenGL, the Open Graphics Language.]
  [id gl]
  [dirname gl]

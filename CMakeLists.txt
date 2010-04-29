@@ -22,8 +22,6 @@ set(Boost_USE_STATIC_LIBS   ON)
 set(Boost_USE_MULTITHREADED ON)
 find_package(Boost 1.40 REQUIRED COMPONENTS system)
 
-#set(OPENCL_ROOT $ENV{ATISTREAMSDKROOT})
-#find_package(OpenCL REQUIRED)
 find_package(OpenGL REQUIRED)
 add_definitions(-DGL3_PROTOTYPES=1)
 
@@ -34,11 +32,6 @@ include_directories(
   include
   ${CMAKE_BINARY_DIR}/include
   ${Boost_INCLUDE_DIRS}
-# ${OPENCL_INCLUDE_DIR}
-  )
-
-add_library(alcc
-  src/alcc/error.cpp
   )
 
 add_library(glcc
