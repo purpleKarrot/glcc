@@ -9,7 +9,7 @@
 
 #include <boost/call_traits.hpp>
 #include <boost/noncopyable.hpp>
-#include <glcc/detail/uniform.hpp>
+//#include <glcc/detail/uniform.hpp>
 
 namespace gl
 {
@@ -53,14 +53,14 @@ public:
 
 	param_type operator=(param_type value)
 	{
-		detail::set_uniform(program, location, value);
+		//detail::set_uniform(program, location, value);
 		return value;
 	}
 
 	operator T()
 	{
 		T value;
-		detail::get_uniform(program, location, value);
+		//detail::get_uniform(program, location, value);
 		return value;
 	}
 

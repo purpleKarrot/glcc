@@ -1,11 +1,31 @@
 #include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_opengl.h>
+#include <iostream>
+#include <glcc.hpp>
+#include <GL/glu.h>
+
+#include <boost/gil/extension/io/png_io.hpp>
+#include <boost/gil/image.hpp>
+#include <boost/gil/typedefs.hpp>
 
 #include "texture.h"
 
 void set_tex_param(GLenum target, const struct TexParameter* param)
 {
+	//	gl::texture_2d::base_level(param->base_level);
+	//	gl::texture_2d::border_color(param->border_color);
+	//	gl::texture_2d::compare_mode(param->compare_mode);
+	//	gl::texture_2d::compare_func(param->compare_func);
+	//	gl::texture_2d::lod_bias(param->lod_bias);
+	//	gl::texture_2d::mag_filter(param->mag_filter);
+	//	gl::texture_2d::max_level(param->max_level);
+	//	gl::texture_2d::max_lod(param->max_lod);
+	//	gl::texture_2d::min_filter(param->min_filter);
+	//	gl::texture_2d::min_lod(param->min_lod);
+	//	//gl::texture_2d::swizzle_rgba(param->swizzle_rgba);
+	//	gl::texture_2d::wrap_s(param->wrap_s);
+	//	gl::texture_2d::wrap_t(param->wrap_t);
+	//	gl::texture_2d::wrap_r(param->wrap_r);
+
 	glTexParameteri(target, GL_TEXTURE_BASE_LEVEL, param->base_level);
 	glTexParameterfv(target, GL_TEXTURE_BORDER_COLOR, param->border_color);
 	glTexParameteri(target, GL_TEXTURE_COMPARE_MODE, param->compare_mode);
@@ -24,22 +44,26 @@ void set_tex_param(GLenum target, const struct TexParameter* param)
 
 void get_tex_param(GLenum target, struct TexParameter* param)
 {
-//	glGenerateMipmap(target);
+	//	glGenerateMipmap(target);
 
 	glGetTexParameteriv(target, GL_TEXTURE_BASE_LEVEL, &param->base_level);
 	glGetTexParameterfv(target, GL_TEXTURE_BORDER_COLOR, param->border_color);
-	glGetTexParameteriv(target, GL_TEXTURE_COMPARE_MODE, &param->compare_mode);
-	glGetTexParameteriv(target, GL_TEXTURE_COMPARE_FUNC, &param->compare_func);
+	glGetTexParameteriv(target, GL_TEXTURE_COMPARE_MODE,
+			(GLint*) &param->compare_mode);
+	glGetTexParameteriv(target, GL_TEXTURE_COMPARE_FUNC,
+			(GLint*) &param->compare_func);
 	glGetTexParameterfv(target, GL_TEXTURE_LOD_BIAS, &param->lod_bias);
-	glGetTexParameteriv(target, GL_TEXTURE_MAG_FILTER, &param->mag_filter);
+	glGetTexParameteriv(target, GL_TEXTURE_MAG_FILTER,
+			(GLint*) &param->mag_filter);
 	glGetTexParameteriv(target, GL_TEXTURE_MAX_LEVEL, &param->max_level);
 	glGetTexParameterfv(target, GL_TEXTURE_MAX_LOD, &param->max_lod);
-	glGetTexParameteriv(target, GL_TEXTURE_MIN_FILTER, &param->min_filter);
+	glGetTexParameteriv(target, GL_TEXTURE_MIN_FILTER,
+			(GLint*) &param->min_filter);
 	glGetTexParameterfv(target, GL_TEXTURE_MIN_LOD, &param->min_lod);
 	//	glGetTexParameteriv(target, GL_TEXTURE_SWIZZLE_RGBA, param->swizzle_rgba);
-	glGetTexParameteriv(target, GL_TEXTURE_WRAP_S, &param->wrap_s);
-	glGetTexParameteriv(target, GL_TEXTURE_WRAP_T, &param->wrap_t);
-	glGetTexParameteriv(target, GL_TEXTURE_WRAP_R, &param->wrap_r);
+	glGetTexParameteriv(target, GL_TEXTURE_WRAP_S, (GLint*) &param->wrap_s);
+	glGetTexParameteriv(target, GL_TEXTURE_WRAP_T, (GLint*) &param->wrap_t);
+	glGetTexParameteriv(target, GL_TEXTURE_WRAP_R, (GLint*) &param->wrap_r);
 
 	GLint val;
 
@@ -50,21 +74,21 @@ void get_tex_param(GLenum target, struct TexParameter* param)
 	glGetTexLevelParameteriv(target, 0, GL_TEXTURE_DEPTH, &val);
 	printf("GL_TEXTURE_DEPTH 0 : %d\n", val);
 
-	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_WIDTH, &val);
-	printf("GL_TEXTURE_WIDTH 1 : %d\n", val);
-	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_HEIGHT, &val);
-	printf("GL_TEXTURE_HEIGHT 1 : %d\n", val);
-	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_DEPTH, &val);
-	printf("GL_TEXTURE_DEPTH 1 : %d\n", val);
-
-	glGenerateMipmap(target);
-
-	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_WIDTH, &val);
-	printf("GL_TEXTURE_WIDTH 1 : %d\n", val);
-	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_HEIGHT, &val);
-	printf("GL_TEXTURE_HEIGHT 1 : %d\n", val);
-	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_DEPTH, &val);
-	printf("GL_TEXTURE_DEPTH 1 : %d\n", val);
+	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_WIDTH, &val);
+	//	printf("GL_TEXTURE_WIDTH 1 : %d\n", val);
+	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_HEIGHT, &val);
+	//	printf("GL_TEXTURE_HEIGHT 1 : %d\n", val);
+	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_DEPTH, &val);
+	//	printf("GL_TEXTURE_DEPTH 1 : %d\n", val);
+	//
+	//	glGenerateMipmap(target);
+	//
+	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_WIDTH, &val);
+	//	printf("GL_TEXTURE_WIDTH 1 : %d\n", val);
+	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_HEIGHT, &val);
+	//	printf("GL_TEXTURE_HEIGHT 1 : %d\n", val);
+	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_DEPTH, &val);
+	//	printf("GL_TEXTURE_DEPTH 1 : %d\n", val);
 }
 
 void print_tex_param(const struct TexParameter* param)
@@ -109,111 +133,23 @@ void InitGL(int Width, int Height)
 
 void DrawGLScene()
 {
-	GLuint texture;
+	boost::gil::rgb8_image_t image;
+	boost::gil::png_read_image("image.png", image);
 
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	gl::texture texture;
+	gl::texture_2d::bind(texture);
+	gl::texture_2d::image(0, GL_RGB, 0, boost::gil::view(image));
 
-	load_image("slideshow-play.png");
+	GLint width = gl::texture_2d::width(0);
+	GLint height= gl::texture_2d::height(0);
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-
-	glTranslatef(-1.5f, 0.0f, -6.0f);
-
-	glBegin(GL_QUADS);
-	glTexCoord2i(0, 0);
-	glVertex3f(-1.0f, 1.0f, 0.0f);
-	glTexCoord2i(1, 0);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glTexCoord2i(1, 1);
-	glVertex3f(1.0f, -1.0f, 0.0f);
-	glTexCoord2i(0, 1);
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-	glEnd();
-
-	glTranslatef(3.0f, 0.0f, 0.0f);
-
-	glBegin(GL_QUADS);
-	glTexCoord2i(0, 0);
-	glVertex3f(-1.0f, 1.0f, 0.0f);
-	glTexCoord2i(1, 0);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-	glTexCoord2i(1, 1);
-	glVertex3f(1.0f, -1.0f, 0.0f);
-	glTexCoord2i(0, 1);
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-	glEnd();
-
-	SDL_GL_SwapBuffers();
-	SDL_Delay(500);
+	boost::gil::rgb8_image_t image2(width, height);
+	gl::texture_2d::get_image(0, boost::gil::view(image2));
+	boost::gil::png_write_view("image2.png", boost::gil::view(image2));
 
 	struct TexParameter tex_param;
 	get_tex_param(GL_TEXTURE_2D, &tex_param);
 	print_tex_param(&tex_param);
-
-	glDeleteTextures(1, &texture);
-}
-
-int load_image(const char* filename)
-{
-	GLuint texture;
-	SDL_Surface * surface;
-	GLenum texture_format;
-	GLint bytes_per_pixel;
-
-	surface = IMG_Load(filename);
-	if (!surface)
-		return -1;
-
-	if (surface->format->palette)
-	{
-		printf("error: image has a palette\n");
-		return -1;
-	}
-
-	if ((surface->w & (surface->w - 1)) != 0)
-		printf("warning: image's width is not a power of 2\n");
-
-	if ((surface->h & (surface->h - 1)) != 0)
-		printf("warning: image's height is not a power of 2\n");
-
-	bytes_per_pixel = surface->format->BytesPerPixel;
-	printf("info: number of colors: %d\n", bytes_per_pixel);
-
-	printf(
-			"rgba mask: %08x %08x %08x %08x\n", //
-			surface->format->Rmask, surface->format->Gmask,
-			surface->format->Bmask, surface->format->Amask);
-
-	if (bytes_per_pixel == 4)
-	{
-		if (surface->format->Rmask == 0x000000ff)
-			texture_format = GL_RGBA;
-		else
-			texture_format = 0x8000;//GL_ABGR;
-	}
-	else if (bytes_per_pixel == 3)
-	{
-		if (surface->format->Rmask == 0x000000ff)
-			texture_format = GL_RGB;
-		else
-			texture_format = GL_BGR;
-	}
-	else
-	{
-		printf("warning: the image is not truecolor... "
-			"this will probably break\n");
-		return -1;
-	}
-
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-
-	glTexImage2D(GL_TEXTURE_2D, 0, bytes_per_pixel, surface->w, surface->h, 0,
-			texture_format, GL_UNSIGNED_BYTE, surface->pixels);
-
-	SDL_FreeSurface(surface);
 }
 
 int main(int argc, char *argv[])

@@ -9,6 +9,7 @@
 
 #include <glcc/detail/gl.hpp>
 #include <glcc/detail/get.hpp>
+#include <glcc/vec.hpp>
 
 namespace gl
 {
@@ -17,7 +18,7 @@ namespace gl
 inline void clear_color(const vec4& value)
 {
 	//glClearColor(value.r, value.g, value.b, value.a);
-	glClearColor(value[0], value[1], value[2], value[3]);
+	glClearColor(value.a[0], value.a[1], value.a[2], value.a[3]);
 }
 
 inline vec4 clear_color()
@@ -35,7 +36,7 @@ inline void clear(GLbitfield mask)
 inline void color_mask(const bvec4& value)
 {
 	//glColorMask(value.r, value.g, value.b, value.a);
-	glColorMask(value[0], value[1], value[2], value[3]);
+	glColorMask(value.a[0], value.a[1], value.a[2], value.a[3]);
 }
 
 inline bvec4 color_mask()

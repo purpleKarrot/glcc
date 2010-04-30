@@ -14,7 +14,7 @@ namespace std
 using boost::array;
 }
 
-#include <slcc/detail/vector.hpp>
+#include <glcc/vec.hpp>
 #include <slcc/detail/matrix.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
 

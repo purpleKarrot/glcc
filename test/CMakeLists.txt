@@ -9,7 +9,7 @@ include(AddTestModule)
 find_package(Boost 1.40.0 REQUIRED
   COMPONENTS unit_test_framework)
 
-##############################################################
+find_package(PNG REQUIRED)
 
 set(SDLDIR /usr/local/)
 find_package(SDL REQUIRED)
@@ -24,11 +24,14 @@ add_test_module(glcc_test detail/GL3Context.cpp
   hint.cpp
   info.cpp
   logic.cpp
+  stencil.cpp
+  texture.cpp
   )
 
 target_link_libraries(glcc_test
   glcc GLEW
   ${SDL_LIBRARY}
+  ${PNG_LIBRARIES}
   ${Boost_LIBRARIES}
   ${OPENGL_LIBRARIES}
   )

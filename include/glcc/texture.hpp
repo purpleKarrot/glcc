@@ -72,7 +72,7 @@ static inline void mag_filter(GLenum filter)
 }
 
 // any 4 values
-static inline void border_color(float color[4])
+static inline void border_color(const GLfloat color[4])
 {
 	glTexParameterfv(Target, GL_TEXTURE_BORDER_COLOR, color);
 }
@@ -203,12 +203,30 @@ static inline void compressed_sub_image();
 //	   sizei height, sizei depth, enum format,
 //	   sizei imageSize, void *data );
 
-
-static inline void get_image();
-//	void glGetTexImage( enum tex, int lod, enum format, enum type, void *img );
+template<typename View>
+static inline void get_image(int lod, View& view)
+{
+  	glGetTexImage(Target, lod, color_traits<View>::layout, //
+				color_traits<View>::channel, &view[0]);
+}
 
 static inline void get_compressed_image();
 //	void GetCompressedTexImage( enum target, int lod, void *img );
+
+static inline int width(int level)
+{
+	GLint value;
+	glGetTexLevelParameteriv(Target, level, GL_TEXTURE_WIDTH, &value);
+	return value;
+}
+
+static inline int height(int level)
+{
+	GLint value;
+	glGetTexLevelParameteriv(Target, level, GL_TEXTURE_HEIGHT, &value);
+	return value;
+}
+
 };
 
 } // namespace detail

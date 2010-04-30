@@ -1,12 +1,16 @@
 
 find_package(SDL REQUIRED)
-find_package(SDL_image REQUIRED)
-include_directories(${SDL_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR})
+include_directories(${SDL_INCLUDE_DIR})
 
-add_executable(texture texture.c)
+find_package(PNG REQUIRED)
+
+add_executable(texture texture.cpp)
 
 target_link_libraries(texture
+  glcc
+  GLEW
   ${SDL_LIBRARY}
-  ${SDLIMAGE_LIBRARY}
+  ${PNG_LIBRARIES}
+  ${Boost_LIBRARIES}
   ${OPENGL_LIBRARIES}
   )
