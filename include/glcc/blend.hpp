@@ -7,7 +7,7 @@
 #ifndef GLCC_BLEND_HPP
 #define GLCC_BLEND_HPP
 
-#include <glcc/detail/gl.hpp>
+#include <GL3/gl3w.h>
 #include <glcc/detail/get.hpp>
 #include <glcc/detail/macros.hpp>
 #include <glcc/vec.hpp>

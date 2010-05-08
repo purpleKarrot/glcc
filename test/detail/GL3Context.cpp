@@ -5,7 +5,7 @@
  **************************************************************/
 
 #include <SDL.h>
-#include <GL/glew.h>
+#include <GL3/gl3w.h>
 #include <stdexcept>
 #include <boost/test/unit_test.hpp>
 
@@ -34,8 +34,8 @@ public:
 
 		context = SDL_GL_CreateContext(window);
 
-		glewInit();
-		glGetError(); // glewInit() does some crap...
+		gl3wInit();
+//		glGetError(); // glewInit() does some crap...
 
 		SDL_GL_SetSwapInterval(1);
 	}

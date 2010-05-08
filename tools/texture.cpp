@@ -9,6 +9,9 @@
 
 #include "texture.h"
 
+SDL_WindowID window;
+SDL_GLContext context;
+
 void set_tex_param(GLenum target, const struct TexParameter* param)
 {
 	//	gl::texture_2d::base_level(param->base_level);
@@ -44,7 +47,11 @@ void set_tex_param(GLenum target, const struct TexParameter* param)
 
 void get_tex_param(GLenum target, struct TexParameter* param)
 {
-	//	glGenerateMipmap(target);
+	param->base_level = gl::texture_2d::base_level();
+	glGetTexParameterfv(target, GL_TEXTURE_BORDER_COLOR, param->border_color);
+	param->compare_mode = gl::texture_2d::compare_mode();
+	param->compare_func = gl::texture_2d::compare_func();
+	param->lod_bias = gl::texture_2d::lod_bias();
 
 	glGetTexParameteriv(target, GL_TEXTURE_BASE_LEVEL, &param->base_level);
 	glGetTexParameterfv(target, GL_TEXTURE_BORDER_COLOR, param->border_color);
@@ -74,21 +81,21 @@ void get_tex_param(GLenum target, struct TexParameter* param)
 	glGetTexLevelParameteriv(target, 0, GL_TEXTURE_DEPTH, &val);
 	printf("GL_TEXTURE_DEPTH 0 : %d\n", val);
 
-	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_WIDTH, &val);
-	//	printf("GL_TEXTURE_WIDTH 1 : %d\n", val);
-	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_HEIGHT, &val);
-	//	printf("GL_TEXTURE_HEIGHT 1 : %d\n", val);
-	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_DEPTH, &val);
-	//	printf("GL_TEXTURE_DEPTH 1 : %d\n", val);
-	//
-	//	glGenerateMipmap(target);
-	//
-	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_WIDTH, &val);
-	//	printf("GL_TEXTURE_WIDTH 1 : %d\n", val);
-	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_HEIGHT, &val);
-	//	printf("GL_TEXTURE_HEIGHT 1 : %d\n", val);
-	//	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_DEPTH, &val);
-	//	printf("GL_TEXTURE_DEPTH 1 : %d\n", val);
+	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_WIDTH, &val);
+	printf("GL_TEXTURE_WIDTH 1 : %d\n", val);
+	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_HEIGHT, &val);
+	printf("GL_TEXTURE_HEIGHT 1 : %d\n", val);
+	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_DEPTH, &val);
+	printf("GL_TEXTURE_DEPTH 1 : %d\n", val);
+
+	glGenerateMipmap(target);
+
+	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_WIDTH, &val);
+	printf("GL_TEXTURE_WIDTH 1 : %d\n", val);
+	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_HEIGHT, &val);
+	printf("GL_TEXTURE_HEIGHT 1 : %d\n", val);
+	glGetTexLevelParameteriv(target, 1, GL_TEXTURE_DEPTH, &val);
+	printf("GL_TEXTURE_DEPTH 1 : %d\n", val);
 }
 
 void print_tex_param(const struct TexParameter* param)
@@ -112,25 +119,6 @@ void print_tex_param(const struct TexParameter* param)
 	printf("\n");
 }
 
-void InitGL(int Width, int Height)
-{
-	glEnable(GL_TEXTURE_2D);
-
-	glViewport(0, 0, Width, Height);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClearDepth(1.0);
-	glDepthFunc(GL_LESS);
-	glEnable(GL_DEPTH_TEST);
-	glShadeModel(GL_SMOOTH);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	gluPerspective(45.0f, (GLfloat) Width / (GLfloat) Height, 0.1f, 100.0f);
-
-	glMatrixMode(GL_MODELVIEW);
-}
-
 void DrawGLScene()
 {
 	boost::gil::rgb8_image_t image;
@@ -140,39 +128,50 @@ void DrawGLScene()
 	gl::texture_2d::bind(texture);
 	gl::texture_2d::image(0, GL_RGB, 0, boost::gil::view(image));
 
-	GLint width = gl::texture_2d::width(0);
-	GLint height= gl::texture_2d::height(0);
-
-	boost::gil::rgb8_image_t image2(width, height);
-	gl::texture_2d::get_image(0, boost::gil::view(image2));
-	boost::gil::png_write_view("image2.png", boost::gil::view(image2));
-
 	struct TexParameter tex_param;
 	get_tex_param(GL_TEXTURE_2D, &tex_param);
 	print_tex_param(&tex_param);
+
+	GLint width = gl::texture_2d::width(1);
+	GLint height = gl::texture_2d::height(1);
+
+	boost::gil::rgb8_image_t image2(width, height);
+	gl::texture_2d::get_image(1, boost::gil::view(image2));
+	boost::gil::png_write_view("image2.png", boost::gil::view(image2));
 }
 
 int main(int argc, char *argv[])
 {
-	int done;
-
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
 		return -1;
 	}
 
-	if (SDL_SetVideoMode(640, 480, 0, SDL_OPENGL) == NULL)
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
+	window = SDL_CreateWindow("SDL GL3 Window", SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED, 512, 512, SDL_WINDOW_OPENGL
+					| SDL_WINDOW_SHOWN);
+
+	if (!window)
 	{
-		fprintf(stderr, "Unable to create OpenGL screen: %s\n", SDL_GetError());
 		SDL_Quit();
+		fprintf(stderr, "Unable to create window: %s\n", SDL_GetError());
 		return -2;
 	}
 
-	InitGL(640, 480);
+	context = SDL_GL_CreateContext(window);
+
+	SDL_GL_SetSwapInterval(1);
 
 	DrawGLScene();
 
+	SDL_GL_DeleteContext(context);
+	SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 1;
 }

@@ -7,7 +7,7 @@
 #ifndef GLCC_INFO_HPP
 #define GLCC_INFO_HPP
 
-#include <glcc/detail/gl.hpp>
+#include <GL3/gl3w.h>
 #include <glcc/detail/get.hpp>
 
 namespace gl

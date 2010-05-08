@@ -8,7 +8,7 @@
 #define GLCC_SHADER_HPP
 
 #include <string>
-#include <glcc/detail/gl.hpp>
+#include <GL3/gl3w.h>
 
 namespace gl
 {

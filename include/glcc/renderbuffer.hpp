@@ -7,7 +7,7 @@
 #ifndef GLCC_RENDERBUFFER_HPP
 #define GLCC_RENDERBUFFER_HPP
 
-#include <glcc/detail/gl.hpp>
+#include <GL3/gl3w.h>
 #include <glcc/detail/macros.hpp>
 
 namespace gl

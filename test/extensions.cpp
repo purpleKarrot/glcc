@@ -6,6 +6,7 @@
 
 #include <glcc/extensions.hpp>
 #include "detail/unit_test.hpp"
+#include <iostream>
 
 BOOST_AUTO_TEST_SUITE(extension)
 

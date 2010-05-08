@@ -7,7 +7,7 @@
 #ifndef GLCC_DETAIL_COLOR_HPP
 #define GLCC_DETAIL_COLOR_HPP
 
-#include <glcc/detail/gl.hpp>
+#include <GL3/gl3w.h>
 #include <boost/gil/pixel.hpp>
 #include <boost/gil/typedefs.hpp>
 

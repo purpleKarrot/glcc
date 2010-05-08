@@ -16,6 +16,8 @@ file(DOWNLOAD
   ${CTOOLBOX_USE_FILE})
 include(${CTOOLBOX_USE_FILE})
 
+include(${CMAKE_SOURCE_DIR}/gl3w.cmake)
+
 set(Boost_USE_STATIC_LIBS   ON)
 set(Boost_USE_MULTITHREADED ON)
 find_package(Boost 1.40 REQUIRED COMPONENTS system)
@@ -31,6 +33,7 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   )
 
+add_library(gl3w ${CMAKE_BINARY_DIR}/src/gl3w.c)
 add_library(glcc src/error.cpp)
 
 set(THIS_PROJECT_NAME glcc)

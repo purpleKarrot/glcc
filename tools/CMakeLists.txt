@@ -8,7 +8,7 @@ add_executable(texture texture.cpp)
 
 target_link_libraries(texture
   glcc
-  GLEW
+# GLEW
   ${SDL_LIBRARY}
   ${PNG_LIBRARIES}
   ${Boost_LIBRARIES}

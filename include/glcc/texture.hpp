@@ -8,10 +8,33 @@
 #define GLCC_TEXTURE_HPP
 
 #include <boost/scoped_array.hpp>
-#include <glcc/detail/gl.hpp>
+#include <GL3/gl3w.h>
 #include <glcc/detail/scoped_bind_base.hpp>
 #include <glcc/detail/color.hpp>
 #include <glcc/detail/macros.hpp>
+
+template<typename T> struct foo{ typedef T t; };
+template<> struct foo<GLenum>{ typedef GLint t; };
+
+#define GLCC_TEX_PARAMETER(type, name, suffix, pname)         \
+    static inline void name(type param)                       \
+    {                                                         \
+        glTexParameter##suffix(Target, pname, param);         \
+    }                                                         \
+    static inline type name()                                 \
+    {                                                         \
+	    foo<type>::t value;                                   \
+	    glGetTexParameter##suffix##v(Target, pname, &value);  \
+	    return value;                                         \
+    }                                                         \
+
+#define GLCC_TEX_LEVEL_PARAMETER(type, name, suffix, pname)   \
+    static inline type name(int level)                        \
+    {                                                         \
+	    foo<type>::t value;                                   \
+        glGetTexLevelParameter##suffix##v(Target, level, pname, &value); \
+        return value;                                         \
+    }                                                         \
 
 namespace gl
 {
@@ -41,35 +64,20 @@ static inline void generate_mipmap()
 }
 
 // CLAMP, CLAMP_TO_EDGE, REPEAT, CLAMP_TO_BORDER, MIRRORED_REPEAT
-static inline void wrap_s(GLenum wrap)
-{
-	glTexParameteri(Target, GL_TEXTURE_WRAP_S, wrap);
-}
+GLCC_TEX_PARAMETER(GLenum, wrap_s, i, GL_TEXTURE_WRAP_S)
 
 // CLAMP, CLAMP_TO_EDGE, REPEAT, CLAMP_TO_BORDER, MIRRORED_REPEAT
-static inline void wrap_t(GLenum wrap)
-{
-	glTexParameteri(Target, GL_TEXTURE_WRAP_T, wrap);
-}
+GLCC_TEX_PARAMETER(GLenum, wrap_t, i, GL_TEXTURE_WRAP_T)
 
 // CLAMP, CLAMP_TO_EDGE, REPEAT, CLAMP_TO_BORDER, MIRRORED_REPEAT
-static inline void wrap_r(GLenum wrap)
-{
-	glTexParameteri(Target, GL_TEXTURE_WRAP_R, wrap);
-}
+GLCC_TEX_PARAMETER(GLenum, wrap_r, i, GL_TEXTURE_WRAP_R)
 
 // NEAREST, LINEAR, NEAREST_MIPMAP_NEAREST, NEAREST_MIPMAP_LINEAR,
 // LINEAR_MIPMAP_NEAREST, LINEAR_MIPMAP_LINEAR
-static inline void min_filter(GLenum filter)
-{
-	glTexParameteri(Target, GL_TEXTURE_MIN_FILTER, filter);
-}
+GLCC_TEX_PARAMETER(GLenum, min_filter, i, GL_TEXTURE_MIN_FILTER)
 
 // NEAREST, LINEAR
-static inline void mag_filter(GLenum filter)
-{
-	glTexParameteri(Target, GL_TEXTURE_MAG_FILTER, filter);
-}
+GLCC_TEX_PARAMETER(GLenum, mag_filter, i, GL_TEXTURE_MAG_FILTER)
 
 // any 4 values
 static inline void border_color(const GLfloat color[4])
@@ -84,34 +92,19 @@ static inline void border_color(const GLfloat color[4])
 //}
 
 // any value
-static inline void min_lod(float param)
-{
-	glTexParameterf(Target, GL_TEXTURE_MIN_LOD, param);
-}
+GLCC_TEX_PARAMETER(GLfloat, min_lod, f, GL_TEXTURE_MIN_LOD)
 
 // any value
-static inline void max_lod(float param)
-{
-	glTexParameterf(Target, GL_TEXTURE_MAX_LOD, param);
-}
+GLCC_TEX_PARAMETER(GLfloat, max_lod, f, GL_TEXTURE_MAX_LOD)
 
 // any non-negative integer
-static inline void base_level(int param)
-{
-	glTexParameteri(Target, GL_TEXTURE_BASE_LEVEL, param);
-}
+GLCC_TEX_PARAMETER(GLint, base_level, i, GL_TEXTURE_BASE_LEVEL)
 
 // any non-negative integer
-static inline void max_level(int param)
-{
-	glTexParameteri(Target, GL_TEXTURE_MAX_LEVEL, param);
-}
+GLCC_TEX_PARAMETER(GLint, max_level, i, GL_TEXTURE_MAX_LEVEL)
 
 // any value
-static inline void lod_bias(float param)
-{
-	glTexParameterf(Target, GL_TEXTURE_LOD_BIAS, param);
-}
+GLCC_TEX_PARAMETER(GLfloat, lod_bias, f, GL_TEXTURE_LOD_BIAS)
 
 //// RED, LUMINANCE, INTENSITY, ALPHA
 //static inline void depth_mode(GLenum mode)
@@ -120,25 +113,10 @@ static inline void lod_bias(float param)
 //}
 
 // NONE, COMPARE_REF_TO_TEXTURE
-static inline void compare_mode(GLenum mode)
-{
-	glTexParameteri(Target, GL_TEXTURE_COMPARE_MODE, mode);
-}
+GLCC_TEX_PARAMETER(GLenum, compare_mode, i, GL_TEXTURE_COMPARE_MODE)
 
 // LEQUAL, GEQUAL, LESS, GREATER, EQUAL, NOTEQUAL, ALWAYS, NEVER
-static inline void compare_func(GLenum func)
-{
-	glTexParameteri(Target, GL_TEXTURE_COMPARE_FUNC, func);
-}
-
-template<typename View>
-static inline void image(GLint level, GLint internalformat, GLint border,
-		const View& view)
-{
-	glTexImage2D(Target, level, internalformat, view.width(),
-			view.height(), border, color_traits<View>::layout,
-			color_traits<View>::channel, &view[0]);
-}
+GLCC_TEX_PARAMETER(GLenum, compare_func, i, GL_TEXTURE_COMPARE_FUNC)
 
 //	void TexImage1D( enum target, int level,
 //	   int internalformat, sizei width, int border,
@@ -213,26 +191,33 @@ static inline void get_image(int lod, View& view)
 static inline void get_compressed_image();
 //	void GetCompressedTexImage( enum target, int lod, void *img );
 
-static inline int width(int level)
-{
-	GLint value;
-	glGetTexLevelParameteriv(Target, level, GL_TEXTURE_WIDTH, &value);
-	return value;
-}
-
-static inline int height(int level)
-{
-	GLint value;
-	glGetTexLevelParameteriv(Target, level, GL_TEXTURE_HEIGHT, &value);
-	return value;
-}
-
+GLCC_TEX_LEVEL_PARAMETER(GLint, width, i, GL_TEXTURE_WIDTH)
+GLCC_TEX_LEVEL_PARAMETER(GLint, height, i, GL_TEXTURE_HEIGHT)
 };
 
 } // namespace detail
 
 typedef detail::texture_target<GL_TEXTURE_1D, GL_TEXTURE_BINDING_1D> texture_1d;
-typedef detail::texture_target<GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D> texture_2d;
+
+struct texture_2d: detail::texture_target<GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D>
+{
+	template<typename View>
+	static inline void image(GLint level, GLint internalformat, GLint border,
+			const View& view)
+	{
+		glTexImage2D(target_type, level, internalformat, view.width(),
+				view.height(), border, color_traits<View>::layout,
+				color_traits<View>::channel, &view[0]);
+	}
+
+	template<typename View>
+	static inline void get_image(int lod, View& view)
+	{
+		glGetTexImage(target_type, lod, color_traits<View>::layout, //
+				color_traits<View>::channel, &view[0]);
+	}
+};
+
 typedef detail::texture_target<GL_TEXTURE_3D, GL_TEXTURE_BINDING_3D> texture_3d;
 
 typedef detail::texture_target<GL_TEXTURE_1D_ARRAY, //
@@ -253,5 +238,7 @@ void bind(GLenum unit, Texture const& texture)
 }
 
 } // namespace gl
+
+#undef GLCC_TEX_PARAMETER
 
 #endif /* GLCC_TEXTURE_HPP */

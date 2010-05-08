@@ -7,7 +7,7 @@
 #ifndef BOOST_GL_DETAIL_GET_HPP
 #define BOOST_GL_DETAIL_GET_HPP
 
-#include <glcc/detail/gl.hpp>
+#include <GL3/gl3w.h>
 #include <boost/la/vector_make.hpp>
 #include <glcc/vec.hpp>
 

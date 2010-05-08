@@ -8,7 +8,7 @@
 #define GLCC_VECTOR_HPP
 
 #include <boost/la/vec.hpp>
-#include <glcc/detail/gl.hpp>
+#include <GL3/gl3w.h>
 
 namespace gl
 {

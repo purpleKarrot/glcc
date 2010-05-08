@@ -7,7 +7,7 @@
 #ifndef GLCC_FRAMEBUFFER_HPP
 #define GLCC_FRAMEBUFFER_HPP
 
-#include <glcc/detail/gl.hpp>
+#include <GL3/gl3w.h>
 #include <glcc/detail/scoped_bind_base.hpp>
 #include <glcc/texture.hpp>
 #include <glcc/renderbuffer.hpp>

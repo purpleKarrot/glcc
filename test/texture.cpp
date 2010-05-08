@@ -27,6 +27,9 @@ BOOST_AUTO_TEST_CASE(load)
 	GLint width = gl::texture_2d::width(0);
 	GLint height= gl::texture_2d::height(0);
 
+//	BOOST_REQUIRE(GLEW_ARB_framebuffer_object);
+	gl::texture_2d::generate_mipmap();
+
 //	boost::gil::rgb8_image_t image2(width, height);
 //	gl::texture_2d::get_image(0, boost::gil::view(image2));
 //

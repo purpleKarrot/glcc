@@ -29,7 +29,7 @@ add_test_module(glcc_test detail/GL3Context.cpp
   )
 
 target_link_libraries(glcc_test
-  glcc GLEW
+  glcc gl3w
   ${SDL_LIBRARY}
   ${PNG_LIBRARIES}
   ${Boost_LIBRARIES}

@@ -7,7 +7,7 @@
 #ifndef GLCC_HINT_HPP
 #define GLCC_HINT_HPP
 
-#include <glcc/detail/gl.hpp>
+#include <GL3/gl3w.h>
 #include <glcc/detail/get.hpp>
 
 namespace gl
