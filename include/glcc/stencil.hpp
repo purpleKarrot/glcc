@@ -7,7 +7,7 @@
 #ifndef GLCC_STENCIL_HPP
 #define GLCC_STENCIL_HPP
 
-#include <GL3/gl3w.h>
+#include <GL/gl.h>
 #include <glcc/detail/macros.hpp>
 
 namespace gl

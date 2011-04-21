@@ -4,34 +4,39 @@
 # Distributed under the Boost Software License, Version 1.0. #
 ##############################################################
 
-include(AddTestModule)
+find_package(Boost COMPONENTS test NO_MODULE)
+include(BoostTestSuite)
 
-find_package(Boost 1.40.0 REQUIRED
-  COMPONENTS unit_test_framework)
+add_custom_target(test)
+set(BOOST_CURRENT_PROJECT glcc)
 
 find_package(PNG REQUIRED)
+find_package(JPEG REQUIRED)
 
-set(SDLDIR /usr/local/)
 find_package(SDL REQUIRED)
+find_package(SDL_image REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
 
 ##############################################################
 
-add_test_module(glcc_test detail/GL3Context.cpp
-  blend.cpp
-  depth.cpp
-  extensions.cpp
-  hint.cpp
-  info.cpp
-  logic.cpp
-  stencil.cpp
-  texture.cpp
-  )
-
-target_link_libraries(glcc_test
-  glcc gl3w
-  ${SDL_LIBRARY}
-  ${PNG_LIBRARIES}
-  ${Boost_LIBRARIES}
-  ${OPENGL_LIBRARIES}
+boost_test_suite(
+  RUN
+    blend
+    depth
+    extensions
+    hint
+    info
+    logic
+    stencil
+    texture
+  LINK_BOOST_LIBRARIES
+    system
+    unit_test_framework
+  LINK_LIBRARIES
+    glcc
+    ${SDL_LIBRARY}
+    ${SDLIMAGE_LIBRARY}
+    ${PNG_LIBRARIES}
+    ${JPEG_LIBRARIES}
+    ${OPENGL_LIBRARIES}
   )

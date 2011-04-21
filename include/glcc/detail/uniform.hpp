@@ -1,5 +1,5 @@
 /**************************************************************
- * Copyright (c) 2008-2009 Daniel Pfeifer                     *
+ * Copyright (c) 2008-2011 Daniel Pfeifer                     *
  *                                                            *
  * Distributed under the Boost Software License, Version 1.0. *
  **************************************************************/
@@ -7,103 +7,87 @@
 #ifndef GLCC_DETAIL_UNIFORM_HPP
 #define GLCC_DETAIL_UNIFORM_HPP
 
-//#include <array>
-#include <boost/array.hpp>
-namespace std
-{
-using boost::array;
-}
-
+#include <GL/gl.h>
 #include <glcc/vec.hpp>
-#include <slcc/detail/matrix.hpp>
-#include <boost/preprocessor/repetition/repeat.hpp>
+#include <glcc/mat.hpp>
 
-#define GLCC_uniform(T, A)                                                     \
-	inline void set_uniform(GLuint program, GLuint location, T value)          \
-	{                                                                          \
-		glProgramUniform1##A##EXT(program, location, value);                   \
-	}                                                                          \
-	template<std::size_t N>                                                    \
-	inline void set_uniform(GLuint program, GLuint location,                   \
-		const std::array<T, N>& values)                                        \
-	{                                                                          \
-		glProgramUniform1##A##vEXT(program, location, N, values.data());       \
-	}
+#define GLCC_uniform(T, S)                                                     \
+    inline void set_uniform(GLuint program, GLuint location, T value)          \
+    {                                                                          \
+        glProgramUniform1##S(program, location, value);                        \
+    }                                                                          \
+    inline void get_uniform(GLuint program, GLuint location, T& value)         \
+    {                                                                          \
+        glGetUniform##S##v(program, location, &value);                         \
+    }                                                                          \
 
-#define GLCC_vector_elements(z, N, d) , value[N]
-#define GLCC_uniform_vector(T, A, D)                                           \
-	inline void uniform(GLuint location, const detail::vector<T, D>& value)    \
+#define GLCC_uniform_vector(D, P, S)                                           \
+	inline void uniform(GLuint prog, GLuint loc, const P##vec##D& val)         \
 	{                                                                          \
-		glUniform##D##A(location BOOST_PP_REPEAT(D, GLCC_vector_elements, ~)); \
+        glProgramUniform##D##S##v(prog, loc, 1, val.a);                        \
 	}                                                                          \
-	template<std::size_t N>                                                    \
-	inline void uniform(GLuint location,                                       \
-			const std::array<detail::vector<T, D>, N>& values)                 \
-	{                                                                          \
-		glUniform##D##A##v(location, N, reinterpret_cast<T*> (values.data())); \
-	}
+    inline void get_uniform(GLuint prog, GLuint loc, P##vec##D& val)           \
+    {                                                                          \
+        glGetUniform##S##v(proc, loc, val.a);                                  \
+    }                                                                          \
 
-#define GLCC_uniform_matrix_s(D)                                               \
-	inline void uniform(GLuint location,                                       \
-			const detail::matrix<D, D>& value)                                 \
+#define GLCC_uniform_matrix(D, P, S)                                           \
+	inline void uniform(GLuint prog, GLuint loc, const P##mat##D& val)         \
 	{                                                                          \
-		glUniformMatrix##D##fv(location, 1, false,                             \
-				reinterpret_cast<const GLfloat*>(value.data));                 \
+		glProgramUniformMatrix##D##S##v(prog, loc, 1, false, val.a);           \
 	}                                                                          \
-	template<std::size_t S>                                                    \
-	inline void uniform(GLuint location,                                       \
-			const std::array<detail::matrix<D, D>, S>& values)                 \
-	{                                                                          \
-		glUniformMatrix##D##fv(location, S, false,                             \
-				reinterpret_cast<GLfloat*> (values.data()));                   \
-	}
-
-#define GLCC_uniform_matrix(M, N)                                              \
-	inline void uniform(GLuint location,                                       \
-			const detail::matrix<M, N>& value)                                 \
-	{                                                                          \
-		glUniformMatrix##M##x##N##fv(location, 1, false,                       \
-				reinterpret_cast<const GLfloat*>(value.data));                 \
-	}                                                                          \
-	template<std::size_t S>                                                    \
-	inline void uniform(GLuint location,                                       \
-			const std::array<detail::matrix<M, N>, S>& values)                 \
-	{                                                                          \
-		glUniformMatrix##M##x##N##fv(location, S, false,                       \
-				reinterpret_cast<GLfloat*> (values.data()));                   \
-	}
+    inline void get_uniform(GLuint prog, GLuint loc, P##mat##D& val)           \
+    {                                                                          \
+        glGetUniform##S##v(prog, loc, val.a);                                  \
+    }                                                                          \
 
 namespace gl
 {
 namespace detail
 {
 
-GLCC_uniform(GLfloat, f)
 GLCC_uniform(GLint, i)
+GLCC_uniform(GLfloat, f)
+GLCC_uniform(GLdouble, d)
 GLCC_uniform(GLuint, ui)
 
-GLCC_uniform_vector(GLfloat, f, 2)
-GLCC_uniform_vector(GLfloat, f, 3)
-GLCC_uniform_vector(GLfloat, f, 4)
+GLCC_uniform_vector(2, i, i)
+GLCC_uniform_vector(3, i, i)
+GLCC_uniform_vector(4, i, i)
 
-GLCC_uniform_vector(GLint, i, 2)
-GLCC_uniform_vector(GLint, i, 3)
-GLCC_uniform_vector(GLint, i, 4)
+GLCC_uniform_vector(2,  , f)
+GLCC_uniform_vector(3,  , f)
+GLCC_uniform_vector(4,  , f)
 
-GLCC_uniform_vector(GLuint, ui, 2)
-GLCC_uniform_vector(GLuint, ui, 3)
-GLCC_uniform_vector(GLuint, ui, 4)
+GLCC_uniform_vector(2, d, d)
+GLCC_uniform_vector(3, d, d)
+GLCC_uniform_vector(4, d, d)
 
-GLCC_uniform_matrix_s(2)
-GLCC_uniform_matrix_s(3)
-GLCC_uniform_matrix_s(4)
+GLCC_uniform_vector(2, u, ui)
+GLCC_uniform_vector(3, u, ui)
+GLCC_uniform_vector(4, u, ui)
 
-GLCC_uniform_matrix(2, 3)
-GLCC_uniform_matrix(2, 4)
-GLCC_uniform_matrix(3, 2)
-GLCC_uniform_matrix(3, 4)
-GLCC_uniform_matrix(4, 2)
-GLCC_uniform_matrix(4, 3)
+GLCC_uniform_matrix(2,  , f)
+GLCC_uniform_matrix(3,  , f)
+GLCC_uniform_matrix(4,  , f)
+
+GLCC_uniform_matrix(2, d, d)
+GLCC_uniform_matrix(3, d, d)
+GLCC_uniform_matrix(4, d, d)
+
+GLCC_uniform_matrix(2x3,  , f)
+GLCC_uniform_matrix(3x2,  , f)
+GLCC_uniform_matrix(2x4,  , f)
+GLCC_uniform_matrix(4x2,  , f)
+GLCC_uniform_matrix(3x4,  , f)
+GLCC_uniform_matrix(4x3,  , f)
+
+GLCC_uniform_matrix(2x3, d, d)
+GLCC_uniform_matrix(3x2, d, d)
+GLCC_uniform_matrix(2x4, d, d)
+GLCC_uniform_matrix(4x2, d, d)
+GLCC_uniform_matrix(3x4, d, d)
+GLCC_uniform_matrix(4x3, d, d)
 
 } // namespace detail
 } // namespace gl
@@ -111,7 +95,5 @@ GLCC_uniform_matrix(4, 3)
 #undef GLCC_uniform
 #undef GLCC_uniform_vector
 #undef GLCC_uniform_matrix
-#undef GLCC_uniform_matrix_s
-#undef GLCC_vector_elements
 
 #endif /* GLCC_DETAIL_UNIFORM_HPP */

@@ -8,7 +8,7 @@
 #define GLCC_SHADER_HPP
 
 #include <string>
-#include <GL3/gl3w.h>
+#include <GL/gl.h>
 
 namespace gl
 {
@@ -16,7 +16,6 @@ namespace gl
 class shader
 {
 public:
-
 	enum shader_type
 	{
 		vertex = GL_VERTEX_SHADER,
@@ -62,10 +61,14 @@ public:
 		return buffer;
 	}
 
-	bool compile()
+	void compile()
+	{
+		glCompileShader(name);
+	}
+
+	bool compile_status()
 	{
 		GLint success;
-		glCompileShader(name);
 		glGetShaderiv(name, GL_COMPILE_STATUS, &success);
 		return success == GL_TRUE;
 	}

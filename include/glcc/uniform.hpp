@@ -53,14 +53,14 @@ public:
 
 	param_type operator=(param_type value)
 	{
-		//detail::set_uniform(program, location, value);
+		detail::set_uniform(program, location, value);
 		return value;
 	}
 
 	operator T()
 	{
 		T value;
-		//detail::get_uniform(program, location, value);
+		detail::get_uniform(program, location, value);
 		return value;
 	}
 

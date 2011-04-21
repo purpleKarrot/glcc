@@ -7,9 +7,8 @@
 #ifndef GLCC_PIXEL_HPP
 #define GLCC_PIXEL_HPP
 
-#include <GL3/gl3w.h>
+#include <GL/gl.h>
 #include <glcc/detail/get.hpp>
-#include <glcc/detail/color.hpp>
 
 namespace gl
 {
@@ -127,11 +126,16 @@ inline GLenum read_buffer()
 	return gl::detail::get<GLenum>(GL_READ_BUFFER);
 }
 
-template<typename View>
-inline void read(int x, int y, const View& view)
+template<typename Image>
+inline typename boost::enable_if<detail::is_2d_image<Image> >::type
+read(const ivec2& offset, Image& image)
 {
-	glReadPixels(x, y, view.width(), view.height(), color_traits<View>::layout,
-			color_traits<View>::channel, &view[0]);
+	glReadPixels(offset.a[0], offset.a[1],
+			detail::image_traits<Image>::width(img),
+			detail::image_traits<Image>::height(img),
+			detail::image_traits<Image>::format(img),
+			detail::image_traits<Image>::size(img),
+			detail::image_traits<Image>::data(img));
 }
 
 } // namespace pixel

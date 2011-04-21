@@ -52,18 +52,26 @@ public:
 		glDetachShader(name, shader.name);
 	}
 
-	bool validate()
+	void validate()
+	{
+		glValidateProgram(name);
+	}
+
+	bool validate_status()
 	{
 		GLint success;
-		glValidateProgram(name);
 		glGetProgramiv(name, GL_VALIDATE_STATUS, &success);
 		return success == GL_TRUE;
 	}
 
-	bool link()
+	void link()
+	{
+		glLinkProgram(name);
+	}
+
+	bool link_status()
 	{
 		GLint success;
-		glLinkProgram(name);
 		glGetProgramiv(name, GL_LINK_STATUS, &success);
 		return success == GL_TRUE;
 	}
@@ -82,7 +90,7 @@ public:
 		glUseProgram(name);
 	}
 
-	//private:
+private:
 	GLuint name;
 };
 

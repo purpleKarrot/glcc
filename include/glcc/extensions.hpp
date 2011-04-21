@@ -7,7 +7,7 @@
 #ifndef GLCC_EXTENSIONS_HPP
 #define GLCC_EXTENSIONS_HPP
 
-#include <GL3/gl3w.h>
+#include <GL/gl.h>
 #include <glcc/detail/get.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/iterator_range.hpp>

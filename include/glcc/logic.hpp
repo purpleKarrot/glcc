@@ -7,7 +7,7 @@
 #ifndef GLCC_LOGIC_HPP
 #define GLCC_LOGIC_HPP
 
-#include <GL3/gl3w.h>
+#include <GL/gl.h>
 #include <glcc/detail/get.hpp>
 #include <glcc/detail/macros.hpp>
 

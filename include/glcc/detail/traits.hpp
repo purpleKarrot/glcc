@@ -7,7 +7,7 @@
 #ifndef GLCC_DETAIL_TRAITS_HPP
 #define GLCC_DETAIL_TRAITS_HPP
 
-#include <GL3/gl3w.h>
+#include <GL/gl.h>
 #include <boost/config.hpp>
 
 #include <boost/type_traits/is_arithmetic.hpp>

@@ -7,8 +7,7 @@
 #ifndef BOOST_GL_DETAIL_GET_HPP
 #define BOOST_GL_DETAIL_GET_HPP
 
-#include <GL3/gl3w.h>
-#include <boost/la/vector_make.hpp>
+#include <GL/gl.h>
 #include <glcc/vec.hpp>
 
 namespace gl
@@ -60,7 +59,7 @@ template<>
 inline vec4 get<vec4> (GLenum pname)
 {
 	vec4 param;
-	glGetFloatv(pname, &param.a[0]);
+	glGetFloatv(pname, param.a);
 	return param;
 }
 
@@ -68,7 +67,7 @@ template<>
 inline bvec4 get<bvec4> (GLenum pname)
 {
 	bvec4 param;
-	glGetBooleanv(pname, &param.a[0]);
+	glGetBooleanv(pname, param.a);
 	return param;
 }
 

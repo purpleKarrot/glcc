@@ -21,7 +21,6 @@
 #include <glcc/program.hpp>
 #include <glcc/query.hpp>
 #include <glcc/renderbuffer.hpp>
-#include <glcc/set.hpp>
 #include <glcc/shader.hpp>
 #include <glcc/stencil.hpp>
 #include <glcc/texture.hpp>

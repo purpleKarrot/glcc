@@ -7,7 +7,7 @@
 #ifndef GLCC_ERROR_HPP
 #define GLCC_ERROR_HPP
 
-#include <GL3/gl3w.h>
+#include <GL/gl.h>
 #include <boost/system/system_error.hpp>
 
 namespace gl

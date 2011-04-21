@@ -7,7 +7,7 @@
 #ifndef GLCC_BUFFER_HPP
 #define GLCC_BUFFER_HPP
 
-#include <GL3/gl3w.h>
+#include <GL/gl.h>
 #include <glcc/detail/scoped_bind_base.hpp>
 #include <glcc/detail/macros.hpp>
 

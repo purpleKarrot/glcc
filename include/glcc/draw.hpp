@@ -7,7 +7,7 @@
 #ifndef GLCC_DRAW_HPP
 #define GLCC_DRAW_HPP
 
-#include <GL3/gl3w.h>
+#include <GL/gl.h>
 #include <boost/mpl/integral_c.hpp>
 #include <vector>
 
